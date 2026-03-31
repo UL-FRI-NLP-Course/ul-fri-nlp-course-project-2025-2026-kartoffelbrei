@@ -12,19 +12,14 @@ def fetch_live_trains():
         return None
 
 
-def print_trains(trains):
+def format_trains(trains):
+    results = ""
     for train in trains:
         if train['runningCurrently']:
-            print(f"Train {train['trainNumber']} ({train['trainType']})")
-            print(f"  Operator: {train['operatorShortCode']}")
-            print(f"  Train Category: {train['trainCategory']}")
-            print()
+            train_number = f"{{Train {train['trainNumber']} ({train['trainType']})."
+            operator = f"Operator: {train['operatorShortCode']}."
+            train_category = f"Train Category: {train['trainCategory']}.}}"
+            result = " ".join([train_number, operator, train_category])
+            results += result
 
-
-def run():
-    trains = fetch_live_trains()
-
-    if trains:
-        print_trains(trains)
-    else:
-        print("No data available.")
+    return results
