@@ -1,0 +1,23 @@
+[project]
+name = "kartoffelbrei"
+version = "31.03.2026"
+requires-python = ">= 3"
+authors = [
+    { name = "Nina Zink", email = "nina-sophie.zink@fau.de"},
+    { name = "Paul Horn", email = "paul.horn@mailbox.tu-dresden.de"},
+    { name = "Cornelius Niese", email = "cornelius.niese@student.kit.edu" }
+]
+readme = "README.md"
+dependencies = [
+    "numpy>=1.26.1",
+]
+
+[project.optional-dependencies]
+optional = [
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[project.urls]
+Repository = "github.url"
