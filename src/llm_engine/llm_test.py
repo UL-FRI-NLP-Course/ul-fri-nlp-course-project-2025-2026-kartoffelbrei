@@ -2,7 +2,7 @@ from llama_cpp import Llama
 from huggingface_hub import hf_hub_download
 import os
 
-MODEL_PATH = "llm_engine/models/llama-2-7b-chat.Q4_K_M.gguf"
+MODEL_PATH = "llm_engine/llama-2-7b-chat.Q4_K_M.gguf"
 
 def run_llm(trains):
     if not os.path.exists(MODEL_PATH):
@@ -14,7 +14,8 @@ def run_llm(trains):
     llm = Llama(
         model_path="llm_engine/llama-2-7b-chat.Q4_K_M.gguf",
         n_ctx=512,
-        n_threads=4
+        n_threads=4,
+        verbose=False
     )
 
     # Provide a prompt
