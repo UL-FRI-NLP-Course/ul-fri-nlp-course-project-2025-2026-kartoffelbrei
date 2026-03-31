@@ -1,3 +1,9 @@
 # Natural language processing course: `AI-Assisted Chatbot for Real-Time Information on Finnish Railway Systems`
 
-Please, organize README and the whole structure of the repository to be self-contained and reproducible.
+1. Start virtual environment
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install .
+```
+2. Install dependencies (`pip install .`)

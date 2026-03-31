@@ -1,8 +1,0 @@
-__pycache__/
-.venv
-.idea
-*.DS_Store
-
-# toml file
-build
-kartoffelbrei.egg-info
