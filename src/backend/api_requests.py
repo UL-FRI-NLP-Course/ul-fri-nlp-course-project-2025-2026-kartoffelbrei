@@ -1,0 +1,76 @@
+import requests
+from requests import Response
+from typing import Optional, Mapping, Any
+from urllib.parse import urlencode
+
+from .fintraffic_endpoints import FintrafficEndpoints as fe
+from .live_train_params import LiveTrainParams
+from .route_params import RouteParams
+
+class APIRequests:
+
+    @staticmethod
+    def _build_url(extensions: list[str]) -> str:
+        return "/".join(extensions)
+
+    @staticmethod
+    def _add_params_to_url(url: str, params: Mapping[str, Any]) -> str:
+        return url + "?" + urlencode(params)
+
+    @staticmethod
+    def _return_response(response: Response):
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("Error:", response.status_code)
+            return None
+
+    def get_live_trains(
+            self,
+            station_shortcode: Optional[str] = None,
+            params: Optional[LiveTrainParams] = None
+    ) -> Optional[str]:
+        if station_shortcode is None:
+            url = fe.LIVE_TRAINS.value
+        else:
+            url = self._build_url([fe.LIVE_TRAINS_STATION.value, station_shortcode])
+
+            if params is not None:
+                url = self._add_params_to_url(url, params)
+
+        return self._return_response(requests.get(url))
+
+    def get_train_information(
+            self, departure_date: str,
+            train_number: Optional[int] = None
+    ) -> str | None:
+        if train_number is None:
+            url = self._build_url([fe.TRAINS.value, departure_date])
+        else:
+            url = self._build_url([fe.TRAINS.value, departure_date, str(train_number)])
+
+        return self._return_response(requests.get(url))
+
+    def get_route_information(
+            self,
+            departure_station: str,
+            arrival_station: str,
+            params: Optional[RouteParams] = None
+    ):
+        url = self._build_url([fe.LIVE_TRAINS_STATION.value, departure_station, arrival_station])
+
+        if params is not None:
+            url = self._add_params_to_url(url, params)
+
+        return self._return_response(requests.get(url))
+
+    def format_trains(self, trains):
+        results = ""
+        for train in trains:
+            train_number = f"{{Train {train['trainNumber']} ({train['trainType']})."
+            operator = f"Operator: {train['operatorShortCode']}."
+            train_category = f"Train Category: {train['trainCategory']}.}}"
+            result = " ".join([train_number, operator, train_category])
+            results += result
+
+        return results
