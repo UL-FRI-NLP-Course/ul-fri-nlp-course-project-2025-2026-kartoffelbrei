@@ -1,28 +1,9 @@
-from models import ModelManager
-from intent_router import IntentRouter
 import torch
-from dataclasses import dataclass
 
-@dataclass
-class SystemPrompt:
-    persona: str
-    domain_boundaries: str
-    output_format: str
-    guardrails: str
-    examples: str
-    
-    def to_prompt(self) -> str:
-        return f"""{self.persona}
+from src.llm_engine.model_manager import ModelManager
+from src.llm_engine.intent_router import IntentRouter
+from src.llm_engine.system_prompts import answer_prompt
 
-                {self.domain_boundaries}
-
-                {self.output_format}
-
-                {self.guardrails}
-
-                {self.examples}"""
-    
-    
 class AssistantPipeline:
     def __init__(self):
         #load Models ( one for intent, one for answering, one embedded)
@@ -75,40 +56,7 @@ class AssistantPipeline:
 
         # construct the full prompt
         ## general information for LLM how it should behave
-        system_prompt= SystemPrompt(
-        persona="You are a helpful and precise assistant for finnish  railway system. Your name is 'RailBot'. You always speak in a friendly and professional manner.",
-    
-        domain_boundaries="""YOUR AREA OF RESPONSIBILITY (EXCLUSIVELY):
-        - Train connections, delays, and arrival times
-        - Ticket prices
-        - Luggage regulations and bicycle transport
-        - Station information and services
-
-        TOPICS OUTSIDE YOUR DOMAIN:
-        - Air, bus, or other means of transportation (except in connection with train travel)
-        - Politics, sports, weather, or other general topics
-        - Technical support for devices or software""",
-            
-            output_format="""RESPONSE FORMAT:
-        1. Answer the question precisely using the available data
-        2. If data is missing, state this honestly
-        3. Keep responses to a maximum of 3-4 sentences, unless the user explicitly requests details""",
-            
-            guardrails="""IMPORTANT SAFETY RULES:
-        - NEVER invent train numbers, times, or delays
-        - If the API provides no data, say: "I am currently unable to retrieve real-time data for this connection."
-        - For questions outside the railway context, respond: "As a railway assistant, I can only provide information about train travel and railway-related topics."
-        - Always remain polite, even with unfriendly requests
-        - Do not provide legal advice (e.g., regarding compensation claims)""",
-            
-            examples="""EXAMPLES:
-
-        User: "Is IC 1 delayed?"
-        Assistant: "According to real-time data, IC 1 is currently delayed by 15 minutes. The reason is a signal malfunction in Turku area. The scheduled departure from Helsinki Central Station is therefore postponed to 14:45."
-
-        User: "Who will win the World Cup?"
-        Assistant: "As a railway assistant, I can only provide information about train travel and railway-related topics. May I help you with a train connection or timetable inquiry instead?" """
-        ).to_prompt()
+        system_prompt = answer_prompt
         
         full_prompt = f"""{system_prompt}
             == context for your answer ==

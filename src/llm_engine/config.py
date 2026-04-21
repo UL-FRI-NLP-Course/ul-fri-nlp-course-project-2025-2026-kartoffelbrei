@@ -22,5 +22,3 @@ class Config:
     API_URL: str = "https://rata.digitraffic.fi/api/v1/"
     #LIVE_TRAINS: str = "https://rata.digitraffic.fi/api/v1/live-trains"
     #GENERAL_TRAIN_INFO: str = "https://rata.digitraffic.fi/api/v1/trains"
-
-config = Config()

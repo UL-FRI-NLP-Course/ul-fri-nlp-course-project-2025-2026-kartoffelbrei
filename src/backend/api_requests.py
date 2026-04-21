@@ -3,9 +3,9 @@ from requests import Response
 from typing import Optional, Mapping, Any
 from urllib.parse import urlencode
 
-from .fintraffic_endpoints import FintrafficEndpoints as fe
-from .live_train_params import LiveTrainParams
-from .route_params import RouteParams
+from src.backend.fintraffic_endpoints import FintrafficEndpoints as fe
+from src.backend.live_train_params import LiveTrainParams
+from src.backend.route_params import RouteParams
 
 class APIRequests:
 
