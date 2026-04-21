@@ -18,7 +18,7 @@ class APIRequests:
         return url + "?" + urlencode(params)
 
     @staticmethod
-    def _return_response(response: Response):
+    def _return_response(response: Response) -> Any:
         if response.status_code == 200:
             return response.json()
         else:
@@ -63,14 +63,3 @@ class APIRequests:
             url = self._add_params_to_url(url, params)
 
         return self._return_response(requests.get(url))
-
-    def format_trains(self, trains):
-        results = ""
-        for train in trains:
-            train_number = f"{{Train {train['trainNumber']} ({train['trainType']})."
-            operator = f"Operator: {train['operatorShortCode']}."
-            train_category = f"Train Category: {train['trainCategory']}.}}"
-            result = " ".join([train_number, operator, train_category])
-            results += result
-
-        return results
