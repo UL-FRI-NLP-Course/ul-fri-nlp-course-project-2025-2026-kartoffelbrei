@@ -2,7 +2,7 @@
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from sentence_transformers import SentenceTransformer
-from config import Config
+from config_llm import ConfigLLM as Config
 
 class ModelManager:
     def __init__(self):
