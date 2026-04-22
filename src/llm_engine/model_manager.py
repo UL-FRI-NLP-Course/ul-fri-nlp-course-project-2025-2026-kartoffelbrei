@@ -19,7 +19,11 @@ class ModelManager:
     def load_intent_model(self):
         print(f"Load intent-model: {Config.INTENT_MODEL_SMALL}")
 
-        local_path = snapshot_download(repo_id="TinyLlama/TinyLlama-1.1B-Chat-v1.0")
+        local_path = snapshot_download(
+            repo_id="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+            force_download=False,
+            max_workers=1
+        )
         
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,
