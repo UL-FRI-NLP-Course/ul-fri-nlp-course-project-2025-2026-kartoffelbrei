@@ -6,7 +6,7 @@ from pathlib import Path
 
 class MetadataHandler:
     base_dir = Path(__file__).resolve().parent
-    metadata_path: str = os.path.join(base_dir.parent, "data")
+    metadata_path: str = os.path.join(base_dir.parent, "metadata")
 
     def _get_data(self, url: str) -> Any:
         return requests.get(url).json()

@@ -39,7 +39,7 @@ query_extraction_prompt: str = SystemPrompt(
     output_format=f"""OUTPUT FORMAT:
         Return a single JSON object with these fields:
         - intent: one of "delay", "arrival", "departure", "connection", "info", "other"
-        - train_type: one of {json.dumps(metadata_handler.load_train_types_dict().keys())} or null
+        - train_type: one of {json.dumps(list(metadata_handler.load_train_types_dict().keys()))} or null
         - train_number: train number as string (e.g. "46") or null
         - departure_station: departure station name or null
         - destination_station: destination station name or null
