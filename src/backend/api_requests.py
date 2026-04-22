@@ -31,9 +31,9 @@ class APIRequests:
             params: Optional[LiveTrainParams] = None
     ) -> Optional[str]:
         if station_shortcode is None:
-            url = fe.LIVE_TRAINS.value
+            url = fe.LIVE_TRAINS
         else:
-            url = self._build_url([fe.LIVE_TRAINS_STATION.value, station_shortcode])
+            url = self._build_url([fe.LIVE_TRAINS_STATION, station_shortcode])
 
             if params is not None:
                 url = self._add_params_to_url(url, params)
@@ -45,9 +45,9 @@ class APIRequests:
             train_number: Optional[int] = None
     ) -> str | None:
         if train_number is None:
-            url = self._build_url([fe.TRAINS.value, departure_date])
+            url = self._build_url([fe.TRAINS, departure_date])
         else:
-            url = self._build_url([fe.TRAINS.value, departure_date, str(train_number)])
+            url = self._build_url([fe.TRAINS, departure_date, str(train_number)])
 
         return self._return_response(requests.get(url))
 
@@ -57,7 +57,7 @@ class APIRequests:
             arrival_station: str,
             params: Optional[RouteParams] = None
     ):
-        url = self._build_url([fe.LIVE_TRAINS_STATION.value, departure_station, arrival_station])
+        url = self._build_url([fe.LIVE_TRAINS_STATION, departure_station, arrival_station])
 
         if params is not None:
             url = self._add_params_to_url(url, params)

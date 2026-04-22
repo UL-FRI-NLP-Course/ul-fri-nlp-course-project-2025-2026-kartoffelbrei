@@ -1,7 +1,8 @@
-from enum import Enum
+from dataclasses import dataclass
 
-class FintrafficEndpoints(Enum):
-    BASE = "https://rata.digitraffic.fi/api/v1/"
-    TRAINS = BASE + "trains"
-    LIVE_TRAINS = BASE + "live-trains"
-    LIVE_TRAINS_STATION = BASE + "live-trains/station"
+@dataclass
+class FintrafficEndpoints():
+    BASE: str = "https://rata.digitraffic.fi/api/v1/"
+    TRAINS: str = BASE + "trains"
+    LIVE_TRAINS: str = BASE + "live-trains"
+    LIVE_TRAINS_STATION: str = BASE + "live-trains/station"

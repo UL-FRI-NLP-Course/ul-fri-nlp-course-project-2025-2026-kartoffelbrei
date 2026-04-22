@@ -13,7 +13,7 @@ class AssistantPipeline:
         #load intent router
         self.router = IntentRouter(self.model_manager)
 
-    def pipeline(self, input: str):
+    def run(self, input: str):
         result = ""
         # get JSON with keywords
         intents = self.router.extract_with_llm(input)
