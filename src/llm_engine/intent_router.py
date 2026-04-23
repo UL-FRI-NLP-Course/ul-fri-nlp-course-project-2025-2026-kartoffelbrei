@@ -13,7 +13,7 @@ class IntentRouter:
     def extract_with_llm(self, user_query: str) -> Dict:
        
         prompt = query_extraction_prompt
-        
+        # hier user query
         inputs = self.manager.intent_tokenizer(prompt, return_tensors="pt")
         
         with torch.no_grad():
