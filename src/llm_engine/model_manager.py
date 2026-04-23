@@ -1,7 +1,8 @@
+import os
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from sentence_transformers import SentenceTransformer
-from huggingface_hub import snapshot_download
+from huggingface_hub import snapshot_download, DryRunFileInfo
 
 from src.llm_engine.config_llm import ConfigLLM as Config
 
@@ -12,15 +13,17 @@ class ModelManager:
         self.answer_model = None
         self.answer_tokenizer = None
         self.embedding_model = None
-        self.access_token = "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"
-        self.local_path = snapshot_download(
-            repo_id="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+
+    def _download_model(self, repo_id: str, dir: str) ->  str | list[DryRunFileInfo]:
+        return snapshot_download(
+            repo_id=repo_id,
+            local_dir=os.path.join("..", "models", dir),
             force_download=False,
             max_workers=1
         )
         
     def load_intent_model(self):
-        print(f"Load intent-model: {Config.INTENT_MODEL_SMALL}")
+        print(f"Load intent-model: {Config.INTENT_MODEL}")
 
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,
@@ -28,8 +31,10 @@ class ModelManager:
             bnb_4bit_compute_dtype=torch.float16,
             bnb_4bit_use_double_quant=True
         )
+
+        local_path = self._download_model(Config.INTENT_MODEL_SMALL, "intent")
         
-        self.intent_tokenizer = AutoTokenizer.from_pretrained(self.local_path, trust_remote_code=True)
+        self.intent_tokenizer = AutoTokenizer.from_pretrained(local_path, trust_remote_code=True)
 
         if self.intent_tokenizer.pad_token is None:
             self.intent_tokenizer.pad_token = self.intent_tokenizer.eos_token
@@ -37,10 +42,10 @@ class ModelManager:
         self.intent_tokenizer.padding_side = "left"
 
         self.intent_model = AutoModelForCausalLM.from_pretrained(
-            self.local_path,
+            local_path,
             quantization_config=bnb_config,
             device_map="auto",
-            torch_dtype=torch.float16,
+            dtype=torch.float16,
             trust_remote_code=True,
         )
 
@@ -51,6 +56,8 @@ class ModelManager:
 
     def load_answer_model(self):
         print(f"Load answer-model: {Config.ANSWER_MODEL} in {Config.DEVICE_ANSWER}")
+
+        local_path = self._download_model(Config.ANSWER_MODEL, "answer")
         
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=Config.USE_4BIT,
@@ -58,9 +65,9 @@ class ModelManager:
             bnb_4bit_use_double_quant=True
         ) if Config.USE_4BIT else None
         
-        self.answer_tokenizer = AutoTokenizer.from_pretrained(self.local_path)
+        self.answer_tokenizer = AutoTokenizer.from_pretrained(local_path)
         self.answer_model = AutoModelForCausalLM.from_pretrained(
-            self.local_path,
+            local_path,
             quantization_config=bnb_config,
             device_map=Config.DEVICE_ANSWER,
             torch_dtype=torch.float16
@@ -68,7 +75,10 @@ class ModelManager:
         
     def load_embedding_model(self):
         print(f"Load embedding-model: {Config.EMBEDDING_MODEL}")
-        self.embedding_model = SentenceTransformer(self.local_path)
+
+        local_path = self._download_model(Config.EMBEDDING_MODEL, "embedding")
+
+        self.embedding_model = SentenceTransformer(local_path)
         
     def load_all(self):
         self.load_intent_model()
