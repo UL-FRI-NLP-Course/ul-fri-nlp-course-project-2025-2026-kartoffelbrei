@@ -1,37 +1,42 @@
 import json
-import re
-import torch
-from typing import Dict
+from typing import Any
 
+from src.llm_engine.system_prompts import intent_prompt_builder
 from src.llm_engine.model_manager import ModelManager
-from src.llm_engine.system_prompts import query_extraction_prompt
+
 
 class IntentRouter:
     def __init__(self, model_manager: ModelManager):
-        self.manager = model_manager
-        
-    def extract_with_llm(self, user_query: str) -> Dict:
-       
-        prompt = query_extraction_prompt
-        # hier user query
-        inputs = self.manager.intent_tokenizer(prompt, return_tensors="pt")
-        
-        with torch.no_grad():
-            outputs = self.manager.intent_model.generate(
-                **inputs,
-                max_new_tokens=200,
-                temperature=0.1,
-                do_sample=False
-            )
-        
-        response = self.manager.intent_tokenizer.decode(outputs[0], skip_special_tokens=True)
-        print(f"Answer: {response}")
-        # JSON aus Response extrahieren
-        try:
-            json_match = re.search(r'\{.*\}', response, re.DOTALL)
-            if json_match:
-                return json.loads(json_match.group())
-        except json.JSONDecodeError:
-            pass
-            
-     
+        self.intent_model = model_manager.intent_model
+        self.intent_tokenizer = model_manager.intent_tokenizer
+
+    def extract_intent(self, user_input: str) -> Any:
+        prompt = intent_prompt_builder.build(user_input)
+
+        inputs = self.intent_tokenizer(prompt, return_tensors="pt")
+        device = self.intent_model.device
+        inputs = {k: v.to(device) for k, v in inputs.items()}
+
+        outputs = self.intent_model.generate(
+            **inputs,
+            max_new_tokens=200,
+            temperature=0.1,
+            do_sample=False,
+        )
+
+        input_length = inputs["input_ids"].shape[1]
+        generated = outputs[0][input_length:]
+
+        text = self.intent_tokenizer.decode(generated, skip_special_tokens=True)
+
+        json_start = text.find("{")
+        json_end = text.rfind("}") + 1
+
+        if json_start == -1 or json_end == -1:
+            raise ValueError("No JSON found in output")
+
+        json_str = text[json_start:json_end]
+
+        print(json_str)
+
+        return json.loads(json_str)

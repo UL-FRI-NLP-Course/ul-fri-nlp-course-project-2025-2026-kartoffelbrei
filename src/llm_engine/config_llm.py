@@ -1,5 +1,3 @@
-# config.py
-import os
 from dataclasses import dataclass
 
 @dataclass
@@ -21,8 +19,3 @@ class ConfigLLM:
     # Pfade für RAG
     VECTOR_DB_PATH: str = "./data/vector_db"
     SCRAPED_DATA_PATH: str = "./data/bahn_website_texts.json"
-    
-    # API Konfiguration (Platzhalter für eure echte API)
-    API_URL: str = "https://rata.digitraffic.fi/api/v1/"
-    #LIVE_TRAINS: str = "https://rata.digitraffic.fi/api/v1/live-trains"
-    #GENERAL_TRAIN_INFO: str = "https://rata.digitraffic.fi/api/v1/trains"
