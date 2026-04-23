@@ -2,7 +2,6 @@ import torch
 
 from src.llm_engine.model_manager import ModelManager
 from src.llm_engine.intent_router import IntentRouter
-from src.llm_engine.system_prompts import answer_prompt
 
 class AssistantPipeline:
     def __init__(self):
@@ -16,7 +15,9 @@ class AssistantPipeline:
     def run(self, input: str):
         result = ""
         # get JSON with keywords
-        intents = self.router.extract_with_llm(input)
+        intents = self.router.extract_intent(input)
+
+        print(f"intents: {intents}")
 
         # decide which RAG method is necessary
         if intents.get("needs_api"):
@@ -56,7 +57,7 @@ class AssistantPipeline:
 
         # construct the full prompt
         ## general information for LLM how it should behave
-        system_prompt = answer_prompt
+        system_prompt = ""
         
         full_prompt = f"""{system_prompt}
             == context for your answer ==
