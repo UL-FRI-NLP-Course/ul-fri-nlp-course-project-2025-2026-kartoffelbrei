@@ -1,5 +1,6 @@
 import os
 import torch
+from typing import Union, List
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from sentence_transformers import SentenceTransformer
 from huggingface_hub import snapshot_download, DryRunFileInfo
@@ -14,7 +15,8 @@ class ModelManager:
         self.answer_tokenizer = None
         self.embedding_model = None
 
-    def _download_model(self, repo_id: str, dir: str) ->  str | list[DryRunFileInfo]:
+    @staticmethod
+    def _download_model(repo_id: str, dir: str) -> Union[str, List[DryRunFileInfo]]:
         return snapshot_download(
             repo_id=repo_id,
             local_dir=os.path.join("..", "models", dir),
@@ -32,7 +34,7 @@ class ModelManager:
             bnb_4bit_use_double_quant=True
         )
 
-        local_path = self._download_model(Config.INTENT_MODEL_SMALL, "intent")
+        local_path = self._download_model(Config.INTENT_MODEL, "intent")
         
         self.intent_tokenizer = AutoTokenizer.from_pretrained(local_path, trust_remote_code=True)
 
