@@ -1,14 +1,26 @@
 import torch
-
+from ..backend.website_handler import RAG_Handler
 from .model_manager import ModelManager
 from .intent_router import IntentRouter
+import os
+
+FAISS_PATH= "/d/hpc/projects/onj_fri/kartoffelbei/faiss/"
 
 class AssistantPipeline:
     def __init__(self):
         #load Models ( one for intent, one for answering, one embedded)
         self.model_manager = ModelManager()
         self.model_manager.load_all()
-        
+        self.faiss_store = None
+        self.rag_handler = RAG_Handler()
+        if not os.path.exists(FAISS_PATH):
+            texts = self.rag_handler.create_database()
+            chunks = self.rag_handler.text_preparation(texts)
+            self.faiss_store = self.rag_handler.vectorize_and_store(chunks, self.model_manager.embedding_model)
+            self.rag_handler.save_faiss_local(self.faiss_store,FAISS_PATH)
+        else: 
+            self.faiss_store = self.rag_handler.load_faiss_local
+
         #load intent router
         self.router = IntentRouter(self.model_manager)
 
@@ -36,24 +48,9 @@ class AssistantPipeline:
                     """
         else:
             print("static knowledge from website is enough")
-            # TODO User scraped websites -> some mock results
-            result = """Train data:
-                    Train IC 1
-                    Route: Helsinki → Espoo → Kirkkonummi
-                    Departure (Helsinki): 08:15
-                    Arrival (Espoo): 08:30
-
-                    Train AE 30
-                    Route: Helsinki → Vantaa → Kerava
-                    Departure (Helsinki): 09:00
-                    Arrival (Espoo): not available
-                    
-                    Train IC 5
-                    Route: Helsinki → Espoo → Kauniainen → Kirkkonummi
-                    Departure (Helsinki): 10:20
-                    Arrival (Espoo): 10:35
-                    
-                    """
+            result = self.rag_handler.search_similiar(self.faiss_store, input, 5)
+        
+            
 
         # construct the full prompt
         ## general information for LLM how it should behave
