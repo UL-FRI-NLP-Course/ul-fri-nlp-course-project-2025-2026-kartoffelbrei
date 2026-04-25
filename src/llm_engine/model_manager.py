@@ -5,7 +5,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from sentence_transformers import SentenceTransformer
 from huggingface_hub import snapshot_download, DryRunFileInfo
 
-from src.llm_engine.config_llm import ConfigLLM as Config
+from .config_llm import ConfigLLM as Config
 
 class ModelManager:
     def __init__(self):

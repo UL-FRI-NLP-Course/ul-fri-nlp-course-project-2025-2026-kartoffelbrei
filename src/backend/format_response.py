@@ -1,7 +1,7 @@
 from typing import List
 from datetime import datetime
 
-from src.backend.metadata_handler import MetadataHandler
+from .metadata_handler import MetadataHandler
 
 def format_train_type_response(train_data, only_running_trains: bool = False, train_category: List[str] = None):
     response_list = []

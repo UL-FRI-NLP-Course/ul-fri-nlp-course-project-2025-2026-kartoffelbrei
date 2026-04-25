@@ -1,7 +1,7 @@
 import torch
 
-from src.llm_engine.model_manager import ModelManager
-from src.llm_engine.intent_router import IntentRouter
+from .model_manager import ModelManager
+from .intent_router import IntentRouter
 
 class AssistantPipeline:
     def __init__(self):
