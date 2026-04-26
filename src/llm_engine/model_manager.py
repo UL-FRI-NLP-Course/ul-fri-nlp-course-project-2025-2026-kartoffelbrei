@@ -1,4 +1,3 @@
-import os
 import torch
 from typing import Union, List
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
@@ -16,10 +15,9 @@ class ModelManager:
         self.embedding_model = None
 
     @staticmethod
-    def _download_model(repo_id: str, dir: str) -> Union[str, List[DryRunFileInfo]]:
+    def _download_model(repo_id: str) -> Union[str, List[DryRunFileInfo]]:
         return snapshot_download(
             repo_id=repo_id,
-            local_dir=os.path.join("..", "models", dir),
             force_download=False,
             max_workers=1
         )
@@ -34,7 +32,7 @@ class ModelManager:
             bnb_4bit_use_double_quant=True
         )
 
-        local_path = self._download_model(Config.INTENT_MODEL, "intent")
+        local_path = self._download_model(Config.INTENT_MODEL)
         
         self.intent_tokenizer = AutoTokenizer.from_pretrained(local_path, trust_remote_code=True)
 
@@ -59,7 +57,7 @@ class ModelManager:
     def load_answer_model(self):
         print(f"Load answer-model: {Config.ANSWER_MODEL} in {Config.DEVICE_ANSWER}")
 
-        local_path = self._download_model(Config.ANSWER_MODEL, "answer")
+        local_path = self._download_model(Config.ANSWER_MODEL)
         
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=Config.USE_4BIT,
@@ -78,7 +76,7 @@ class ModelManager:
     def load_embedding_model(self):
         print(f"Load embedding-model: {Config.EMBEDDING_MODEL}")
 
-        local_path = self._download_model(Config.EMBEDDING_MODEL, "embedding")
+        local_path = self._download_model(Config.EMBEDDING_MODEL)
 
         self.embedding_model = SentenceTransformer(local_path)
         
