@@ -5,6 +5,6 @@ from src.backend.api_requests import APIRequests
 
 if __name__ == "__main__":
     pipeline = AssistantPipeline()
-    pipeline.run("Can I travel from Helsinki asema to Tampere today?")
+    pipeline.run("Can I travel from Helsinki asema to Tampere asema today?")
 
 
