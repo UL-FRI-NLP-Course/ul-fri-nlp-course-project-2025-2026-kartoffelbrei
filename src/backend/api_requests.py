@@ -54,10 +54,10 @@ class APIRequests:
     def get_route_information(
             self,
             departure_station: str,
-            arrival_station: str,
+            destination_station: str,
             params: Optional[RouteParams] = None
     ):
-        url = self._build_url([Config.LIVE_TRAINS_STATION, departure_station, arrival_station])
+        url = self._build_url([Config.LIVE_TRAINS_STATION, departure_station, destination_station])
 
         if params is not None:
             url = self._add_params_to_url(url, params)
