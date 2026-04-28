@@ -1,7 +1,7 @@
 import torch
-from ..backend.website_handler import RAG_Handler
-from .model_manager import ModelManager
-from .intent_router import IntentRouter
+from src.backend.website_handler import RAG_Handler
+from src.llm_engine.model_manager import ModelManager
+from src.llm_engine.intent_router import IntentRouter
 import os
 
 FAISS_PATH= "/d/hpc/projects/onj_fri/kartoffelbei/faiss/"

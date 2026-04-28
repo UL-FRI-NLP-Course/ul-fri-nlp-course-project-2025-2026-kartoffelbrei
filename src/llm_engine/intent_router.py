@@ -1,8 +1,8 @@
 import json
 from typing import Any
 
-from .system_prompts import intent_prompt_builder
-from .model_manager import ModelManager
+from src.llm_engine.system_prompts import intent_prompt_builder
+from src.llm_engine.model_manager import ModelManager
 
 
 class IntentRouter:

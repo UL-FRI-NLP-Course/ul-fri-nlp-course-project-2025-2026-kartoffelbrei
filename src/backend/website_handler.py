@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from .config_backend import ConfigBackend
-from llm_engine.model_manager import ModelManager
+from src.llm_engine.model_manager import ModelManager
 from pathlib import Path
 import json
 from langchain_core.documents import Document
