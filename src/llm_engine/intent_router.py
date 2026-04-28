@@ -27,7 +27,6 @@ class IntentRouter:
          "departure_station": string or null,
          "destination_station": string or null,
          "departure_date": string or null,
-         "needs_api": boolean
         }
         """
             },

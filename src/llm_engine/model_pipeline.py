@@ -4,6 +4,7 @@ from src.llm_engine.model_manager import ModelManager
 from src.llm_engine.intent_router import IntentRouter
 from src.backend.api_requests import APIRequests
 from src.llm_engine.api_request_builder import APIRequestBuilder
+from src.llm_engine.intents import Intent
 import os
 
 FAISS_PATH= "/d/hpc/projects/onj_fri/kartoffelbei/faiss/"
@@ -36,7 +37,7 @@ class AssistantPipeline:
         print(f"intents: {intents}")
 
         # decide which RAG method is necessary
-        if intents.get("needs_api"):
+        if intents.get("intent") is not Intent.OTHER.value:
             print("Ask API for livedata")
             # TODO API request -> we just mock some results now
             result = self.api_request_builder.send_api_request(intents)
