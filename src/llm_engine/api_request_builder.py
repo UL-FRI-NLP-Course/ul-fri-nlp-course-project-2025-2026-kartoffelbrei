@@ -47,6 +47,7 @@ class APIRequestBuilder:
 
         train_stations = MetadataHandler.load_station_dict()
         departure_station = train_stations[intent_json["departure_station"]]
+        print(intent_json["arrival_station"])
         arrival_station = train_stations[intent_json["arrival_station"]]
 
         route_params: RouteParams = {'departure_date': departure_date}
