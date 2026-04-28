@@ -29,30 +29,6 @@ class PromptBuilder:
         Output:
         """
 
-messages = [
-    {
-        "role": "system",
-        "content": """
-You are a railway intent extractor.
-Return ONLY valid JSON.
-
-Schema:
-{
- "intent": "delay|arrival|departure|route|train_information|other",
- "train_number": string or null,
- "departure_station": string or null,
- "destination_station": string or null,
- "departure_date": string or null,
- "needs_api": boolean
-}
-"""
-    },
-    {
-        "role": "user",
-        "content": user_input
-    }
-]
-
 #todo: find right format for departure date
 intent_prompt_builder = PromptBuilder(
     task="Extract structured data from a railway query.",
