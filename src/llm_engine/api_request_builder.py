@@ -43,11 +43,11 @@ class APIRequestBuilder:
         return self.api_requests.get_train_information(departure_date, train_number)
 
     def _build_route_information_request(self, intent_json: Any) -> str:
-        departure_date = intent_json["departure_date"]
+        #departure_date = intent_json["departure_date"]
 
         train_stations = MetadataHandler.load_station_dict()
         departure_station = train_stations[intent_json["departure_station"]]
         destination_station = train_stations[intent_json["destination_station"]]
 
-        route_params: RouteParams = {'departure_date': departure_date}
-        return self.api_requests.get_route_information(departure_station, destination_station, params=route_params)
+        #route_params: RouteParams = {'departure_date': departure_date}
+        return self.api_requests.get_route_information(departure_station, destination_station)
