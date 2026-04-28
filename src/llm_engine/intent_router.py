@@ -11,17 +11,48 @@ class IntentRouter:
         self.intent_tokenizer = model_manager.intent_tokenizer
 
     def extract_intent(self, user_input: str) -> Any:
-        prompt = intent_prompt_builder.build(user_input)
+        #prompt = intent_prompt_builder.build(user_input)
 
-        inputs = self.intent_tokenizer(prompt, return_tensors="pt")
+        prompt = [
+            {
+                "role": "system",
+                "content": """
+        You are a railway intent extractor.
+        Return ONLY valid JSON.
+
+        Schema:
+        {
+         "intent": "delay|arrival|departure|route|train_information|other",
+         "train_number": string or null,
+         "departure_station": string or null,
+         "destination_station": string or null,
+         "departure_date": string or null,
+         "needs_api": boolean
+        }
+        """
+            },
+            {
+                "role": "user",
+                "content": user_input
+            }
+        ]
+
         device = self.intent_model.device
-        inputs = {k: v.to(device) for k, v in inputs.items()}
+
+        inputs = self.intent_tokenizer.apply_chat_template(
+            prompt,
+            tokenize=True,
+            add_generation_prompt=True,
+            return_tensors="pt"
+        ).to(device)
 
         outputs = self.intent_model.generate(
-            **inputs,
-            max_new_tokens=200,
-            temperature=0.1,
+            inputs,
+            max_new_tokens=60,
+            temperature=0.0,
             do_sample=False,
+            eos_token_id=self.intent_tokenizer.eos_token_id,
+            pad_token_id=self.intent_tokenizer.eos_token_id,
         )
 
         input_length = inputs["input_ids"].shape[1]
