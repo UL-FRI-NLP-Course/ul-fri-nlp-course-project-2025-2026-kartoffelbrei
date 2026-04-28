@@ -10,24 +10,26 @@ class IntentRouter:
         self.intent_model = model_manager.intent_model
         self.intent_tokenizer = model_manager.intent_tokenizer
 
-    def extract_intent(self, user_input):
-        messages = [
+    def extract_intent(self, user_input: str) -> Any:
+        #prompt = intent_prompt_builder.build(user_input)
+
+        prompt = [
             {
                 "role": "system",
                 "content": """
-    You are a railway intent extractor.
-    Return ONLY valid JSON.
+        You are a railway intent extractor.
+        Return ONLY valid JSON.
 
-    Schema:
-    {
-     "intent": "delay|arrival|departure|route|other",
-     "train_number": string or null,
-     "departure_station": string or null,
-     "destination_station": string or null,
-     "departure_date": string or null,
-     "needs_api": boolean
-    }
-    """
+        Schema:
+        {
+         "intent": "delay|arrival|departure|route|other",
+         "train_number": string or null,
+         "departure_station": string or null,
+         "destination_station": string or null,
+         "departure_date": string or null,
+         "needs_api": boolean
+        }
+        """
             },
             {
                 "role": "user",
@@ -37,15 +39,15 @@ class IntentRouter:
 
         device = self.intent_model.device
 
-        input_ids = self.intent_tokenizer.apply_chat_template(
-            messages,
+        inputs = self.intent_tokenizer.apply_chat_template(
+            prompt,
             tokenize=True,
             add_generation_prompt=True,
             return_tensors="pt"
         ).to(device)
 
         outputs = self.intent_model.generate(
-            input_ids,
+            **inputs,
             max_new_tokens=60,
             temperature=0.0,
             do_sample=False,
@@ -53,21 +55,21 @@ class IntentRouter:
             pad_token_id=self.intent_tokenizer.eos_token_id,
         )
 
-        input_length = input_ids.shape[1]
+        input_length = inputs["input_ids"].shape[1]
         generated = outputs[0][input_length:]
 
         text = self.intent_tokenizer.decode(generated, skip_special_tokens=True)
 
-        print("RAW OUTPUT:", text)
+        print(f"RAW text: {text}")
 
         json_start = text.find("{")
         json_end = text.rfind("}") + 1
 
-        if json_start == -1 or json_end == 0:
-            raise ValueError("No JSON found")
+        if json_start == -1 or json_end == -1:
+            raise ValueError("No JSON found in output")
 
         json_str = text[json_start:json_end]
 
-        print("JSON:", json_str)
+        print(json_str)
 
         return json.loads(json_str)
