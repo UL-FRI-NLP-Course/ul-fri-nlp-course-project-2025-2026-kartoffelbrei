@@ -13,13 +13,13 @@ class AssistantPipeline:
         self.model_manager.load_all()
         self.faiss_store = None
         self.rag_handler = RAG_Handler()
-        if not os.path.exists(FAISS_PATH):
-            texts = self.rag_handler.create_database()
-            chunks = self.rag_handler.text_preparation(texts)
-            self.faiss_store = self.rag_handler.vectorize_and_store(chunks, self.model_manager.embedding_model)
-            self.rag_handler.save_faiss_local(self.faiss_store,FAISS_PATH)
-        else: 
-            self.faiss_store = self.rag_handler.load_faiss_local
+        #if not os.path.exists(FAISS_PATH):
+        #    texts = self.rag_handler.create_database()
+        #    chunks = self.rag_handler.text_preparation(texts)
+        #    self.faiss_store = self.rag_handler.vectorize_and_store(chunks, self.model_manager.embedding_model)
+        #    self.rag_handler.save_faiss_local(self.faiss_store,FAISS_PATH)
+        #else:
+        #    self.faiss_store = self.rag_handler.load_faiss_local
 
         #load intent router
         self.router = IntentRouter(self.model_manager)
