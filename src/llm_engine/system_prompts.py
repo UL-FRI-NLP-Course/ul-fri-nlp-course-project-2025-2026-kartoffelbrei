@@ -29,17 +29,18 @@ class PromptBuilder:
         Output:
         """
 
-
+#todo: find right format for departure date
 intent_prompt_builder = PromptBuilder(
     task="Extract structured data from a railway query.",
 
     schema="""
     {
-    "intent": "delay | arrival | departure | connection | info | other",
-    "train_type": string or null,
+    "intent": "train information | arrival | departure | route | other",
     "train_number": string or null,
     "departure_station": string or null,
     "destination_station": string or null,
+    "departure_date": date or null,
+    
     "needs_api": boolean
     }
     """,
