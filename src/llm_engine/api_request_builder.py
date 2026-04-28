@@ -34,6 +34,8 @@ class APIRequestBuilder:
                 print("No valid intent was provided.")
                 return None
 
+        print(f"Response: {response}")
+
         return format_train_type_response(response)
 
     def _build_train_information_request(self, intent_json: Any) -> str:
@@ -48,6 +50,9 @@ class APIRequestBuilder:
         train_stations = MetadataHandler.load_station_dict()
         departure_station = train_stations[intent_json["departure_station"]]
         destination_station = train_stations[intent_json["destination_station"]]
+
+        print(f"Departure: {departure_station}")
+        print(f"Destination: {destination_station}")
 
         #route_params: RouteParams = {'departure_date': departure_date}
         return self.api_requests.get_route_information(departure_station, destination_station)
