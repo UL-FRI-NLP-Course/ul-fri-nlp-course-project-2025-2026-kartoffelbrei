@@ -28,6 +28,7 @@ class APIRequestBuilder:
             case Intent.ROUTE.value:
                 response = self._build_route_information_request(intent_json)
             case Intent.OTHER.value:
+                print("Could not provide any information related to the question.")
                 return None
             case _:
                 print("No valid intent was provided.")

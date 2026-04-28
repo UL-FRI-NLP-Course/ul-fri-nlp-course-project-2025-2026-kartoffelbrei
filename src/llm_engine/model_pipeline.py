@@ -2,6 +2,8 @@ import torch
 from src.backend.website_handler import RAG_Handler
 from src.llm_engine.model_manager import ModelManager
 from src.llm_engine.intent_router import IntentRouter
+from src.backend.api_requests import APIRequests
+from src.llm_engine.api_request_builder import APIRequestBuilder
 import os
 
 FAISS_PATH= "/d/hpc/projects/onj_fri/kartoffelbei/faiss/"
@@ -11,6 +13,8 @@ class AssistantPipeline:
         #load Models ( one for intent, one for answering, one embedded)
         self.model_manager = ModelManager()
         self.model_manager.load_all()
+        self.api_requests = APIRequests()
+        self.api_request_builder = APIRequestBuilder(self.api_requests)
         self.faiss_store = None
         self.rag_handler = RAG_Handler()
         #if not os.path.exists(FAISS_PATH):
@@ -35,17 +39,8 @@ class AssistantPipeline:
         if intents.get("needs_api"):
             print("Ask API for livedata")
             # TODO API request -> we just mock some results now
-            result = """Train data:
-
-                    Train IC 1
-                    Status: On time
-
-                    Train AE 30
-                    Status: Does not stop in Espoo, delayed 15 minutes
-
-                    Train IC 5
-                    Status: Delayed 5 minutes
-                    """
+            result = self.api_request_builder.send_api_request(intents)
+            print(result)
         else:
             print("static knowledge from website is enough")
             result = self.rag_handler.search_similiar(self.faiss_store, input, 5)

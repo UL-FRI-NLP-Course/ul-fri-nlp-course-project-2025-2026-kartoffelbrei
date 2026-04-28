@@ -4,10 +4,7 @@ from src.backend.api_requests import APIRequests
 
 
 if __name__ == "__main__":
-    print("Hallo")
-
     pipeline = AssistantPipeline()
-
-    pipeline.run("hello")
+    pipeline.run("Can I travel from Helsinki to Tampere today?")
 
 

@@ -22,7 +22,7 @@ class IntentRouter:
 
         Schema:
         {
-         "intent": "delay|arrival|departure|route|train_information|other",
+         "intent": "delay|arrival|departure|route|other",
          "train_number": string or null,
          "departure_station": string or null,
          "destination_station": string or null,
