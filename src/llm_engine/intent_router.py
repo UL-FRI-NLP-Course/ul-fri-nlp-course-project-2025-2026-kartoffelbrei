@@ -48,7 +48,7 @@ class IntentRouter:
 
         outputs = self.intent_model.generate(
             **inputs,
-            max_new_tokens=60,
+            max_new_tokens=200,
             temperature=0.0,
             do_sample=False,
             eos_token_id=self.intent_tokenizer.eos_token_id,
