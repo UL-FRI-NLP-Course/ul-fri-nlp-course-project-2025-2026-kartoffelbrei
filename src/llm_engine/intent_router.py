@@ -47,7 +47,7 @@ class IntentRouter:
         ).to(device)
 
         outputs = self.intent_model.generate(
-            inputs,
+            **inputs,
             max_new_tokens=60,
             temperature=0.0,
             do_sample=False,
