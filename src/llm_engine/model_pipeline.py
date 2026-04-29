@@ -32,7 +32,6 @@ class AssistantPipeline:
     def run(self, input: str):
         # get JSON with keywords
         intents = self.router.extract_intent(input)
-        print(f"Intents: {intents}")
 
         # decide which RAG method is necessary
         if intents.get("intent") != Intent.OTHER.value:
@@ -41,8 +40,6 @@ class AssistantPipeline:
         else:
             print("static knowledge from website is enough")
             result = self.rag_handler.search_similiar(self.faiss_store, input, 5)
-
-        print(f"Result: {result}")
 
         SYSTEM_PROMPT = """
         You are RailBot, a helpful assistant for Finnish railway travel.
@@ -93,6 +90,7 @@ class AssistantPipeline:
 
         response = self.model_manager.answer_tokenizer.decode(generated, skip_special_tokens=True)
 
+        print(f"Query: {input}")
         print(f"Answer: {response}")
 
         
