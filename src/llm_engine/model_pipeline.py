@@ -35,40 +35,65 @@ class AssistantPipeline:
         print(f"Intents: {intents}")
 
         # decide which RAG method is necessary
-        if intents.get("intent") is not Intent.OTHER.value:
+        if intents.get("intent") != Intent.OTHER.value:
             print("Ask API for livedata")
             result = self.api_request_builder.send_api_request(intents)
         else:
             print("static knowledge from website is enough")
             result = self.rag_handler.search_similiar(self.faiss_store, input, 5)
-        
-            
 
-        # construct the full prompt
-        ## general information for LLM how it should behave
-        system_prompt = ""
-        
-        full_prompt = f"""{system_prompt}
-            == context for your answer ==
-            {result}
-            == User query ==
-            {input}
-            == Your answer (just based on given context)==
-            """
-        print("Generating an answer...")
-        inputs = self.model_manager.answer_tokenizer(full_prompt, return_tensors="pt")
-        with torch.no_grad():
-            outputs = self.model_manager.answer_model.generate(
-                **inputs,
-                max_new_tokens=300,
-                temperature=0.3,
-                do_sample=True,
-                top_p=0.9,
-                repetition_penalty=1.1
-            )
-        response = self.model_manager.answer_tokenizer.decode(outputs[0], skip_special_tokens=True)
+        print(f"Result: {result}")
 
-        print(f"Die Antwort des Models: {response}")
+        SYSTEM_PROMPT = """
+        You are RailBot, a helpful assistant for Finnish railway travel.
+
+        Use ONLY the provided context data.
+        Never invent train times, delays, routes, or prices.
+
+        Rules:
+        - If context is incomplete, say so clearly.
+        - Keep answers concise (max 4 sentences unless asked for more).
+        - Stay within railway topics only.
+        - If no relevant data exists, say you cannot find the information.
+        """
+
+        USER_PROMPT = f"""
+        User question:
+        {input}
+
+        Retrieved context:
+        {result}
+
+        Generate the best possible answer for the user.
+        """
+
+        messages = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": USER_PROMPT}
+        ]
+
+        inputs = self.model_manager.answer_tokenizer.apply_chat_template(
+            messages,
+            tokenize=True,
+            add_generation_prompt=True,
+            return_tensors="pt"
+        ).to(self.model_manager.answer_model.device)
+
+        outputs = self.model_manager.answer_model.generate(
+            inputs,
+            max_new_tokens=180,
+            temperature=0.3,
+            do_sample=True,
+            eos_token_id=self.model_manager.answer_tokenizer.eos_token_id,
+            pad_token_id=self.model_manager.answer_tokenizer.eos_token_id
+        )
+
+        input_length = inputs.shape[1]
+        generated = outputs[0][input_length:]
+
+        response = self.model_manager.answer_tokenizer.decode(generated, skip_special_tokens=True)
+
+        print(f"Answer: {response}")
 
         
 

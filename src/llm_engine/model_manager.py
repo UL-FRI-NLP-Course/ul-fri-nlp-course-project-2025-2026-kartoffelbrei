@@ -53,25 +53,37 @@ class ModelManager:
         self.intent_model.config.use_cache = True
         print("Intent-model loaded")
 
-
     def load_answer_model(self):
-        print(f"Load answer-model: {Config.ANSWER_MODEL} in {Config.DEVICE_ANSWER}")
+        print(f"Load answer-model: {Config.ANSWER_MODEL}")
 
         local_path = self._download_model(Config.ANSWER_MODEL)
-        
+
         bnb_config = BitsAndBytesConfig(
-            load_in_4bit=Config.USE_4BIT,
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
             bnb_4bit_compute_dtype=torch.float16,
             bnb_4bit_use_double_quant=True
-        ) if Config.USE_4BIT else None
-        
-        self.answer_tokenizer = AutoTokenizer.from_pretrained(local_path)
+        )
+
+        self.answer_tokenizer = AutoTokenizer.from_pretrained(
+            local_path,
+            use_fast=True
+        )
+
+        if self.answer_tokenizer.pad_token is None:
+            self.answer_tokenizer.pad_token = self.answer_tokenizer.eos_token
+
+        self.answer_tokenizer.padding_side = "left"
+
         self.answer_model = AutoModelForCausalLM.from_pretrained(
             local_path,
             quantization_config=bnb_config,
-            device_map=Config.DEVICE_ANSWER,
-            torch_dtype=torch.float16
+            torch_dtype=torch.float16,
+            device_map="auto"
         )
+
+        self.answer_model.eval()
+        print("Answer model loaded")
         
     def load_embedding_model(self):
         print(f"Load embedding-model: {Config.EMBEDDING_MODEL}")
@@ -82,5 +94,5 @@ class ModelManager:
         
     def load_all(self):
         self.load_intent_model()
-        #self.load_answer_model()
+        self.load_answer_model()
         #self.load_embedding_model()
