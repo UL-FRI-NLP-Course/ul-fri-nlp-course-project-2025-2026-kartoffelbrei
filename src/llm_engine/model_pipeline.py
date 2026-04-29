@@ -78,7 +78,7 @@ class AssistantPipeline:
 
         outputs = self.model_manager.answer_model.generate(
             **inputs,
-            max_new_tokens=180,
+            max_new_tokens=500,
             temperature=0.3,
             do_sample=True,
             eos_token_id=self.model_manager.answer_tokenizer.eos_token_id,
