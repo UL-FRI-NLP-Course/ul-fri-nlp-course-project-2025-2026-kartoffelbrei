@@ -80,7 +80,7 @@ class AssistantPipeline:
         ).to(self.model_manager.answer_model.device)
 
         outputs = self.model_manager.answer_model.generate(
-            inputs,
+            **inputs,
             max_new_tokens=180,
             temperature=0.3,
             do_sample=True,
