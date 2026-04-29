@@ -88,7 +88,7 @@ class AssistantPipeline:
             pad_token_id=self.model_manager.answer_tokenizer.eos_token_id
         )
 
-        input_length = inputs.shape[1]
+        input_length = inputs["input_ids"].shape[1]
         generated = outputs[0][input_length:]
 
         response = self.model_manager.answer_tokenizer.decode(generated, skip_special_tokens=True)
