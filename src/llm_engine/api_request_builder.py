@@ -2,8 +2,7 @@ from typing import Any, Union
 
 from src.llm_engine.intents import Intent
 from src.backend.api_requests import APIRequests
-from src.backend.route_params import RouteParams
-from src.backend.format_response import format_train_type_response
+from src.backend.format_response import format_train_type_response, format_route_response
 from src.backend.metadata_handler import MetadataHandler
 
 class APIRequestBuilder:
@@ -17,16 +16,15 @@ class APIRequestBuilder:
             print("No intent provided by either the LLM or the user.")
             return None
 
-        response = ""
         match intent:
             case Intent.DELAY.value:
-                response = self._build_train_information_request(intent_json)
+                return self._build_train_information_request(intent_json)
             case Intent.ARRIVAL.value:
-                response = self._build_train_information_request(intent_json)
+                return self._build_train_information_request(intent_json)
             case Intent.DEPARTURE.value:
-                response = self._build_train_information_request(intent_json)
+                return self._build_train_information_request(intent_json)
             case Intent.ROUTE.value:
-                response = self._build_route_information_request(intent_json)
+                return self._build_route_information_request(intent_json)
             case Intent.OTHER.value:
                 print("Could not provide any information related to the question.")
                 return None
@@ -34,13 +32,12 @@ class APIRequestBuilder:
                 print("No valid intent was provided.")
                 return None
 
-        return format_train_type_response(response)
-
     def _build_train_information_request(self, intent_json: Any) -> str:
         departure_date = intent_json["departure_date"]
         train_number = intent_json["train_number"]
 
-        return self.api_requests.get_train_information(departure_date, train_number)
+        result = self.api_requests.get_train_information(departure_date, train_number)
+        return format_train_type_response(train_data=result)
 
     def _build_route_information_request(self, intent_json: Any) -> str:
         #departure_date = intent_json["departure_date"]
@@ -50,4 +47,9 @@ class APIRequestBuilder:
         destination_station = train_stations[intent_json["destination_station"]]
 
         #route_params: RouteParams = {'departure_date': departure_date}
-        return self.api_requests.get_route_information(departure_station, destination_station)
+        result = self.api_requests.get_route_information(departure_station, destination_station)
+        return format_route_response(
+            train_data=result,
+            departure_station=departure_station,
+            destination_station=destination_station
+        )
