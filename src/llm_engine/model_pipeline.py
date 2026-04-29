@@ -30,18 +30,14 @@ class AssistantPipeline:
         self.router = IntentRouter(self.model_manager)
 
     def run(self, input: str):
-        result = ""
         # get JSON with keywords
         intents = self.router.extract_intent(input)
-
-        print(f"intents: {intents}")
+        print(f"Intents: {intents}")
 
         # decide which RAG method is necessary
         if intents.get("intent") is not Intent.OTHER.value:
             print("Ask API for livedata")
-            # TODO API request -> we just mock some results now
             result = self.api_request_builder.send_api_request(intents)
-            print(result)
         else:
             print("static knowledge from website is enough")
             result = self.rag_handler.search_similiar(self.faiss_store, input, 5)

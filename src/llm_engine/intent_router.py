@@ -59,8 +59,6 @@ class IntentRouter:
 
         text = self.intent_tokenizer.decode(generated, skip_special_tokens=True)
 
-        print(f"RAW text: {text}")
-
         json_start = text.find("{")
         json_end = text.rfind("}") + 1
 
@@ -68,7 +66,5 @@ class IntentRouter:
             raise ValueError("No JSON found in output")
 
         json_str = text[json_start:json_end]
-
-        print(json_str)
 
         return json.loads(json_str)

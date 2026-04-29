@@ -34,8 +34,6 @@ class APIRequestBuilder:
                 print("No valid intent was provided.")
                 return None
 
-        print(f"Response: {response}")
-
         return format_train_type_response(response)
 
     def _build_train_information_request(self, intent_json: Any) -> str:
