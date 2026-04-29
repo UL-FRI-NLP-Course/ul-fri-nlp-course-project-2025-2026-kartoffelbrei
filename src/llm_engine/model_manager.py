@@ -1,3 +1,4 @@
+import os
 import torch
 from typing import Union, List
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
@@ -18,6 +19,7 @@ class ModelManager:
     def _download_model(repo_id: str) -> Union[str, List[DryRunFileInfo]]:
         return snapshot_download(
             repo_id=repo_id,
+            token=os.getenv("HF_TOKEN"),
             force_download=False,
             max_workers=1
         )
