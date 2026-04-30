@@ -21,6 +21,7 @@ class AnswerRouter(Router):
 
         outputs = self.answer_model.generate(
             **inputs,
+            max_new_tokens=1000,
             temperature=0.3,
             do_sample=True,
             eos_token_id=self.answer_tokenizer.eos_token_id,
