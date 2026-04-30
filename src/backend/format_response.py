@@ -25,9 +25,8 @@ def format_train_type_response(
             continue
         else:
             response_list.append(_basic_response_string(train))
-            response_list.append("\n")
 
-    return "".join(response_list)
+    return " ".join(response_list)
 
 def format_route_response(
         train_data,
@@ -42,7 +41,7 @@ def format_route_response(
                              f"{train["trainNumber"]}: "
                              f"{build_route_string(train["timeTableRows"], departure_station, destination_station)}")
 
-    return "\n".join(response_list)
+    return " ".join(response_list)
 
 def build_route_string(timetable, departure_station: str, destination_station: str) -> str:
     response_list = []
