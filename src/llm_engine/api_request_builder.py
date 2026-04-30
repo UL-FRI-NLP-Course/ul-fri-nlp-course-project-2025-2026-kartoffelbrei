@@ -36,7 +36,7 @@ class APIRequestBuilder:
         departure_date = intent_json["departure_date"]
         train_number = intent_json["train_number"]
 
-        result = self.api_requests.get_train_information(departure_date, train_number)
+        result = self.api_requests.get_train_information(train_number=train_number)
         return format_train_type_response(train_data=result)
 
     def _build_route_information_request(self, intent_json: Any) -> str:

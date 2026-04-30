@@ -36,6 +36,4 @@ Generate the best possible answer.
         {"role": "user", "content": user_prompt}
     ]
 
-    print(f"PromptType: {prompt_type.name}, \n Message: {messages}")
-
     return messages
