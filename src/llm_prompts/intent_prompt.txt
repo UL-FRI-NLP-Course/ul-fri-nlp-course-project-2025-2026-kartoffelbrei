@@ -3,7 +3,7 @@ Return ONLY valid JSON.
 
 Schema:
 {
- "intent": "delay|arrival|departure|route|other",
+ "intent": "route|other",
  "train_number": string or null,
  "departure_station": string or null,
  "destination_station": string or null,
