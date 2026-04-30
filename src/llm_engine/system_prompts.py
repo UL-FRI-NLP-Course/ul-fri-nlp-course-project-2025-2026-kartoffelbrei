@@ -20,14 +20,13 @@ def generate_prompt(prompt_type: PromptType, user_input: str, result: Optional[s
         case PromptType.ANSWER:
             system_prompt = load_prompt(os.path.join(path, "answer_prompt.txt"))
             user_prompt = f"""
-            User question:
-            {user_input}
+            User question: 
+{user_input}
 
-            Retrieved context:
-            {result}
+Retrieved context: {result}
 
-            Generate the best possible answer.
-            """
+Generate the best possible answer.
+"""
         case PromptType.INTENT:
             system_prompt = load_prompt(os.path.join(path, "intent_prompt.txt"))
             user_prompt = user_input
