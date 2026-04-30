@@ -1,60 +1,40 @@
-from dataclasses import dataclass
+import os
 
-@dataclass
-class PromptBuilder:
-    task: str
-    schema: str
-    rules: str
-    examples: str
+from typing import Optional
+from pathlib import Path
+from enum import Enum, auto
 
-    def build(self, user_input: str) -> str:
-        return f"""
-        ### TASK
-        {self.task}
+class PromptType(Enum):
+    ANSWER = auto()
+    INTENT = auto()
 
-        ### OUTPUT
-        Return ONLY valid JSON.
-        
-        ### SCHEMA
-        {self.schema}
-        
-        ### RULES
-        {self.rules}
-        
-        ### EXAMPLES
-        {self.examples}
-        
-        ### INPUT
-        User: {user_input}
-        Output:
-        """
+def load_prompt(path):
+    return Path(path).read_text()
 
-#todo: find right format for departure date
-intent_prompt_builder = PromptBuilder(
-    task="Extract structured data from a railway query.",
+def generate_prompt(prompt_type: PromptType, user_input: str, result: Optional[str] = None) ->  list[dict[str, str]]:
+    path = os.path.join("src", "llm_prompts")
 
-    schema="""
-    {
-    "intent": "train information | arrival | departure | route | other",
-    "train_number": string or null,
-    "departure_station": string or null,
-    "destination_station": string or null,
-    "departure_date": date or null,
-    
-    "needs_api": boolean
-    }
-    """,
+    system_prompt = ""
+    user_prompt = ""
+    match prompt_type:
+        case PromptType.ANSWER:
+            system_prompt = load_prompt(os.path.join(path, "answer_prompt.txt"))
+            user_prompt = f"""
+            User question:
+            {user_input}
 
-    rules="""
-    - Do not explain
-    - Do not output anything except JSON
-    - Use null if unknown
-    - needs_api = true for real-time queries
-    """,
+            Retrieved context:
+            {result}
 
-    examples="""
-    User: Is IC 46 delayed today?
-    Output:
-    {"intent":"train information","train_type":"IC","train_number":"46","departure_station":null,"destination_station":null,"needs_api":true}
-    """
-)
+            Generate the best possible answer.
+            """
+        case PromptType.INTENT:
+            system_prompt = load_prompt(os.path.join(path, "intent_prompt.txt"))
+            user_prompt = user_input
+
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt}
+    ]
+
+    return messages

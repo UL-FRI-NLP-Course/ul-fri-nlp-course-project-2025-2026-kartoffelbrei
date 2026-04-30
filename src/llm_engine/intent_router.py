@@ -1,45 +1,23 @@
 import json
-from typing import Any
+from typing import Optional, Any
 
-from src.llm_engine.system_prompts import intent_prompt_builder
+from src.llm_engine.router_i import Router
+from src.llm_engine.system_prompts import generate_prompt, PromptType
 from src.llm_engine.model_manager import ModelManager
 
 
-class IntentRouter:
+class IntentRouter(Router):
     def __init__(self, model_manager: ModelManager):
         self.intent_model = model_manager.intent_model
         self.intent_tokenizer = model_manager.intent_tokenizer
 
-    def extract_intent(self, user_input: str) -> Any:
-        #prompt = intent_prompt_builder.build(user_input)
-
-        prompt = [
-            {
-                "role": "system",
-                "content": """
-        You are a railway intent extractor.
-        Return ONLY valid JSON.
-
-        Schema:
-        {
-         "intent": "delay|arrival|departure|route|other",
-         "train_number": string or null,
-         "departure_station": string or null,
-         "destination_station": string or null,
-         "departure_date": string or null,
-        }
-        """
-            },
-            {
-                "role": "user",
-                "content": user_input
-            }
-        ]
+    def extract_answer(self, user_input: str, result: Optional[str] = None) -> Any:
+        messages = generate_prompt(prompt_type=PromptType.INTENT, user_input=user_input)
 
         device = self.intent_model.device
 
         inputs = self.intent_tokenizer.apply_chat_template(
-            prompt,
+            messages,
             tokenize=True,
             add_generation_prompt=True,
             return_tensors="pt"
