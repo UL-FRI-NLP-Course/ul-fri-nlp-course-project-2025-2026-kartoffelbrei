@@ -37,4 +37,6 @@ def generate_prompt(prompt_type: PromptType, user_input: str, result: Optional[s
         {"role": "user", "content": user_prompt}
     ]
 
+    print(f"PromptType: {prompt_type.name}, \n Message: {messages}")
+
     return messages
