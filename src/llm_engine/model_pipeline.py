@@ -1,5 +1,5 @@
 import torch
-from src.backend.website_handler import RAG_Handler
+#from src.backend.website_handler import RAG_Handler
 from src.llm_engine.model_manager import ModelManager
 from src.llm_engine.router_i import Router
 from src.llm_engine.intent_router import IntentRouter
@@ -17,7 +17,7 @@ class AssistantPipeline:
         self.api_requests = APIRequests()
         self.api_request_builder = APIRequestBuilder(self.api_requests)
         self.faiss_store = None
-        self.rag_handler = RAG_Handler()
+        #self.rag_handler = RAG_Handler()
         #if not os.path.exists(FAISS_PATH):
         #    texts = self.rag_handler.create_database()
         #    chunks = self.rag_handler.text_preparation(texts)
