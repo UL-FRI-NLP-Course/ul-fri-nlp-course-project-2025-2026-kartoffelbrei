@@ -33,8 +33,6 @@ class AssistantPipeline:
         # get JSON with keywords
         intents = self.intent_router.extract_answer(user_input=input)
 
-        print(f"Intents: {intents}")
-
         # decide which RAG method is necessary
         if intents.get("intent") != Intent.OTHER.value:
             print("Ask API for livedata")
