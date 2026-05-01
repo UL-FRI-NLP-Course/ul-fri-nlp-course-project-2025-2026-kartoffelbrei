@@ -81,7 +81,12 @@
 	
 	% In the Introduction section you should write about the relevance of your work (what is the purpose of the project, what will we solve) and about related work (what solutions for the problem already exist). Where appropriate, reference scientific work conducted by other researchers. For example, the work done by Demšar et al. \cite{Demsar2016BalancedMixture} is very important for our project. The abbreviation et al. is for et alia, which in latin means and others, we use this abbreviation when there are more than two authors of the work we are citing. If there are two authors (or if there is a single author) we just write down their surnames. For example, the work done by Demšar and Lebar Bajec \cite{Demsar2017LinguisticEvolution} is also important for successful completion of our project.
 
-
+Motivation: 
+\begin{itemize}
+    \item increasing demand for efficient and personalized customer support \cite{Banu.2025}
+    \item Traditional methods of obtaining information:  waiting in long queues or navigating complex websites, can be time-consuming and inconvenient. 
+    \item offering 24/7 availability, quick response times, and the ability to handle multiple queries simultaneously~\cite{Banu.2025}
+\end{itemize}
     
 Features:
 \begin{itemize}  
@@ -104,17 +109,97 @@ Potential datasets:
 \begin{itemize}
     \item Sharma et al. \cite{sharma_retrieval_2024}
     \item Xu et al. \cite{xu_genai-powered_2024}
-    \item Rafee et al. \cite{noauthor_bus_nodate}
+    \item Rafee et al. \cite{noauthor_bus_nodate}: bus enquiry chatbot equipped with voice support and emergency assistance / Features: obtain real-time information related to bus services, including arrival times, route details, and fare estimates / Design: Voice and Text Input Acquisition + NLP Processing and Intent Recognition + Emergency Assistance Information Module + Transport Data Integration+ Voice Response Generation
     \item Dharani et al. \cite{dharani_interactive_2020}
     \item Fantin et al. \cite{fantin_design_2025}
-    \item Banu et al. 
-    \cite{Banu.2025}
-    \item Prathamesh et al. 
-    \cite{Prathamesh.2022}
+    \item Banu et al. \cite{Banu.2025} : Railway Enquiry Chatbot / Features: ticket availability checks, train schedule inquiries, platform details, and fare estimations / Dataset: train schedules, station details, ticket prices, PNR statuses, live updates on train delays --> from public APIs or third-party services, dataset of user queries/ Design: Data Collection Module + Data Processing Module + NLP Module + Database Management + Artificial Neural Network Module + Response Generation 
     \item BetterBahn by Lukas Weihrauch (\url{https://github.com/BetterBahn/betterbahn?tab=readme-ov-file})
     \item Wang et al. \cite{wang_traffic_2024}
 \end{itemize}
 %------------------------------------------------
+%
+%- Jeder erstellt 10 Anwendungsfälle -> relation dataset for testing
+%- mal chatGPT / Gemini ausprobieren zum vergleichen -> how do they perform 
+%- multi query damit man mehrere Fragen nacheinander stellen kann 
+
+%Submission 2: 
+%- basic implementation 
+
+
+\section*{Testing}
+
+Tests with AI-Tool: 
+
+Query: "Hello, i want to go from Helsinki to Turku on Monday 4.5. in the morning. Which trains can I take?"
+
+\textbf{ChatGPT:} 
+Answer: Morning trains (approximate departures)
+~05:25–05:30 → arrival ~07:30
+~06:50–07:00 → arrival ~08:30–08:40
+~08:30–08:40 → arrival ~10:35–10:40
+~10:30–10:40 → arrival ~12:35–12:40
+
+→ nearly all trains correct, but second one doesn't exist 
+→ also a concrete service: InterCity train IC 41
+departs 06:53 from Helsinki
+arrives 08:34 in Turku
+→ this is not a train from the official website 
+
+\textbf{Gemini:}
+Gives correct timetable, but one train in between is missing
+
+
+Follow up question: "I want to take the one at 08:30, can you tell me where exactly it stops and how much is a ticket?"
+\textbf{ChatGPT:} 
+→ ChatGPT gives correct departure \& arrival times and also the correct stops in between 
+You also get a information about the ticket price from two different sources, but just a span and not the exact prices
+
+\textbf{Gemini:}
+→ correct departure \& arrival times and correct stops
+→ price range and also states additional fees for different classes or bicycle 
+
+
+Follow up question: "When i want to bring a bicycle, do I have to pay extra?" 
+→ ChatGPT states correct information about regulations of taking a bicycle \& Gemini already gave this information in the answer before
+
+
+→ ChatGPT \& Gemini can answer question regarding train connections, prices and regulations pretty precisely because it uses Online-Search
+
+
+
+
+
+
+
+
+Usage Scenarios:
+\begin{itemize}
+    \item I want to take a train from Helsinki to Tampere tomorrow around 8 am. What are my options?
+    \item Is my train IC 93 from 8:00 to 9:53 today on schedule?
+    \item How do I get from Tampere to Rovaniemi? (very long, indirect route)
+    \item I want to take train IC 93 tomorrow from 8:00 to 9:53. How much is the ticket?
+    \item I want to take a train from Helsinki to Tampere tomorrow at a flexible time. What's my cheapest option? 
+    \item Which cities can I reach from Kuopio without switching trains?
+    \item Which services does my train IC 93 at 8am today from Helsinki provide?
+    \item Was my train on schedule two months ago?
+    \item What trains are arriving to Oulo in the next hour?
+\end{itemize}
+
+\section*{Future directions \& ideas}
+By now the following was implemented:
+\begin{itemize}
+    \item complete Pipeline: Query → intent extraction → RAG / API → build prompt → LLM answer generator 
+    \item API Request handler that can get all informations about train schedules and delays (works)
+    \item RAG handler that scrapes websites with embedding and a faiss index (doesn't work yet on arnes) 
+\end{itemize}
+
+What we will work on: 
+\begin{itemize}
+    \item integrate RAG into pipeline and test it on the cluster
+    \item try different models and compare results
+    \item try different prompt mechanism (more friendly, more fact-based)
+    
+\end{itemize}
 
 %----------------------------------------------------------------------------------------
 %	REFERENCE LIST
@@ -124,3 +209,4 @@ Potential datasets:
 
 
 \end{document}
+
