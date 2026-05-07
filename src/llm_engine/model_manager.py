@@ -2,8 +2,8 @@ import os
 import torch
 from typing import Union, List
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-from sentence_transformers import SentenceTransformer
 from huggingface_hub import snapshot_download, DryRunFileInfo
+from langchain_huggingface import HuggingFaceEmbeddings
 
 from .config_llm import ConfigLLM as Config
 
@@ -90,9 +90,15 @@ class ModelManager:
     def load_embedding_model(self):
         print(f"Load embedding-model: {Config.EMBEDDING_MODEL}")
 
-        local_path = self._download_model(Config.EMBEDDING_MODEL)
+        self.embedding_model = HuggingFaceEmbeddings(
+            model_name = Config.EMBEDDING_MODEL,
+            model_kwargs={"device": "cuda" if torch.cuda.is_available() else "cpu"},
+            encode_kwargs={"normalize_embeddings": True},  # L2-normalise → cosine similarity = dot product
+            )
 
-        self.embedding_model = SentenceTransformer(local_path)
+        # local_path = self._download_model(Config.EMBEDDING_MODEL)
+
+        # self.embedding_model = SentenceTransformer(local_path)
         
     def load_all(self):
         self.load_intent_model()
