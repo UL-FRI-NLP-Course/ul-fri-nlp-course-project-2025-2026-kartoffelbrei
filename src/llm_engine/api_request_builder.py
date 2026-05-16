@@ -1,9 +1,9 @@
 from typing import Any, Union
 
-from src.llm_engine.intents import Intent
-from src.backend.api_requests import APIRequests
-from src.backend.format_response import format_train_type_response, format_route_response
-from src.backend.metadata_handler import MetadataHandler
+from llm_engine.intents import Intent
+from backend.api_requests import APIRequests
+from backend.format_response import format_train_type_response, format_route_response
+from backend.metadata_handler import MetadataHandler
 
 class APIRequestBuilder:
     def __init__(self, api_requests: APIRequests):

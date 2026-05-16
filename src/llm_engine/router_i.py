@@ -1,7 +1,7 @@
 from typing import Optional, Any
 from abc import ABC, abstractmethod
 
-from src.llm_engine.model_manager import ModelManager
+from llm_engine.model_manager import ModelManager
 
 class Router(ABC):
     @abstractmethod

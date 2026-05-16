@@ -1,12 +1,14 @@
 import torch
-#from src.backend.website_handler import RAG_Handler
-from src.llm_engine.model_manager import ModelManager
-from src.llm_engine.router_i import Router
-from src.llm_engine.intent_router import IntentRouter
-from src.llm_engine.answer_router import AnswerRouter
-from src.backend.api_requests import APIRequests
-from src.llm_engine.api_request_builder import APIRequestBuilder
-from src.llm_engine.intents import Intent
+from backend.website_handler import RAG_Handler
+from llm_engine.model_manager import ModelManager
+from llm_engine.router_i import Router
+from llm_engine.intent_router import IntentRouter
+from llm_engine.answer_router import AnswerRouter
+from backend.api_requests import APIRequests
+from llm_engine.api_request_builder import APIRequestBuilder
+from llm_engine.intents import Intent
+import os
+
 
 FAISS_PATH= "/d/hpc/projects/onj_fri/kartoffelbei/faiss/"
 
@@ -17,14 +19,14 @@ class AssistantPipeline:
         self.api_requests = APIRequests()
         self.api_request_builder = APIRequestBuilder(self.api_requests)
         self.faiss_store = None
-        #self.rag_handler = RAG_Handler()
-        #if not os.path.exists(FAISS_PATH):
-        #    texts = self.rag_handler.create_database()
-        #    chunks = self.rag_handler.text_preparation(texts)
-        #    self.faiss_store = self.rag_handler.vectorize_and_store(chunks, self.model_manager.embedding_model)
-        #    self.rag_handler.save_faiss_local(self.faiss_store,FAISS_PATH)
-        #else:
-        #    self.faiss_store = self.rag_handler.load_faiss_local
+        self.rag_handler = RAG_Handler()
+        if not os.path.exists(FAISS_PATH):
+            texts = self.rag_handler.create_database()
+            chunks = self.rag_handler.text_preparation(texts)
+            self.faiss_store = self.rag_handler.vectorize_and_store(chunks, self.model_manager.embedding_model)
+            self.rag_handler.save_faiss_local(self.faiss_store,FAISS_PATH)
+        else:
+           self.faiss_store = self.rag_handler.load_faiss_local(self.model_manager.embedding_model, FAISS_PATH)
 
         self.intent_router: Router = IntentRouter(self.model_manager)
         self.answer_router: Router = AnswerRouter(self.model_manager)

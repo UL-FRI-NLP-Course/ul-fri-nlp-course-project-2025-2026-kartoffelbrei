@@ -1,9 +1,9 @@
 import json
 from typing import Optional, Any
 
-from src.llm_engine.router_i import Router
-from src.llm_engine.system_prompts import generate_prompt, PromptType
-from src.llm_engine.model_manager import ModelManager
+from llm_engine.router_i import Router
+from llm_engine.system_prompts import generate_prompt, PromptType
+from llm_engine.model_manager import ModelManager
 
 
 class IntentRouter(Router):

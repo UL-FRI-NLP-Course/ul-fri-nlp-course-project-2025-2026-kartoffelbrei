@@ -4,8 +4,9 @@ from typing import Union, List
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from huggingface_hub import snapshot_download, DryRunFileInfo
 from langchain_huggingface import HuggingFaceEmbeddings
+from llm_engine.config_llm import ConfigLLM as Config
 
-from .config_llm import ConfigLLM as Config
+
 
 class ModelManager:
     def __init__(self):
@@ -21,12 +22,14 @@ class ModelManager:
             repo_id=repo_id,
             token=os.getenv("HF_TOKEN"),
             force_download=False,
-            max_workers=1
+            max_workers=1,
+            cache_dir=Config.MODEL_CACHE_DIR
         )
         
     def load_intent_model(self):
         print(f"Load intent-model: {Config.INTENT_MODEL}")
 
+        #für lokakle Test quantisierung abschalten
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_quant_type="nf4",
@@ -36,7 +39,10 @@ class ModelManager:
 
         local_path = self._download_model(Config.INTENT_MODEL)
         
-        self.intent_tokenizer = AutoTokenizer.from_pretrained(local_path, trust_remote_code=True)
+        self.intent_tokenizer = AutoTokenizer.from_pretrained(
+            local_path, 
+            trust_remote_code=True, 
+            cache_dir=Config.MODEL_CACHE_DIR)
 
         if self.intent_tokenizer.pad_token is None:
             self.intent_tokenizer.pad_token = self.intent_tokenizer.eos_token
@@ -47,8 +53,9 @@ class ModelManager:
             local_path,
             quantization_config=bnb_config,
             device_map="auto",
-            dtype=torch.float16,
+            dtype=torch.float32,
             trust_remote_code=True,
+            cache_dir=Config.MODEL_CACHE_DIR
         )
 
         self.intent_model.eval()
@@ -69,7 +76,8 @@ class ModelManager:
 
         self.answer_tokenizer = AutoTokenizer.from_pretrained(
             local_path,
-            use_fast=True
+            use_fast=True,
+            cache_dir=Config.MODEL_CACHE_DIR
         )
 
         if self.answer_tokenizer.pad_token is None:
@@ -80,8 +88,9 @@ class ModelManager:
         self.answer_model = AutoModelForCausalLM.from_pretrained(
             local_path,
             quantization_config=bnb_config,
-            torch_dtype=torch.float16,
-            device_map="auto"
+            dtype=torch.float16,
+            device_map="auto",
+            cache_dir=Config.MODEL_CACHE_DIR
         )
 
         self.answer_model.eval()
@@ -89,18 +98,19 @@ class ModelManager:
         
     def load_embedding_model(self):
         print(f"Load embedding-model: {Config.EMBEDDING_MODEL}")
-
+        
+        #local_path = self._download_model(Config.EMBEDDING_MODEL)
         self.embedding_model = HuggingFaceEmbeddings(
-            model_name = Config.EMBEDDING_MODEL,
+            model_name= Config.EMBEDDING_MODEL,
+            cache_folder = Config.MODEL_CACHE_DIR,
             model_kwargs={"device": "cuda" if torch.cuda.is_available() else "cpu"},
             encode_kwargs={"normalize_embeddings": True},  # L2-normalise → cosine similarity = dot product
             )
-
-        # local_path = self._download_model(Config.EMBEDDING_MODEL)
-
-        # self.embedding_model = SentenceTransformer(local_path)
+    
+        print(f"type:{type(self.embedding_model)}")
+    
         
     def load_all(self):
         self.load_intent_model()
         self.load_answer_model()
-        #self.load_embedding_model()
+        self.load_embedding_model()

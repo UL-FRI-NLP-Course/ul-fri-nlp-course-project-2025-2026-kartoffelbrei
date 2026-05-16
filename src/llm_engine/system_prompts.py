@@ -12,23 +12,26 @@ def load_prompt(path):
     return Path(path).read_text()
 
 def generate_prompt(prompt_type: PromptType, user_input: str, result: Optional[str] = None) ->  list[dict[str, str]]:
-    path = os.path.join("src", "llm_prompts")
+    BASE_DIR = Path(__file__).resolve().parent.parent 
+    print(BASE_DIR) # Datei, in der dieser Code steht
+    path = BASE_DIR / "llm_prompts"
+    
 
     system_prompt = ""
     user_prompt = ""
     match prompt_type:
         case PromptType.ANSWER:
-            system_prompt = load_prompt(os.path.join(path, "answer_prompt.txt"))
+            system_prompt = load_prompt(path / "answer_prompt.txt")
             user_prompt = f"""
             User question: 
-{user_input}
+                {user_input}
 
-Retrieved context: {result}
+            Retrieved context: {result}
 
-Generate the best possible answer.
-"""
+            Generate the best possible answer.
+            """
         case PromptType.INTENT:
-            system_prompt = load_prompt(os.path.join(path, "intent_prompt.txt"))
+            system_prompt = load_prompt(path / "intent_prompt.txt")
             user_prompt = user_input
 
     messages = [
