@@ -1,91 +1,148 @@
-from typing import List, Optional
+import json
+
+from typing import List, Optional, Any
 from datetime import datetime
 
 from backend.metadata_handler import MetadataHandler
 
-def _basic_response_string(train) -> str:
-    response_list = []
-    response_list.append(f"Train: {train['trainType']} {train['trainNumber']}\n")
-    response_list.append(f"Train category: {train['trainCategory']}\n")
-    response_list.append(f"Departure date: {train['departureDate']}\n")
-    response_list.append(f"Is cancelled: {train['cancelled']}\n")
-    return "".join(response_list)
+class ResponseFormatter:
 
-def format_train_type_response(
-        train_data,
-        only_running_trains: bool = False,
-        train_category: Optional[List[str]] = None,
-):
-    response_list = []
+    @staticmethod
+    def _basic_response_string(train) -> str:
+        response_list = []
+        response_list.append(f"Train: {train['trainType']} {train['trainNumber']}\n")
+        response_list.append(f"Train category: {train['trainCategory']}\n")
+        response_list.append(f"Departure date: {train['departureDate']}\n")
+        response_list.append(f"Is cancelled: {train['cancelled']}\n")
+        return "".join(response_list)
 
-    for train in train_data:
-        if only_running_trains and not train["runningCurrently"]:
-            continue
-        elif train_category is not None and train["trainCategory"] not in train_category:
-            continue
-        else:
-            response_list.append(_basic_response_string(train))
+    @staticmethod
+    def format_train_status_response(
+            train_data,
+            only_running_trains: bool = False,
+            train_category: Optional[List[str]] = None,
+    ):
+        response_list = []
 
-    return " ".join(response_list)
+        for train in train_data:
+            if only_running_trains and not train["runningCurrently"]:
+                continue
+            elif train_category is not None and train["trainCategory"] not in train_category:
+                continue
+            else:
+                response_list.append(ResponseFormatter._basic_response_string(train))
 
-def format_route_response(
-        train_data,
-        departure_station: str,
-        destination_station: str,
-) -> str:
-    response_list = []
+        return " ".join(response_list)
 
-    for train in train_data:
-        response_list.append(f""
-                             f"{train['trainType']} "
-                             f"{train['trainNumber']}: "
-                             f"{build_route_string(train['timeTableRows'], departure_station, destination_station)}")
+    @staticmethod
+    def _get_departure_and_arrival_time(timetable, departure_station: str, destination_station: str) -> List[Any]:
+        response_list = []
+        rows = sorted(timetable, key=lambda x: x['scheduledTime'])
 
-    return " ".join(response_list)
+        seen = set()
+        for r in rows:
+            station = r.get("stationShortCode")
+            time = r.get("scheduledTime")
+            #time = datetime.fromisoformat(time.replace("Z", "+00:00"))
 
-def build_route_string(timetable, departure_station: str, destination_station: str) -> str:
-    response_list = []
-    rows = sorted(timetable, key=lambda x: x['scheduledTime'])
+            if not station or station in seen:
+                continue
 
-    seen = set()
-    for r in rows:
-        station = r.get("stationShortCode")
-        time = r.get("scheduledTime")
-        time = datetime.fromisoformat(time.replace("Z", "+00:00")).strftime("%H:%M")
+            if str(station) == departure_station:
+                response_list.append(time)
+            elif str(station) == destination_station:
+                response_list.append(time)
+                break
 
-        if not station or station in seen:
-            continue
+        return response_list
 
-        if str(station) == departure_station:
-            response_list.append(time)
-        elif str(station) == destination_station:
-            response_list.append(time)
-            break
+    @staticmethod
+    def _get_shortest_connections(response_list: List[Any]) -> List[Any]:
+        sorted_list = sorted(response_list, key=lambda x: x["duration"])
+        return sorted_list[:5]
 
-    return " → ".join(response_list)
-
-def build_timetable_string(timetable):
-    rows = sorted(timetable, key=lambda x: x['scheduledTime'])
-
-    seen = set()
-    route = []
-    for r in rows:
-        station = r.get("stationShortCode")
-
-        if not station or station in seen:
-            continue
-
-        time = r.get("scheduledTime")
-
-        seen.add(station)
-
-        t = datetime.fromisoformat(time.replace("Z", "+00:00")).strftime("%H:%M")
-
+    @staticmethod
+    def _turn_connections_into_json_string(
+            departure_station: str,
+            destination_station: str,
+            response_list: List[Any]
+    ) -> str:
         station_dict = MetadataHandler.load_station_dict()
+        data = {
+            "departure_station": station_dict[departure_station],
+            "destination_station": station_dict[destination_station],
+            "top_five_connections": []
+        }
 
-        route.append(f"{station_dict.get(station)} {t}")
+        for connection in response_list:
+            data["top_five_connections"].append(
+                {
+                    "train": connection["train_type"] + " " + connection["train_number"],
+                    "departure": connection["departure"],
+                    "arrival": connection["arrival"],
+                    "duration_minutes": connection["duration"]
+                }
+            )
 
-    route = " → ".join(route)
-    route = "Route: " + route
+        json_string = json.dumps(data, ensure_ascii=False, indent=2)
+        return json_string
 
-    return route
+    @staticmethod
+    def format_journey_response(
+            train_data,
+            departure_station: str,
+            destination_station: str,
+    ) -> str:
+        response_list = []
+
+        for train in train_data:
+            times = ResponseFormatter._get_departure_and_arrival_time(train['timeTableRows'], departure_station, destination_station)
+
+            departure_time = datetime.fromisoformat(times[0].replace("Z", "+00:00"))
+            arrival_time = datetime.fromisoformat(times[1].replace("Z", "+00:00"))
+            difference = arrival_time - departure_time
+
+            response_list.append(
+                {
+                    "train_type": f"{train['trainType']}",
+                    "train_number": f"{train['trainNumber']}",
+                    "departure": str(times[0]),
+                    "arrival": str(times[1]),
+                    "duration": float(difference.total_seconds() / 60)
+                }
+            )
+
+        response_list = ResponseFormatter._get_shortest_connections(response_list)
+
+        return ResponseFormatter._turn_connections_into_json_string(
+            departure_station,
+            destination_station,
+            response_list
+        )
+
+    @staticmethod
+    def _build_timetable_string(timetable):
+        rows = sorted(timetable, key=lambda x: x['scheduledTime'])
+
+        seen = set()
+        route = []
+        for r in rows:
+            station = r.get("stationShortCode")
+
+            if not station or station in seen:
+                continue
+
+            time = r.get("scheduledTime")
+
+            seen.add(station)
+
+            t = datetime.fromisoformat(time.replace("Z", "+00:00")).strftime("%H:%M")
+
+            station_dict = MetadataHandler.load_station_dict()
+
+            route.append(f"{station_dict.get(station)} {t}")
+
+        route = " → ".join(route)
+        route = "Route: " + route
+
+        return route

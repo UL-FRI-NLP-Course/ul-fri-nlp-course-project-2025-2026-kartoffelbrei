@@ -2,7 +2,7 @@ from typing import Any, Union
 
 from llm_engine.intents import Intent
 from backend.api_requests import APIRequests
-from backend.format_response import format_train_type_response, format_route_response
+from backend.format_response import ResponseFormatter
 from backend.metadata_handler import MetadataHandler
 
 class APIRequestBuilder:
@@ -17,15 +17,15 @@ class APIRequestBuilder:
             return None
 
         match intent:
-            case Intent.DELAY.value:
+            case Intent.JOURNEY.value:
                 return self._build_train_information_request(intent_json)
-            case Intent.ARRIVAL.value:
+            case Intent.TRAIN_STATUS.value:
                 return self._build_train_information_request(intent_json)
-            case Intent.DEPARTURE.value:
+            case Intent.TRAIN_TIMETABLE.value:
                 return self._build_train_information_request(intent_json)
-            case Intent.ROUTE.value:
+            case Intent.STATION_TIMETABLE.value:
                 return self._build_route_information_request(intent_json)
-            case Intent.OTHER.value:
+            case Intent.OUT_OF_SCOPE.value:
                 print("Could not provide any information related to the question.")
                 return None
             case _:
@@ -37,7 +37,7 @@ class APIRequestBuilder:
         train_number = intent_json["train_number"]
 
         result = self.api_requests.get_train_information(train_number=train_number)
-        return format_train_type_response(train_data=result)
+        return ResponseFormatter.format_train_status_response(train_data=result)
 
     def _build_route_information_request(self, intent_json: Any) -> str:
         #departure_date = intent_json["departure_date"]
@@ -48,7 +48,7 @@ class APIRequestBuilder:
 
         #route_params: RouteParams = {'departure_date': departure_date}
         result = self.api_requests.get_route_information(departure_station, destination_station)
-        return format_route_response(
+        return ResponseFormatter.format_journey_response(
             train_data=result,
             departure_station=departure_station,
             destination_station=destination_station
