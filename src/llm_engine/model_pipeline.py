@@ -10,7 +10,7 @@ from llm_engine.intents import Intent
 import os
 
 
-FAISS_PATH= "/d/hpc/projects/onj_fri/kartoffelbei/faiss/"
+FAISS_PATH= "/d/hpc/projects/onj_fri/kartoffelbrei/faiss/"
 
 class AssistantPipeline:
     def __init__(self):
@@ -21,6 +21,7 @@ class AssistantPipeline:
         self.faiss_store = None
         self.rag_handler = RAG_Handler()
         if not os.path.exists(FAISS_PATH):
+            print("Create FAISS index")
             texts = self.rag_handler.create_database()
             chunks = self.rag_handler.text_preparation(texts)
             self.faiss_store = self.rag_handler.vectorize_and_store(chunks, self.model_manager.embedding_model)
@@ -32,9 +33,9 @@ class AssistantPipeline:
         self.answer_router: Router = AnswerRouter(self.model_manager)
 
     def run(self, input: str):
+        print(f"Query: {input}")
         # get JSON with keywords
         intents = self.intent_router.extract_answer(user_input=input)
-
         # decide which RAG method is necessary
         if intents.get("intent") != Intent.OTHER.value:
             print("Ask API for livedata")
@@ -42,8 +43,8 @@ class AssistantPipeline:
         else:
             print("static knowledge from website is enough")
             result = self.rag_handler.search_similiar(self.faiss_store, input, 5)
-
+        print(f"Ergebnis von API oder RAG: {result}")
         response = self.answer_router.extract_answer(user_input=input, result=result)
 
-        print(f"Query: {input}")
+        
         print(f"Answer: {response}")

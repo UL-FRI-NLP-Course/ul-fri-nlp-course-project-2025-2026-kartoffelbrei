@@ -63,9 +63,9 @@ class ModelManager:
         print("Intent-model loaded")
 
     def load_answer_model(self):
-        print(f"Load answer-model: {Config.INTENT_MODEL}")
+        print(f"Load answer-model: {Config.ANSWER_MODEL}")
 
-        local_path = self._download_model(Config.INTENT_MODEL)
+        local_path = self._download_model(Config.ANSWER_MODEL)
 
         bnb_config = BitsAndBytesConfig(
             load_in_4bit=True,

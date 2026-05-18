@@ -36,7 +36,7 @@ class IntentRouter(Router):
         generated = outputs[0][input_length:]
 
         text = self.intent_tokenizer.decode(generated, skip_special_tokens=True)
-
+        print(f"json output von intent-router: {text}")
         json_start = text.find("{")
         json_end = text.rfind("}") + 1
 
