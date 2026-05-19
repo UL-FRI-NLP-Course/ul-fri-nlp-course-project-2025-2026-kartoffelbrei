@@ -40,7 +40,7 @@ class APIRequests:
 
         return self._return_response(requests.get(url))
 
-    def get_train_information(
+    def get_train_status(
             self,
             train_number: int,
             departure_date: Optional[str] = None,

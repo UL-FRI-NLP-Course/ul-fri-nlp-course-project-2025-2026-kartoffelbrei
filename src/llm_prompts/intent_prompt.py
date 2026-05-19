@@ -36,12 +36,6 @@ IF:
 - AND user asks delay / location / status
 THEN choose train_status
 
-4) train_timetable
-IF:
-- AND ONLY IF train_number is present
-- AND user asks stops / route / schedule
-THEN choose train_timetable
-
 ------------------------------------------------------------
 HARD CONSTRAINTS
 
@@ -58,7 +52,6 @@ If multiple intents match:
 1. journey_search
 2. station_timetable
 3. train_status
-4. train_timetable
 
 ------------------------------------------------------------
 ENTITY RULES
