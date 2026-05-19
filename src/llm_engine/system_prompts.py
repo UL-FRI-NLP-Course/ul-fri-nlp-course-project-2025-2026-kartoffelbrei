@@ -4,6 +4,8 @@ from typing import Optional
 from pathlib import Path
 from enum import Enum, auto
 
+from llm_prompts.intent_prompt import intent_prompt
+
 class PromptType(Enum):
     ANSWER = auto()
     INTENT = auto()
@@ -31,7 +33,7 @@ def generate_prompt(prompt_type: PromptType, user_input: str, result: Optional[s
             Generate the best possible answer.
             """
         case PromptType.INTENT:
-            system_prompt = load_prompt(path / "intent_prompt.txt")
+            system_prompt = intent_prompt #load_prompt(path / "intent_prompt.txt")
             user_prompt = user_input
 
     messages = [
