@@ -20,11 +20,11 @@ class APIRequestBuilder:
 
         match intent:
             case Intent.JOURNEY.value:
-                return self._build_train_information_request(intent_json)
+                return self._build_route_information_request(intent_json)
             case Intent.TRAIN_STATUS.value:
                 return self._build_train_information_request(intent_json)
             case Intent.TRAIN_TIMETABLE.value:
-                return self._build_train_information_request(intent_json)
+                return self._build_route_information_request(intent_json)
             case Intent.STATION_TIMETABLE.value:
                 return self._build_route_information_request(intent_json)
             case Intent.OUT_OF_SCOPE.value:

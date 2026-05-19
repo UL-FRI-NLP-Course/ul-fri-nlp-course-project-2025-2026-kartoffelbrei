@@ -14,6 +14,9 @@ class ResponseFormatter:
         response_list.append(f"Train category: {train['trainCategory']}\n")
         response_list.append(f"Departure date: {train['departureDate']}\n")
         response_list.append(f"Is cancelled: {train['cancelled']}\n")
+        # currently at station
+        # delayed by
+        # from station to station
         return "".join(response_list)
 
     @staticmethod
