@@ -43,7 +43,6 @@ class ResponseFormatter:
         for r in rows:
             station = r.get("stationShortCode")
             time = r.get("scheduledTime")
-            #time = datetime.fromisoformat(time.replace("Z", "+00:00"))
 
             if not station or station in seen:
                 continue
@@ -57,8 +56,14 @@ class ResponseFormatter:
         return response_list
 
     @staticmethod
-    def _get_shortest_connections(response_list: List[Any]) -> List[Any]:
-        sorted_list = sorted(response_list, key=lambda x: x["duration"])
+    def _filter_connections(response_list: List[Any], current_time: Any) -> List[Any]:
+        filtered_list = []
+        for connection in response_list:
+            if connection["departure"][1].time() >= current_time:
+                filtered_list.append(connection)
+
+
+        sorted_list = sorted(filtered_list, key=lambda x: x["duration"])
         return sorted_list[:5]
 
     @staticmethod
@@ -78,8 +83,8 @@ class ResponseFormatter:
             data["top_five_connections"].append(
                 {
                     "train": connection["train_type"] + " " + connection["train_number"],
-                    "departure": connection["departure"],
-                    "arrival": connection["arrival"],
+                    "departure": str(connection["departure"][0]),
+                    "arrival": str(connection["arrival"][0]),
                     "duration_minutes": connection["duration"]
                 }
             )
@@ -92,6 +97,7 @@ class ResponseFormatter:
             train_data,
             departure_station: str,
             destination_station: str,
+            current_time: Any
     ) -> str:
         response_list = []
 
@@ -106,13 +112,13 @@ class ResponseFormatter:
                 {
                     "train_type": f"{train['trainType']}",
                     "train_number": f"{train['trainNumber']}",
-                    "departure": str(times[0]),
-                    "arrival": str(times[1]),
+                    "departure": (times[0], departure_time),
+                    "arrival": (times[1], arrival_time),
                     "duration": float(difference.total_seconds() / 60)
                 }
             )
 
-        response_list = ResponseFormatter._get_shortest_connections(response_list)
+        response_list = ResponseFormatter._filter_connections(response_list, current_time)
 
         return ResponseFormatter._turn_connections_into_json_string(
             departure_station,

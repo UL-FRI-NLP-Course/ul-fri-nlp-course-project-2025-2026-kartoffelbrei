@@ -4,6 +4,8 @@ from llm_engine.intents import Intent
 from backend.api_requests import APIRequests
 from backend.format_response import ResponseFormatter
 from backend.metadata_handler import MetadataHandler
+from backend.time_converter import TimeConverter
+from backend.route_params import RouteParams
 
 class APIRequestBuilder:
     def __init__(self, api_requests: APIRequests):
@@ -40,16 +42,17 @@ class APIRequestBuilder:
         return ResponseFormatter.format_train_status_response(train_data=result)
 
     def _build_route_information_request(self, intent_json: Any) -> str:
-        #departure_date = intent_json["departure_date"]
+        departure_time, departure_date = TimeConverter.convert_time(intent_json["departure_date"])
 
         train_stations = MetadataHandler.load_station_dict()
         departure_station = train_stations[intent_json["departure_station"]]
         destination_station = train_stations[intent_json["destination_station"]]
 
-        #route_params: RouteParams = {'departure_date': departure_date}
-        result = self.api_requests.get_route_information(departure_station, destination_station)
+        route_params: RouteParams = {'departure_date': departure_date.isoformat()}
+        result = self.api_requests.get_journey_information(departure_station, destination_station, params=route_params)
         return ResponseFormatter.format_journey_response(
             train_data=result,
             departure_station=departure_station,
-            destination_station=destination_station
+            destination_station=destination_station,
+            current_time=departure_time,
         )

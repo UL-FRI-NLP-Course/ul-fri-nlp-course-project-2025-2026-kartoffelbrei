@@ -52,7 +52,7 @@ class APIRequests:
 
         return self._return_response(requests.get(url))
 
-    def get_route_information(
+    def get_journey_information(
             self,
             departure_station: str,
             destination_station: str,
