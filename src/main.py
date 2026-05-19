@@ -3,7 +3,7 @@ from pathlib import Path
 from backend.metadata_handler import MetadataHandler
 from llm_engine.model_pipeline import AssistantPipeline
 from backend.api_requests import APIRequests
-from backend.format_response import format_train_type_response, format_route_response
+from backend.format_response import ResponseFormatter
 
 if __name__ == "__main__":
     # requests = APIRequests()

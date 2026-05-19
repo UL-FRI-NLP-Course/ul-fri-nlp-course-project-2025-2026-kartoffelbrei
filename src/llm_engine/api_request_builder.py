@@ -13,13 +13,14 @@ class APIRequestBuilder:
 
     def send_api_request(self, intent_json: Any) -> Union[str, None]:
         intent = intent_json["intent"]
+        print(f"Intent: {intent}")
 
         if intent is None:
             print("No intent provided by either the LLM or the user.")
             return None
 
         match intent:
-            case Intent.JOURNEY.value:
+            case Intent.JOURNEY_SEARCH.value:
                 return self._build_route_information_request(intent_json)
             case Intent.TRAIN_STATUS.value:
                 return self._build_train_information_request(intent_json)

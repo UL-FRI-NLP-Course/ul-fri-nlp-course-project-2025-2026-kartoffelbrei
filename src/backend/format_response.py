@@ -79,8 +79,12 @@ class ResponseFormatter:
         data = {
             "departure_station": station_dict[departure_station],
             "destination_station": station_dict[destination_station],
+            "connections_found": True,
             "top_five_connections": []
         }
+
+        if len(response_list) == 0:
+            data["connections_found"] = False
 
         for connection in response_list:
             data["top_five_connections"].append(
