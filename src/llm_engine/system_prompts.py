@@ -15,9 +15,9 @@ def load_prompt(path):
     return Path(path).read_text()
 
 def generate_prompt(prompt_type: PromptType, user_input: str, result: Optional[str] = None) ->  list[dict[str, str]]:
-    BASE_DIR = Path(__file__).resolve().parent.parent 
-    print(BASE_DIR) # Datei, in der dieser Code steht
-    path = os.path.join(BASE_DIR, "llm_prompts")
+    #BASE_DIR = Path(__file__).resolve().parent.parent
+    #print(BASE_DIR) # Datei, in der dieser Code steht
+    #path = os.path.join(BASE_DIR, "llm_prompts")
     
 
     system_prompt = ""

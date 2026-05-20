@@ -2,6 +2,7 @@ import requests
 from requests import Response
 from typing import Optional, Mapping, Any, Union
 from urllib.parse import urlencode
+from datetime import date
 
 from backend.config_backend import ConfigBackend as Config
 from backend.live_train_params import LiveTrainParams
@@ -43,12 +44,12 @@ class APIRequests:
     def get_train_status(
             self,
             train_number: int,
-            departure_date: Optional[str] = None,
+            departure_date: Optional[date] = None,
     ) -> Union[str, None]:
         if departure_date is None:
             url = self._build_url([Config.TRAINS, "latest", str(train_number)])
         else:
-            url = self._build_url([Config.TRAINS, departure_date, str(train_number)])
+            url = self._build_url([Config.TRAINS, str(departure_date), str(train_number)])
 
         return self._return_response(requests.get(url))
 

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 @dataclass
-class ConfigBackend():
+class ConfigBackend:
     BASE: str = "https://rata.digitraffic.fi/api/v1/"
     TRAINS: str = BASE + "trains"
     LIVE_TRAINS: str = BASE + "live-trains"

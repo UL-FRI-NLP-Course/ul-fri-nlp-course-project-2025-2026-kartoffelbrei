@@ -1,6 +1,6 @@
 import json
 
-from typing import List, Any, Tuple
+from typing import List, Any, Tuple, Union
 from datetime import datetime, timedelta
 
 from backend.metadata_handler import MetadataHandler
@@ -38,7 +38,7 @@ class ResponseFormatter:
     def _filter_connections(response_list: List[Any], current_time: Any) -> List[Any]:
         filtered_list = []
         for connection in response_list:
-            if connection['departure'][1].time() >= current_time:
+            if connection['departure'].time() >= current_time:
                 filtered_list.append(connection)
 
 
@@ -66,8 +66,8 @@ class ResponseFormatter:
             data['top_five_connections'].append(
                 {
                     "train": ResponseFormatter._build_train_string(connection['train_type'], connection['train_number']),
-                    "departure": str(connection['departure'][0]),
-                    "arrival": str(connection['arrival'][0]),
+                    "departure": TimeConverter.convert_datetime_to_string(connection['departure']),
+                    "arrival": TimeConverter.convert_datetime_to_string(connection['arrival']),
                     "duration_minutes": connection['duration']
                 }
             )
@@ -87,16 +87,16 @@ class ResponseFormatter:
         for train in train_data:
             times = ResponseFormatter._get_arrival_and_departure_time_journey(train['timeTableRows'], departure_station, destination_station)
 
-            departure_time = datetime.fromisoformat(times[0].replace("Z", "+00:00"))
-            arrival_time = datetime.fromisoformat(times[1].replace("Z", "+00:00"))
+            departure_time = TimeConverter.convert_time_to_utc(times[0])
+            arrival_time = TimeConverter.convert_time_to_utc(times[1])
             difference = arrival_time - departure_time
 
             response_list.append(
                 {
                     "train_type": f"{train['trainType']}",
                     "train_number": f"{train['trainNumber']}",
-                    "departure": (times[0], departure_time),
-                    "arrival": (times[1], arrival_time),
+                    "departure": departure_time,
+                    "arrival": arrival_time,
                     "duration": float(difference.total_seconds() / 60)
                 }
             )
@@ -110,14 +110,14 @@ class ResponseFormatter:
         )
 
     @staticmethod
-    def _get_arrival_and_departure_time_station(entry, station_shortcode: str) -> Tuple[str, str]:
-        arrival_time = ""
-        departure_time = ""
+    def _get_arrival_and_departure_time_station(entry, station_shortcode: str) -> Tuple[Union[datetime, None], Union[datetime, None]]:
+        arrival_time = None
+        departure_time = None
         for row in entry['timeTableRows']:
             if row['type'] == "ARRIVAL" and row['stationShortCode'] == station_shortcode:
-                arrival_time = row['scheduledTime']
+                arrival_time = TimeConverter.convert_time_to_utc(row['scheduledTime'])
             elif row['type'] == "DEPARTURE" and row['stationShortCode'] == station_shortcode:
-                departure_time = row['scheduledTime']
+                departure_time = TimeConverter.convert_time_to_utc(row['scheduledTime'])
 
         return arrival_time, departure_time
 
@@ -136,8 +136,10 @@ class ResponseFormatter:
             data['timetable_found'] = False
 
         for train in response_list:
-            arrival_time = "starting_station" if train['scheduled_arrival'] == "" else train['scheduled_arrival']
-            departure_time = "terminal_station" if train['scheduled_departure'] == "" else train['scheduled_departure']
+            arrival_time = "starting_station" if train['scheduled_arrival'] is None \
+                else TimeConverter.convert_datetime_to_string(train['scheduled_arrival'])
+            departure_time = "terminal_station" if train['scheduled_departure'] is None \
+                else TimeConverter.convert_datetime_to_string(train['scheduled_departure'])
 
             data['timetable'].append(
                 {
@@ -183,7 +185,7 @@ class ResponseFormatter:
 
         destination = commercial_rows[-1]
 
-        now = TimeConverter.get_current_datetime()
+        now = TimeConverter.get_current_datetime_in_utc()
         for row in commercial_rows:
 
             timestamp = (
@@ -191,45 +193,43 @@ class ResponseFormatter:
                     or row.get('scheduledTime')
             )
 
-            row_time = datetime.fromisoformat(
-                timestamp.replace("Z", "+00:00")
-            )
+            row_time = TimeConverter.convert_time_to_utc(timestamp)
 
             if row_time <= now:
                 current_location = row
 
             elif row_time > now and next_stop is None:
-                print(now, row_time)
                 next_stop = row
                 break
 
         station_dict = MetadataHandler.load_station_dict()
 
-        if current_location != None:
+        if current_location is not None:
             delay = current_location['differenceInMinutes']
+            dt = TimeConverter.convert_time_to_utc(current_location['actualTime'])
             current_location = {
                 "station": station_dict[current_location['stationShortCode']],
                 "event": current_location['type'],
-                "time": str(datetime.fromisoformat(current_location['actualTime'].replace("Z", "+00:00"))),
+                "time": TimeConverter.convert_datetime_to_string(dt),
                 "delay_minutes": delay
             }
 
-        if next_stop != None:
-            scheduled = datetime.fromisoformat(next_stop['scheduledTime'].replace("Z", "+00:00"))
+        if next_stop is not None:
+            scheduled = TimeConverter.convert_time_to_utc(next_stop['scheduledTime'])
             estimated = scheduled + timedelta(minutes=delay)
             next_stop = {
                 "station": station_dict[next_stop['stationShortCode']],
-                "scheduled_arrival": str(scheduled),
-                "estimated_arrival": str(estimated),
+                "scheduled_arrival": TimeConverter.convert_datetime_to_string(scheduled),
+                "estimated_arrival": TimeConverter.convert_datetime_to_string(estimated),
             }
 
-        if destination != None:
-            scheduled = datetime.fromisoformat(destination['scheduledTime'].replace("Z", "+00:00"))
+        if destination is not None:
+            scheduled = TimeConverter.convert_time_to_utc(destination['scheduledTime'])
             estimated = scheduled + timedelta(minutes=delay)
             destination = {
                 "station": station_dict[destination['stationShortCode']],
-                "scheduled_arrival": str(scheduled),
-                "estimated_arrival": str(estimated),
+                "scheduled_arrival": TimeConverter.convert_datetime_to_string(scheduled),
+                "estimated_arrival": TimeConverter.convert_datetime_to_string(estimated),
             }
 
         return current_location, next_stop, destination
