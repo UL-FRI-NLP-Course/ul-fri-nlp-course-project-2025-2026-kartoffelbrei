@@ -6,9 +6,10 @@ from backend.api_requests import APIRequests
 from backend.format_response import ResponseFormatter
 
 if __name__ == "__main__":
-    # requests = APIRequests()
-    # result = requests.get_route_information(departure_station="HKI", destination_station="TPE")
-    # print(format_route_response(train_data=result, departure_station="HKI", destination_station="TPE"))
+    #requests = APIRequests()
+    #result = requests.get_train_status(273)
+    #print(ResponseFormatter.format_train_status_response(result))
+    #print(format_route_response(train_data=result, departure_station="HKI", destination_station="TPE"))
     BASE_DIR = Path(__file__).resolve().parent
     print(BASE_DIR)
 
