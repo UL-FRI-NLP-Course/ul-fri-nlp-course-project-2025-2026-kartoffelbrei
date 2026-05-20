@@ -1,0 +1,16 @@
+=== Intent Evaluation Metrics ===
+
+Accuracy: 0.9643
+
+Classification Report:
+                   precision    recall  f1-score   support
+
+     general_info       1.00      1.00      1.00         7
+   journey_search       1.00      1.00      1.00         7
+            other       0.00      0.00      0.00         0
+station_timetable       1.00      1.00      1.00         7
+     train_status       1.00      0.86      0.92         7
+
+         accuracy                           0.96        28
+        macro avg       0.80      0.77      0.78        28
+     weighted avg       1.00      0.96      0.98        28

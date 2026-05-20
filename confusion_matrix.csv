@@ -1,0 +1,6 @@
+,journey_search,station_timetable,train_status,general_info,other
+journey_search,7,0,0,0,0
+station_timetable,0,7,0,0,0
+train_status,0,0,6,0,1
+general_info,0,0,0,7,0
+other,0,0,0,0,0
