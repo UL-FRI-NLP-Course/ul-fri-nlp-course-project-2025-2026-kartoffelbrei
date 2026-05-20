@@ -2,10 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from backend.config_backend import ConfigBackend
 from llm_engine.model_manager import ModelManager
-from pathlib import Path
-import json
 from langchain_core.documents import Document
-from langchain_text_splitters import RecursiveCharacterTextSplitter, TokenTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 
 class RAG_Handler():

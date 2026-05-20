@@ -1,10 +1,9 @@
 import json
 
-from typing import List, Any, Tuple, Dict, Union
+from typing import List, Any, Tuple
 from datetime import datetime, timedelta
 
 from backend.metadata_handler import MetadataHandler
-
 from src.backend.time_converter import TimeConverter
 
 

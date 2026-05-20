@@ -1,4 +1,5 @@
-import torch
+import os
+
 from backend.website_handler import RAG_Handler
 from llm_engine.model_manager import ModelManager
 from llm_engine.router_i import Router
@@ -7,7 +8,6 @@ from llm_engine.answer_router import AnswerRouter
 from backend.api_requests import APIRequests
 from llm_engine.api_request_builder import APIRequestBuilder
 from llm_engine.intents import Intent
-import os
 
 
 FAISS_PATH= "/d/hpc/projects/onj_fri/kartoffelbrei/faiss/"
