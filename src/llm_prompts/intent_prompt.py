@@ -36,6 +36,27 @@ IF:
 - AND user asks delay / location / status
 THEN choose train_status
 
+4) general_info
+IF:
+The user asks about:
+- tickets
+- prices
+- luggage
+- bicycles
+- pets
+- railway policies
+- onboard services
+- accessibility
+- refunds
+- general railway information
+
+5) other
+IF:
+- the message is unrelated to Finnish railway travel
+- the intent cannot be determined
+
+============================================================
+
 ------------------------------------------------------------
 HARD CONSTRAINTS
 
