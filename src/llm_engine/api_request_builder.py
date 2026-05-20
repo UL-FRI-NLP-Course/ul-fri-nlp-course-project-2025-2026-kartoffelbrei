@@ -12,7 +12,7 @@ class APIRequestBuilder:
         self.api_requests = api_requests
 
     def send_api_request(self, intent_json: Any) -> Union[str, None]:
-        intent = intent_json["intent"]
+        intent = intent_json['intent']
         print(f"Intent: {intent}")
 
         if intent is None:
@@ -31,7 +31,7 @@ class APIRequestBuilder:
                 return None
 
     def _get_intent_time(self, intent_json: Any) -> Tuple[Any, Any]:
-        intent_time = intent_json["time"]
+        intent_time = intent_json['time']
         departure_time, departure_date = TimeConverter.convert_time(intent_time['raw'])
         if departure_time == None:
             departure_time = TimeConverter.get_current_time()
@@ -42,13 +42,13 @@ class APIRequestBuilder:
         return departure_time, departure_date
 
     def _get_intent_entities(self, intent_json) -> Tuple[Any, Any, Any]:
-        intent_entities = intent_json["entities"]
+        intent_entities = intent_json['entities']
 
-        train_number = intent_entities["train_number"]
+        train_number = intent_entities['train_number']
 
         train_stations = MetadataHandler.load_station_dict()
-        departure_station = train_stations[intent_entities["departure_station"]]
-        destination_station = train_stations[intent_entities["destination_station"]]
+        departure_station = train_stations[intent_entities['departure_station']]
+        destination_station = train_stations[intent_entities['destination_station']]
 
         return train_number, departure_station, destination_station
 
@@ -61,7 +61,7 @@ class APIRequestBuilder:
         train_data = self.api_requests.get_journey_information(
             departure_station=departure_station,
             destination_station=destination_station,
-            params=route_params
+            params=route_params)
         return ResponseFormatter.format_journey_response(
             train_data=train_data,
             departure_station=departure_station,
