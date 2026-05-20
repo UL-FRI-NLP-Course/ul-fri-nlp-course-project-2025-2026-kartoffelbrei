@@ -53,13 +53,13 @@ class AssistantPipeline:
                 IntentExtractor.get_intent(intents) != Intent.OTHER.value
                 and IntentExtractor.get_intent(intents) != Intent.GENERAL_INFO.value
         ):
-            decision = "Ask API for live data and got the following result."
+            decision = "Ask API for live data and got the following result"
             result = self.api_request_builder.send_api_request(intents)
         elif IntentExtractor.get_intent(intents) != Intent.OTHER.value:
-            decision = "Use RAG to answer question with static websites and got the following result."
+            decision = "Use RAG to answer question with static websites and got the following result"
             result = self.rag_handler.search_similiar(self.faiss_store, input, 5)
         else:
-            decision = "Use neither API nor RAG to answer the question."
+            decision = "Use neither API nor RAG to answer the question"
             result = ""
         self._log(f"{decision}: {result}")
         response = self.answer_router.extract_answer(user_input=input, result=result)
