@@ -61,13 +61,13 @@ class IntentExtractor:
                 intent_entities.get('departure_station') is not None
                 and intent_entities.get('departure_station') != 'null'
         ):
-            departure_station = train_stations[intent_entities.get('departure_station')]
+            departure_station = train_stations.get(intent_entities.get('departure_station'))
 
         destination_station = None
         if (
                 intent_entities.get('destination_station') is not None
                 and intent_entities.get('destination_station') != 'null'
         ):
-            destination_station = train_stations[intent_entities.get('destination_station')]
+            destination_station = train_stations.get(intent_entities.get('destination_station'))
 
         return train_number, departure_station, destination_station

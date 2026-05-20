@@ -25,15 +25,14 @@ dataset = [
     {"text": "What trains stop at Tikkurila asema?", "label": Intent.STATION_TIMETABLE.value},
     {"text": "Next departures from Oulu asema.", "label": Intent.STATION_TIMETABLE.value},
     {"text": "What is the station timetable for Lahti?", "label": Intent.STATION_TIMETABLE.value},
-    {"text": "Is IC 21 delayed?", "label": Intent.STATION_TIMETABLE.value},
     # train status
+    {"text": "Is IC 21 delayed?", "label": Intent.TRAIN_STATUS.value},
     {"text": "Where is S45?", "label": Intent.TRAIN_STATUS.value},
     {"text": "What is the status of Pendolino 51?", "label": Intent.TRAIN_STATUS.value},
     {"text": "Has IC 104 arrived yet?", "label": Intent.TRAIN_STATUS.value},
     {"text": "How late is train IC 22?", "label": Intent.TRAIN_STATUS.value},
     {"text": "Is train PYO 273 running on time?", "label": Intent.TRAIN_STATUS.value},
     {"text": "Where is train S currently?", "label": Intent.TRAIN_STATUS.value},
-    {"text": "Is there a direct train from Vaasa to Seinäjoki?", "label": Intent.TRAIN_STATUS.value},
     # general info
     {"text": "Can I bring a bicycle on the train?", "label": Intent.GENERAL_INFO.value},
     {"text": "Are pets allowed on Finnish trains?", "label": Intent.GENERAL_INFO.value},

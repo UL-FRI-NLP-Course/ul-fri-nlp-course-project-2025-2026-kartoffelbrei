@@ -53,8 +53,8 @@ class ResponseFormatter:
     ) -> str:
         station_dict = MetadataHandler.load_station_dict()
         data = {
-            "departure_station": station_dict[departure_station],
-            "destination_station": station_dict[destination_station],
+            "departure_station": station_dict.get(departure_station),
+            "destination_station": station_dict.get(destination_station),
             "connections_found": True,
             "top_five_connections": []
         }
@@ -124,7 +124,7 @@ class ResponseFormatter:
     @staticmethod
     def _turn_station_timetable_into_json_string(response_list: List[Any], station_shortcode: str) -> str:
         station_dict = MetadataHandler.load_station_dict()
-        station = station_dict[station_shortcode]
+        station = station_dict.get(station_shortcode)
 
         data = {
             "station": station,
@@ -208,7 +208,7 @@ class ResponseFormatter:
             delay = current_location['differenceInMinutes']
             dt = TimeConverter.convert_time_to_utc(current_location['actualTime'])
             current_location = {
-                "station": station_dict[current_location['stationShortCode']],
+                "station": station_dict.get(current_location['stationShortCode']),
                 "event": current_location['type'],
                 "time": TimeConverter.convert_datetime_to_string(dt),
                 "delay_minutes": delay
