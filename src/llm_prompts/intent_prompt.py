@@ -103,7 +103,7 @@ SCHEMA
 }}
 
 ------------------------------------------------------------
-EXAMPLE
+EXAMPLE 1
 
 User:
 "I want to go to Helsinki asema from Turku asema today around 4pm. When is the next train leaving?"
@@ -119,6 +119,25 @@ Output:
   }},
   "time": {{
     "raw": "4pm today"
+  }}
+}}
+
+EXAMPLE 2
+
+User:
+"Is PYO 37 on time?"
+
+Output:
+{{
+  "intent": "train_status",
+  "confidence": 0.95,
+  "entities": {{
+    "train_number": 37,
+    "departure_station": null,
+    "destination_station": null
+  }},
+  "time": {{
+    "raw": null
   }}
 }}
 """

@@ -1,3 +1,5 @@
+import re
+
 from typing import Any, Union, Tuple, Dict
 from datetime import time, date
 
@@ -52,10 +54,21 @@ class APIRequestBuilder:
         return departure_time, departure_date
 
     @staticmethod
+    def _extract_train_number(value: Union[str, None]) -> Union[str, None]:
+        if not value or value == 'null':
+            return None
+
+        value = value.strip()
+
+        match = re.search(r"\d+", value)
+
+        return match.group(0) if match else None
+
+    @staticmethod
     def _get_intent_entities(intent_json) -> Tuple[Any, Any, Any]:
         intent_entities: Dict[str, Any] = intent_json.get('entities')
 
-        train_number = intent_entities.get('train_number')
+        train_number = APIRequestBuilder._extract_train_number(intent_entities.get('train_number'))
 
         train_stations = MetadataHandler.load_station_dict()
 
