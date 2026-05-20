@@ -2,9 +2,11 @@ import json
 
 from typing import List, Any, Tuple, Dict, Union
 from datetime import datetime, timedelta
-from zoneinfo import ZoneInfo
 
 from backend.metadata_handler import MetadataHandler
+
+from src.backend.time_converter import TimeConverter
+
 
 class ResponseFormatter:
 
@@ -86,8 +88,8 @@ class ResponseFormatter:
         for train in train_data:
             times = ResponseFormatter._get_arrival_and_departure_time_journey(train['timeTableRows'], departure_station, destination_station)
 
-            departure_time = datetime.fromisoformat(times[0].replace("Z", "+03:00"))
-            arrival_time = datetime.fromisoformat(times[1].replace("Z", "+03:00"))
+            departure_time = datetime.fromisoformat(times[0].replace("Z", "+00:00"))
+            arrival_time = datetime.fromisoformat(times[1].replace("Z", "+00:00"))
             difference = arrival_time - departure_time
 
             response_list.append(
@@ -182,7 +184,7 @@ class ResponseFormatter:
 
         destination = commercial_rows[-1]
 
-        now = datetime.now(ZoneInfo("Europe/Helsinki"))
+        now = TimeConverter.get_current_datetime()
         for row in commercial_rows:
 
             timestamp = (
@@ -192,7 +194,7 @@ class ResponseFormatter:
 
             row_time = datetime.fromisoformat(
                 timestamp.replace("Z", "+00:00")
-            ).astimezone(ZoneInfo("Europe/Helsinki"))
+            )
 
             if row_time <= now:
                 current_location = row
@@ -209,12 +211,12 @@ class ResponseFormatter:
             current_location = {
                 "station": station_dict[current_location['stationShortCode']],
                 "event": current_location['type'],
-                "time": str(datetime.fromisoformat(current_location['actualTime'].replace("Z", "+03:00"))),
+                "time": str(datetime.fromisoformat(current_location['actualTime'].replace("Z", "+00:00"))),
                 "delay_minutes": delay
             }
 
         if next_stop != None:
-            scheduled = datetime.fromisoformat(next_stop['scheduledTime'].replace("Z", "+03:00"))
+            scheduled = datetime.fromisoformat(next_stop['scheduledTime'].replace("Z", "+00:00"))
             estimated = scheduled + timedelta(minutes=delay)
             next_stop = {
                 "station": station_dict[next_stop['stationShortCode']],
@@ -223,7 +225,7 @@ class ResponseFormatter:
             }
 
         if destination != None:
-            scheduled = datetime.fromisoformat(destination['scheduledTime'].replace("Z", "+03:00"))
+            scheduled = datetime.fromisoformat(destination['scheduledTime'].replace("Z", "+00:00"))
             estimated = scheduled + timedelta(minutes=delay)
             destination = {
                 "station": station_dict[destination['stationShortCode']],
