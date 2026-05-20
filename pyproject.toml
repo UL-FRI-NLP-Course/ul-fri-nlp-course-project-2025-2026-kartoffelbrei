@@ -45,4 +45,4 @@ optional = [
 where = ["."]
 
 [project.urls]
-Repository = "github.url"
+Repository = "https://github.com/UL-FRI-NLP-Course/ul-fri-nlp-course-project-2025-2026-kartoffelbrei"
