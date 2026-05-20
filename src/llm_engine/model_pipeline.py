@@ -40,9 +40,11 @@ class AssistantPipeline:
         if intents.get("intent") != Intent.OTHER.value and intents.get("intent") != Intent.GENERAL_INFO.value:
             print("Ask API for livedata")
             result = self.api_request_builder.send_api_request(intents)
-        else:
+        elif intents.get("intent") != Intent.OTHER.value:
             print("static knowledge from website is enough")
             result = self.rag_handler.search_similiar(self.faiss_store, input, 5)
+        else:
+            result = ""
         print(f"Ergebnis von API oder RAG: {result}")
         response = self.answer_router.extract_answer(user_input=input, result=result)
 
