@@ -12,4 +12,7 @@ if __name__ == "__main__":
     pipeline = AssistantPipeline()
     with open(query_path, "r") as file:
         for query in file:
-            pipeline.run(query.strip())
+            if query.startswith("#"):
+                continue
+            else:
+                pipeline.run(query.strip())
