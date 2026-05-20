@@ -136,14 +136,22 @@ class ResponseFormatter:
             data['timetable_found'] = False
 
         for train in response_list:
-            arrival_time = "starting_station" if train['scheduled_arrival'] is None \
+            arrival_time = "" if train['scheduled_arrival'] is None \
                 else TimeConverter.convert_datetime_to_string(train['scheduled_arrival'])
-            departure_time = "terminal_station" if train['scheduled_departure'] is None \
+            departure_time = "" if train['scheduled_departure'] is None \
                 else TimeConverter.convert_datetime_to_string(train['scheduled_departure'])
+
+            if arrival_time == "":
+                station_role = "origin"
+            elif departure_time == "":
+                station_role = "destination"
+            else:
+                station_role = "intermediate"
 
             data['timetable'].append(
                 {
                     "train": ResponseFormatter._build_train_string(train['train_type'], train['train_number']),
+                    "station_role": station_role,
                     "scheduled_arrival": arrival_time,
                     "scheduled_departure": departure_time,
                 }

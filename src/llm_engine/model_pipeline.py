@@ -1,6 +1,7 @@
 import os
 
 from typing import Any
+from pathlib import Path
 
 from backend.website_handler import RAG_Handler
 from llm_engine.model_manager import ModelManager
@@ -37,7 +38,7 @@ class AssistantPipeline:
         print("\n")
 
     def _log(self, text: str, file="pipeline_log.txt"):
-        with open(file, "a", encoding="utf-8") as f:
+        with open(os.path.join(Path.cwd(), file), "a", encoding="utf-8") as f:
             f.write(text + "\n")
             print(text)
 

@@ -1,7 +1,10 @@
+import os.path
+
 import pandas as pd
 
 from typing import List, Any
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from pathlib import Path
 
 from llm_engine.intents import Intent
 
@@ -9,6 +12,7 @@ class IntentData:
     def __init__(self, y_pred: List[Any], dataset: List[Any]):
         self.y_pred = y_pred
         self.y_true = self._create_y_true(dataset)
+        self.path = Path.cwd()
 
     def _create_y_true(self, dataset: List[Any]) -> List[Any]:
         y_true = []
@@ -23,7 +27,7 @@ class IntentData:
         accuracy = accuracy_score(self.y_true, self.y_pred)
         report = classification_report(self.y_true, self.y_pred)
 
-        with open("metrics.txt", "w") as f:
+        with open(os.path.join(self.path, "metrics.txt"), "w") as f:
             f.write("=== Intent Evaluation Metrics ===\n\n")
             f.write(f"Accuracy: {accuracy:.4f}\n\n")
             f.write("Classification Report:\n")
@@ -41,4 +45,4 @@ class IntentData:
         cm = confusion_matrix(self.y_true, self.y_pred, labels=labels)
 
         df_cm = pd.DataFrame(cm, index=labels, columns=labels)
-        df_cm.to_csv("confusion_matrix.csv")
+        df_cm.to_csv(os.path.join(self.path, "confusion_matrix.csv"))
