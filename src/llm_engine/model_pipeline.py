@@ -1,5 +1,7 @@
 import os
 
+from typing import Any
+
 from backend.website_handler import RAG_Handler
 from llm_engine.model_manager import ModelManager
 from llm_engine.router_i import Router
@@ -8,6 +10,7 @@ from llm_engine.answer_router import AnswerRouter
 from backend.api_requests import APIRequests
 from llm_engine.api_request_builder import APIRequestBuilder
 from llm_engine.intents import Intent
+from llm_engine.intent_extractor import IntentExtractor
 
 
 FAISS_PATH= "/d/hpc/projects/onj_fri/kartoffelbrei/faiss/"
@@ -33,24 +36,34 @@ class AssistantPipeline:
         self.answer_router: Router = AnswerRouter(self.model_manager)
         print("\n")
 
-    def run(self, input: str):
-        print("==================")
-        print(f"Query: {input}")
+    def _log(self, text: str, file="pipeline_log.txt"):
+        with open(file, "a", encoding="utf-8") as f:
+            f.write(text + "\n")
+            print(text)
+
+    def run(self, input: str) -> Any:
+        self._log("==================")
+        self._log(f"Query: {input}")
         # get JSON with keywords
         intents = self.intent_router.extract_answer(user_input=input)
         # decide which RAG method is necessary
         decision = ""
-        if intents.get("intent") != Intent.OTHER.value and intents.get("intent") != Intent.GENERAL_INFO.value:
+        if (
+                IntentExtractor.get_intent(intents) != Intent.OTHER.value
+                and IntentExtractor.get_intent(intents) != Intent.GENERAL_INFO.value
+        ):
             decision = "Ask API for live data and got the following result"
             result = self.api_request_builder.send_api_request(intents)
-        elif intents.get("intent") != Intent.OTHER.value:
+        elif IntentExtractor.get_intent(intents) != Intent.OTHER.value:
             decision = "Use RAG to answer question with static websites and got the following result"
             result = self.rag_handler.search_similiar(self.faiss_store, input, 5)
         else:
             result = ""
-        print(f"{decision}: {result}")
+        self._log(f"{decision}: {result}")
         response = self.answer_router.extract_answer(user_input=input, result=result)
 
         
-        print(f"Answer: {response}")
-        print("==================\n")
+        self._log(f"Answer of the model: {response}")
+        self._log("==================\n")
+
+        return intents

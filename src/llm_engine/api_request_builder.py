@@ -1,25 +1,21 @@
-import re
-
-from typing import Any, Union, Tuple, Dict
-from datetime import time, date
+from typing import Any
 
 from llm_engine.intents import Intent
+from llm_engine.intent_extractor import IntentExtractor
 from backend.api_requests import APIRequests
 from backend.format_response import ResponseFormatter
-from backend.metadata_handler import MetadataHandler
-from backend.time_converter import TimeConverter
 from backend.route_params import RouteParams
 
 class APIRequestBuilder:
     def __init__(self, api_requests: APIRequests):
         self.api_requests = api_requests
 
-    def send_api_request(self, intent_json: Any) -> Union[str, None]:
-        intent = intent_json.get('intent')
+    def send_api_request(self, intent_json: Any) -> str:
+        intent = IntentExtractor.get_intent(intent_json)
 
-        if intent is None:
+        if intent == "":
             print("No intent provided by either the LLM or the user.")
-            return None
+            return ""
 
         match intent:
             case Intent.JOURNEY_SEARCH.value:
@@ -30,67 +26,12 @@ class APIRequestBuilder:
                 return self._build_train_status_request(intent_json)
             case _:
                 print("Could not provide any information related to the question.")
-                return None
-
-    @staticmethod
-    def _get_intent_time(intent_json: Any) -> Tuple[Union[time, None], Union[date, None]]:
-        intent_time = intent_json.get('time')
-        if (
-                intent_time is not None
-                and intent_time.get('raw') is not None
-                and intent_time.get('raw') != 'null'
-        ):
-            departure_time, departure_date = TimeConverter.convert_time(intent_time.get('raw'))
-        else:
-            departure_time, departure_date = None, None
-
-        if departure_time is None:
-            departure_time = TimeConverter.get_current_time()
-
-        if departure_date is None:
-            departure_date = TimeConverter.get_current_date()
-
-        return departure_time, departure_date
-
-    @staticmethod
-    def _extract_train_number(value: Union[str, None]) -> Union[str, None]:
-        if not value or value == 'null':
-            return None
-
-        value = value.strip()
-
-        match = re.search(r"\d+", value)
-
-        return match.group(0) if match else None
-
-    @staticmethod
-    def _get_intent_entities(intent_json) -> Tuple[Any, Any, Any]:
-        intent_entities: Dict[str, Any] = intent_json.get('entities')
-
-        train_number = APIRequestBuilder._extract_train_number(intent_entities.get('train_number'))
-
-        train_stations = MetadataHandler.load_station_dict()
-
-        departure_station = None
-        if (
-                intent_entities.get('departure_station') is not None
-                and intent_entities.get('departure_station') != 'null'
-        ):
-            departure_station = train_stations[intent_entities.get('departure_station')]
-
-        destination_station = None
-        if (
-                intent_entities.get('destination_station') is not None
-                and intent_entities.get('destination_station') != 'null'
-        ):
-            destination_station = train_stations[intent_entities.get('destination_station')]
-
-        return train_number, departure_station, destination_station
+                return ""
 
     def _build_journey_search_request(self, intent_json: Any) -> str:
-        departure_time, departure_date = self._get_intent_time(intent_json)
+        departure_time, departure_date = IntentExtractor.get_intent_time(intent_json)
 
-        _, departure_station, destination_station = self._get_intent_entities(intent_json)
+        _, departure_station, destination_station = IntentExtractor.get_intent_entities(intent_json)
 
         if departure_station is None or destination_station is None:
             return ""
@@ -108,7 +49,7 @@ class APIRequestBuilder:
         )
 
     def _build_station_timetable_request(self, intent_json: Any) -> str:
-        _, departure_station, destination_station = self._get_intent_entities(intent_json)
+        _, departure_station, destination_station = IntentExtractor.get_intent_entities(intent_json)
 
         if departure_station is None and destination_station is None:
             return ""
@@ -121,9 +62,9 @@ class APIRequestBuilder:
         )
 
     def _build_train_status_request(self, intent_json: Any) -> str:
-        _, departure_date = self._get_intent_time(intent_json)
+        _, departure_date = IntentExtractor.get_intent_time(intent_json)
 
-        train_number, _, _ = self._get_intent_entities(intent_json)
+        train_number, _, _ = IntentExtractor.get_intent_entities(intent_json)
 
         if train_number is None:
             return ""
