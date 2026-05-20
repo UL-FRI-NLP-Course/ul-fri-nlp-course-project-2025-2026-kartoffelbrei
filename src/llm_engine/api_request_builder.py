@@ -34,7 +34,11 @@ class APIRequestBuilder:
     @staticmethod
     def _get_intent_time(intent_json: Any) -> Tuple[Union[time, None], Union[date, None]]:
         intent_time = intent_json.get('time')
-        if intent_time is not None:
+        if (
+                intent_time is not None
+                and intent_time.get('raw') is not None
+                and intent_time.get('raw') != 'null'
+        ):
             departure_time, departure_date = TimeConverter.convert_time(intent_time.get('raw'))
         else:
             departure_time, departure_date = None, None
@@ -56,11 +60,17 @@ class APIRequestBuilder:
         train_stations = MetadataHandler.load_station_dict()
 
         departure_station = None
-        if intent_entities.get('departure_station') is not None:
+        if (
+                intent_entities.get('departure_station') is not None
+                and intent_entities.get('departure_station') != 'null'
+        ):
             departure_station = train_stations[intent_entities.get('departure_station')]
 
         destination_station = None
-        if intent_entities.get('destination_station') is not None:
+        if (
+                intent_entities.get('destination_station') is not None
+                and intent_entities.get('destination_station') != 'null'
+        ):
             destination_station = train_stations[intent_entities.get('destination_station')]
 
         return train_number, departure_station, destination_station
@@ -69,6 +79,9 @@ class APIRequestBuilder:
         departure_time, departure_date = self._get_intent_time(intent_json)
 
         _, departure_station, destination_station = self._get_intent_entities(intent_json)
+
+        if departure_station is None or destination_station is None:
+            return ""
 
         route_params: RouteParams = {'departure_date': departure_date}
         train_data = self.api_requests.get_journey_information(
@@ -83,7 +96,11 @@ class APIRequestBuilder:
         )
 
     def _build_station_timetable_request(self, intent_json: Any) -> str:
-        train_number, departure_station, destination_station = self._get_intent_entities(intent_json)
+        _, departure_station, destination_station = self._get_intent_entities(intent_json)
+
+        if departure_station is None and destination_station is None:
+            return ""
+
         station = departure_station if departure_station is not None else destination_station
         station_data = self.api_requests.get_live_trains(station_shortcode=station)
         return ResponseFormatter.format_station_timetable_response(
@@ -93,9 +110,11 @@ class APIRequestBuilder:
 
     def _build_train_status_request(self, intent_json: Any) -> str:
         _, departure_date = self._get_intent_time(intent_json)
-        print("date: ", departure_date)
 
         train_number, _, _ = self._get_intent_entities(intent_json)
+
+        if train_number is None:
+            return ""
 
         result = self.api_requests.get_train_status(train_number=train_number, departure_date=departure_date)
 

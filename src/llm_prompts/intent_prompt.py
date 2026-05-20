@@ -17,9 +17,9 @@ Choose intent based on these conditions:
 
 1) journey_search
 IF:
+- ONLY IF departure and destination stations are provided
 - user asks how to travel between places
 - OR asks for next train / connections
-- OR mentions origin + destination
 THEN ALWAYS choose journey_search
 
 2) station_timetable
@@ -30,7 +30,7 @@ THEN choose station_timetable
 
 3) train_status
 IF:
-- AND ONLY IF train_number is present
+- ONLY IF train_number is present
 - AND user asks delay / location / status
 THEN choose train_status
 
