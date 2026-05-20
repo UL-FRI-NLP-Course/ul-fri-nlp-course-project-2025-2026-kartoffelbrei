@@ -5,6 +5,7 @@ from pathlib import Path
 from enum import Enum, auto
 
 from llm_prompts.intent_prompt import intent_prompt
+from llm_prompts.answer_prompt import answer_prompt
 
 class PromptType(Enum):
     ANSWER = auto()
@@ -23,7 +24,7 @@ def generate_prompt(prompt_type: PromptType, user_input: str, result: Optional[s
     user_prompt = ""
     match prompt_type:
         case PromptType.ANSWER:
-            system_prompt = load_prompt(os.path.join(path, "answer_prompt.txt"))
+            system_prompt = answer_prompt#load_prompt(os.path.join(path, "answer_prompt.txt"))
             user_prompt = f"""
             User question: 
                 {user_input}
