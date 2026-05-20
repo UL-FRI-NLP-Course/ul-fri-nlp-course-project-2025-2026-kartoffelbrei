@@ -93,12 +93,12 @@ SCHEMA
   "intent": string,
   "confidence": number,
   "entities": {{
-    "train_number": string or null,
-    "departure_station": string or null,
-    "destination_station": string or null
+    "train_number": string or None,
+    "departure_station": string or None,
+    "destination_station": string or None
   }},
   "time": {{
-    "raw": string or null
+    "raw": string or None
   }}
 }}
 

@@ -38,14 +38,14 @@ class AssistantPipeline:
         intents = self.intent_router.extract_answer(user_input=input)
         # decide which RAG method is necessary
         if intents.get("intent") != Intent.OTHER.value and intents.get("intent") != Intent.GENERAL_INFO.value:
-            print("Ask API for livedata")
+            print("Ask API for livedata.")
             result = self.api_request_builder.send_api_request(intents)
         elif intents.get("intent") != Intent.OTHER.value:
-            print("static knowledge from website is enough")
+            print("Use RAG to answer question with static websites.")
             result = self.rag_handler.search_similiar(self.faiss_store, input, 5)
         else:
             result = ""
-        print(f"Ergebnis von API oder RAG: {result}")
+        print(f"Result from API or RAG: {result}")
         response = self.answer_router.extract_answer(user_input=input, result=result)
 
         

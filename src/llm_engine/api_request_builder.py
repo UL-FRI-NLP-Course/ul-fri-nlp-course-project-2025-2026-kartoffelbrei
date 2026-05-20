@@ -22,22 +22,24 @@ class APIRequestBuilder:
         match intent:
             case Intent.JOURNEY_SEARCH.value:
                 return self._build_journey_search_request(intent_json)
-            case Intent.TRAIN_STATUS.value:
-                return self._build_train_information_request(intent_json)
-            case Intent.TRAIN_TIMETABLE.value:
-                return self._build_route_information_request(intent_json)
             case Intent.STATION_TIMETABLE.value:
-                return self._build_route_information_request(intent_json)
-            case Intent.OUT_OF_SCOPE.value:
-                print("Could not provide any information related to the question.")
-                return None
+                return self._build_station_timetable_request(intent_json)
+            case Intent.TRAIN_STATUS.value:
+                return self._build_train_status_request(intent_json)
             case _:
-                print("No valid intent was provided.")
+                print("Could not provide any information related to the question.")
                 return None
 
     def _get_intent_time(self, intent_json: Any) -> Tuple[Any, Any]:
         intent_time = intent_json["time"]
-        return TimeConverter.convert_time(intent_time["raw"])
+        departure_time, departure_date = TimeConverter.convert_time(intent_time['raw'])
+        if departure_time == None:
+            departure_time = TimeConverter.get_current_time()
+
+        if departure_date == None:
+            departure_date = TimeConverter.get_current_date()
+
+        return departure_time, departure_date
 
     def _get_intent_entities(self, intent_json) -> Tuple[Any, Any, Any]:
         intent_entities = intent_json["entities"]
@@ -60,7 +62,6 @@ class APIRequestBuilder:
             departure_station=departure_station,
             destination_station=destination_station,
             params=route_params
-        )
         return ResponseFormatter.format_journey_response(
             train_data=train_data,
             departure_station=departure_station,
@@ -81,9 +82,6 @@ class APIRequestBuilder:
 
         train_number, _, _ = self._get_intent_entities(intent_json)
 
-        if departure_date == None:
-            result = self.api_requests.get_train_information(train_number=train_number)
-        else:
-            result = self.api_requests.get_train_information(train_number=train_number, departure_date=departure_date)
+        result = self.api_requests.get_train_information(train_number=train_number, departure_date=departure_date)
 
         return ResponseFormatter.format_train_status_response(result)
