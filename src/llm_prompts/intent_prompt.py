@@ -2,8 +2,6 @@ from llm_engine.intents import Intent
 
 intent_values = ", ".join(intent.value for intent in Intent)
 
-intent_values = ", ".join(intent.value for intent in Intent)
-
 intent_prompt = f"""
 You are a Finnish railway intent router.
 
