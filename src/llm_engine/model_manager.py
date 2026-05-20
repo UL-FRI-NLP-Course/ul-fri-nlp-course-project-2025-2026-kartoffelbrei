@@ -107,9 +107,6 @@ class ModelManager:
             encode_kwargs={"normalize_embeddings": True},  # L2-normalise → cosine similarity = dot product
             )
     
-        print(f"type:{type(self.embedding_model)}")
-    
-        
     def load_all(self):
         self.load_intent_model()
         self.load_answer_model()

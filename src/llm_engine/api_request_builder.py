@@ -16,7 +16,6 @@ class APIRequestBuilder:
 
     def send_api_request(self, intent_json: Any) -> Union[str, None]:
         intent = intent_json.get('intent')
-        print(f"Intent: {intent}")
 
         if intent is None:
             print("No intent provided by either the LLM or the user.")

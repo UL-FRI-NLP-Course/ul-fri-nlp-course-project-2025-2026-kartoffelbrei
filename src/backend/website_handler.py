@@ -47,7 +47,7 @@ class RAG_Handler():
                }
            )
            documents.append(doc)
-       print(f"{len(documents)} Documents erstellt")
+       print(f"{len(documents)} documents created.")
 
        text_splitter = RecursiveCharacterTextSplitter(
            chunk_size=800,          # Target size in characters
@@ -57,8 +57,6 @@ class RAG_Handler():
        )
        chunks = text_splitter.split_documents(documents)
 
-       print(chunks[0])
-    
        print(f"Documents → chunks: {len(documents)} → {len(chunks)}")
        print(f"Average chunk size : {sum(len(c.page_content) for c in chunks) / len(chunks):.0f} chars")
        print(f"Min / Max          : {min(len(c.page_content) for c in chunks)} / {max(len(c.page_content) for c in chunks)} chars")
@@ -82,7 +80,7 @@ class RAG_Handler():
        print(f"Top {k} results for this query: {user_input}")
        for i, (doc, score) in enumerate(results,1):
            source = doc.metadata.get('source', 'unbekannt')
-           print(f"{i}. Score: {score:.4f} | Quelle: {source}")
+           print(f"{i}. Score: {score:.4f} | Source: {source}")
            print(f"   Text: {doc.page_content[:100]}...\n")
        return results
 

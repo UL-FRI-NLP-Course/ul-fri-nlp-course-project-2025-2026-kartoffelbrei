@@ -21,7 +21,7 @@ class AssistantPipeline:
         self.faiss_store = None
         self.rag_handler = RAG_Handler()
         if not os.path.exists(FAISS_PATH):
-            print("Create FAISS index")
+            print("Create FAISS index.")
             texts = self.rag_handler.create_database()
             chunks = self.rag_handler.text_preparation(texts)
             self.faiss_store = self.rag_handler.vectorize_and_store(chunks, self.model_manager.embedding_model)
@@ -31,22 +31,26 @@ class AssistantPipeline:
 
         self.intent_router: Router = IntentRouter(self.model_manager)
         self.answer_router: Router = AnswerRouter(self.model_manager)
+        print("\n")
 
     def run(self, input: str):
+        print("==================")
         print(f"Query: {input}")
         # get JSON with keywords
         intents = self.intent_router.extract_answer(user_input=input)
         # decide which RAG method is necessary
+        decision = ""
         if intents.get("intent") != Intent.OTHER.value and intents.get("intent") != Intent.GENERAL_INFO.value:
-            print("Ask API for livedata.")
+            decision = "Ask API for live data and got the following result"
             result = self.api_request_builder.send_api_request(intents)
         elif intents.get("intent") != Intent.OTHER.value:
-            print("Use RAG to answer question with static websites.")
+            decision = "Use RAG to answer question with static websites and got the following result"
             result = self.rag_handler.search_similiar(self.faiss_store, input, 5)
         else:
             result = ""
-        print(f"Result from API or RAG: {result}")
+        print(f"{decision}: {result}")
         response = self.answer_router.extract_answer(user_input=input, result=result)
 
         
         print(f"Answer: {response}")
+        print("==================\n")
