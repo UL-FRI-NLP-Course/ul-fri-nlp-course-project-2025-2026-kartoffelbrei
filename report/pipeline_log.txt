@@ -1,0 +1,1128 @@
+This appendix contains the complete set of 28 evaluation queries and corresponding system responses used for the qualitative analysis.
+==================
+Query: Can I travel from Helsinki asema to Tampere asema today?
+Ask API for live data and got the following result: {
+  "departure_station": "Helsinki asema",
+  "destination_station": "Tampere asema",
+  "connections_found": true,
+  "top_five_connections": [
+    {
+      "train": "PYO 273",
+      "departure": "2026-05-20 23:13:00 EEST+0300",
+      "arrival": "2026-05-21 01:55:00 EEST+0300",
+      "duration_minutes": 162.0
+    }
+  ]
+}
+Answer of the model: Yes, you can travel from Helsinki asema to Tampere asema today. The train PYO 273 departs at 23:13 and arrives at 01:55, with a duration of 162 minutes.
+==================
+
+==================
+Query: What is the next train from Turku asema to Helsinki asema?
+Ask API for live data and got the following result: {
+  "departure_station": "Turku asema",
+  "destination_station": "Helsinki asema",
+  "connections_found": false,
+  "top_five_connections": []
+}
+Answer of the model: I cannot answer the question with the provided data.
+==================
+
+==================
+Query: How do I get from Oulu asema to Rovaniemi?
+Ask API for live data and got the following result: {
+  "departure_station": "Oulu asema",
+  "destination_station": "Rovaniemi",
+  "connections_found": false,
+  "top_five_connections": []
+}
+Answer of the model: I cannot answer the question with the provided data.
+==================
+
+==================
+Query: Are there trains from Pasila asema to Lahti this evening?
+Ask API for live data and got the following result: {
+  "departure_station": "Pasila asema",
+  "destination_station": "Lahti",
+  "connections_found": true,
+  "top_five_connections": [
+    {
+      "train": "HL 9881",
+      "departure": "2026-05-20 00:14:30 EEST+0300",
+      "arrival": "2026-05-20 00:15:00 EEST+0300",
+      "duration_minutes": 0.5
+    },
+    {
+      "train": "HL 9879",
+      "departure": "2026-05-20 23:14:30 EEST+0300",
+      "arrival": "2026-05-20 23:15:00 EEST+0300",
+      "duration_minutes": 0.5
+    }
+  ]
+}
+Answer of the model: Yes, there are trains from Pasila asema to Lahti this evening. The top connections are HL 9881 departing at 00:14:30 EEST+0300 and HL 9879 departing at 23:14:30 EEST+0300. Both trains have a duration of 0.5 minutes.
+==================
+
+==================
+Query: What connections are available between Tampere asema and Turku asema?
+Ask API for live data and got the following result: {
+  "departure_station": "Tampere asema",
+  "destination_station": "Turku asema",
+  "connections_found": false,
+  "top_five_connections": []
+}
+Answer of the model: I cannot answer the question with the provided data.
+==================
+
+==================
+Query: Can I get from Helsinki asema to Tampere asema after 4pm?
+Ask API for live data and got the following result: {
+  "departure_station": "Helsinki asema",
+  "destination_station": "Tampere asema",
+  "connections_found": true,
+  "top_five_connections": [
+    {
+      "train": "IC 51",
+      "departure": "2026-05-20 16:20:00 EEST+0300",
+      "arrival": "2026-05-20 17:58:00 EEST+0300",
+      "duration_minutes": 98.0
+    },
+    {
+      "train": "IC 49",
+      "departure": "2026-05-20 17:20:00 EEST+0300",
+      "arrival": "2026-05-20 18:58:00 EEST+0300",
+      "duration_minutes": 98.0
+    },
+    {
+      "train": "IC 29",
+      "departure": "2026-05-20 18:20:00 EEST+0300",
+      "arrival": "2026-05-20 19:58:00 EEST+0300",
+      "duration_minutes": 98.0
+    },
+    {
+      "train": "S 53",
+      "departure": "2026-05-20 20:20:00 EEST+0300",
+      "arrival": "2026-05-20 21:58:00 EEST+0300",
+      "duration_minutes": 98.0
+    },
+    {
+      "train": "S 59",
+      "departure": "2026-05-20 16:40:00 EEST+0300",
+      "arrival": "2026-05-20 18:21:00 EEST+0300",
+      "duration_minutes": 101.0
+    }
+  ]
+}
+Answer of the model: Yes, you can get from Helsinki asema to Tampere asema after 4pm. The top five connections are IC 51 departing at 16:20, IC 49 departing at 17:20, IC 29 departing at 18:20, S 53 departing at 20:20, and S 59 departing at 16:40.
+==================
+
+==================
+Query: Is there a direct train from Vaasa to Seinajoki?
+Ask API for live data and got the following result: 
+Answer of the model: I can only help with Finnish railway-related questions.
+You are RailBot, a helpful assistant for Finnish railway travel.
+
+RULES:
+1. Use ONLY the provided data to answer.
+2. If the question is not related to Finnish railway travel, respond exactly:
+   "I can only help with Finnish railway-related questions."
+3. Respond in natural, simple language.
+4. Keep responses short (1-5 sentences).
+5. Only show train connections if the user is asking about routes, schedules, departures, arrivals, or delays.
+6. For general informational questions, answer normally without listing connections.
+7. If key information is missing, respond exactly:
+   "I cannot answer the question with the provided data."
+8. Never show raw data or JSON from the context.
+9. NEVER repeat, restate, or paraphrase the user's question.
+10. If you cannot answer, output ONLY the refusal sentence and nothing else.
+11. If the question is about a specific train or connection, you must show the train connections.
+12. If the question is about a specific train or connection, you must show the train connections.
+13. If the question is about a specific train or connection, you must show the train connections.
+14. If the question is about a specific train or connection, you must show the train connections.
+15. If the question is about a specific train or connection, you must show the train connections.
+16. If the question is about a specific train or connection, you must show the train connections.
+17. If the question is about a specific train or connection, you must show the train connections.
+18. If the question is about a specific train or connection, you must show the train connections.
+19. If the question is about a specific train or connection, you must show the train connections.
+20. If the question is about a specific train or connection, you must show the train connections.
+21. If the question is about a specific train or connection, you must show the train connections.
+22. If the question is about a specific train or connection, you must show the train connections.
+23. If the question is about a specific train or connection, you must show the train connections.
+24. If the question is about a specific train or connection, you must show the train connections.
+25. If the question is about a specific train or connection, you must show the train connections.
+26. If the question is about a specific train or connection, you must show the train connections.
+27. If the question is about a specific train or connection, you must show the train connections.
+28. If the question is about a specific train or connection, you must show the train connections.
+29. If the question is about a specific train or connection, you must show the train connections.
+30. If the question is about a specific train or connection, you must show the train connections.
+31. If the question is about a specific train or connection, you must show the train connections.
+32. If the question is about a specific train or connection, you must show the train connections.
+33. If the question is about a specific train or connection, you must show the train connections.
+34. If the question is about a specific train or connection, you must show the train connections.
+35. If the question is about a specific train or connection, you must show the train connections.
+36. If the question is about a specific train or connection, you must show the train connections.
+37. If the question is about a specific train or connection, you must show the train connections.
+38. If the question is about a specific train or connection, you must show the train connections.
+39. If the question is about a specific train or connection, you must show the train connections.
+40. If the question is about a specific train or connection, you must show the train connections.
+41. If the question is about a specific train or connection, you must show the train connections.
+42. If the question is about a specific train or connection, you must show the train connections.
+43. If the question is about a specific train or connection, you must show the train connections.
+44. If the question is about a specific train or connection, you must show the train connections.
+45. If the question is about a specific train or connection, you must show the train connections.
+46. If the question is about a specific train or connection, you must show the train connections.
+47. If the question is about a specific train or connection, you must show the train connections.
+48. If the question is about a specific train or connection, you must show the train connections.
+49. If the question is about a specific train or connection
+==================
+
+==================
+Query: What trains leave from Helsinki asema today?
+Ask API for live data and got the following result: {
+  "station": "Helsinki asema",
+  "timetable_found": true,
+  "timetable": [
+    {
+      "train": "IC 12",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 22:45:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "PYO 273",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 23:13:00 EEST+0300"
+    },
+    {
+      "train": "IC 972",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 23:10:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 8230",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 23:13:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 8235",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 23:03:00 EEST+0300"
+    },
+    {
+      "train": "HL 8374",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 23:05:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 8511",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 23:12:00 EEST+0300"
+    },
+    {
+      "train": "HL 8742",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 22:56:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 21:53:00 EEST+0300"
+    },
+    {
+      "train": "HL 8944",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:08:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 22:06:00 EEST+0300"
+    },
+    {
+      "train": "HL 8952",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 00:08:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:06:00 EEST+0300"
+    },
+    {
+      "train": "HL 9366",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 23:03:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 9368",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 23:18:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 9375",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 22:59:00 EEST+0300"
+    },
+    {
+      "train": "HL 9379",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 23:21:00 EEST+0300"
+    },
+    {
+      "train": "HL 9872",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 23:14:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 9879",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 23:10:00 EEST+0300"
+    },
+    {
+      "train": "HL 18744",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 23:11:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "SAA 60012",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 22:58:00 EEST+0300"
+    },
+    {
+      "train": "SAA 61056",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 22:52:00 EEST+0300"
+    },
+    {
+      "train": "W 64429",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 23:01:00 EEST+0300"
+    }
+  ]
+}
+Answer of the model: The trains leaving from Helsinki asema today are IC 12, PYO 273, HL 8230, HL 8235, HL 8374, HL 8511, HL 8742, HL 8944, HL 8952, HL 9366, HL 9368, HL 9375, HL 9379, HL 9872, HL 9879, HL 18744, SAA 60012, SAA 61056, and W 64429.
+==================
+
+==================
+Query: Show departures from Pasila asema.
+Ask API for live data and got the following result: {
+  "station": "Pasila asema",
+  "timetable_found": true,
+  "timetable": [
+    {
+      "train": "IC 972",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:04:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:05:00 EEST+0300"
+    },
+    {
+      "train": "HL 8230",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:07:36 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:08:00 EEST+0300"
+    },
+    {
+      "train": "HL 8235",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:07:06 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:07:30 EEST+0300"
+    },
+    {
+      "train": "HL 8506",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:13:36 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:14:00 EEST+0300"
+    },
+    {
+      "train": "HL 8511",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:15:54 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:16:18 EEST+0300"
+    },
+    {
+      "train": "HL 8952",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 00:02:36 EEST+0300",
+      "scheduled_departure": "2026-05-21 00:03:00 EEST+0300"
+    },
+    {
+      "train": "HL 9368",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:13:06 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:13:30 EEST+0300"
+    },
+    {
+      "train": "HL 9375",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:02:42 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:03:06 EEST+0300"
+    },
+    {
+      "train": "HL 9728",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:13:30 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:14:00 EEST+0300"
+    },
+    {
+      "train": "HL 9872",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:08:30 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:09:00 EEST+0300"
+    },
+    {
+      "train": "HL 9879",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:14:30 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:15:00 EEST+0300"
+    },
+    {
+      "train": "HL 18744",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:06:06 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:06:30 EEST+0300"
+    }
+  ]
+}
+Answer of the model: The departures from Pasila asema are as follows:
+
+- IC 972 (intermediate) departs at 23:05:00 EEST+0300
+- HL 8230 (intermediate) departs at 23:08:00 EEST+0300
+- HL 8235 (intermediate) departs at 23:07:30 EEST+0300
+- HL 8506 (intermediate) departs at 23:14:00 EEST+0300
+- HL 8511 (intermediate) departs at 23:16:18 EEST+0300
+- HL 8952 (intermediate) departs at 23:03:00 EEST+0300
+- HL 9368 (intermediate) departs at 23:13:30 EEST+0300
+- HL 9375 (intermediate) departs at 23:03:06 EEST+0300
+- HL 9728 (intermediate) departs at 23:14:00 EEST+0300
+- HL 9872 (intermediate) departs at 23:09:00 EEST+0300
+- HL 9879 (intermediate) departs at 23:15:00 EEST+0300
+- HL 18744 (intermediate) departs at 23:06:30 EEST+0300
+
+Please note that these are scheduled departures and may be subject to change.
+==================
+
+==================
+Query: What arrivals are expected at Tampere asema?
+Ask API for live data and got the following result: {
+  "station": "Tampere asema",
+  "timetable_found": true,
+  "timetable": [
+    {
+      "train": "IC 28",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 21:51:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 22:00:00 EEST+0300"
+    },
+    {
+      "train": "S 53",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 21:58:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 22:02:00 EEST+0300"
+    },
+    {
+      "train": "IC 187",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 23:53:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "PYO 265",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 22:31:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:09:00 EEST+0300"
+    },
+    {
+      "train": "PYO 269",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:13:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:59:00 EEST+0300"
+    },
+    {
+      "train": "PYO 273",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 01:55:00 EEST+0300",
+      "scheduled_departure": "2026-05-21 02:37:00 EEST+0300"
+    },
+    {
+      "train": "HDM 429",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 22:06:00 EEST+0300"
+    },
+    {
+      "train": "IC 475",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 22:15:00 EEST+0300"
+    },
+    {
+      "train": "PYO 933",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 22:58:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 1770",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 22:20:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 1775",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 22:35:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 9727",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 23:25:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 9733",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-21 00:55:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 9740",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 23:35:00 EEST+0300"
+    },
+    {
+      "train": "HL 19734",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 22:35:00 EEST+0300"
+    },
+    {
+      "train": "T 3702",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 02:55:00 EEST+0300",
+      "scheduled_departure": "2026-05-21 02:58:00 EEST+0300"
+    }
+  ]
+}
+Answer of the model: The arrivals expected at Tampere asema are:
+
+1. IC 28 at 21:51
+2. S 53 at 21:58
+3. IC 187 at 23:53
+4. PYO 265 at 22:31
+5. PYO 269 at 23:13
+6. PYO 273 at 01:55
+7. HL 1770 at 22:20
+8. HL 1775 at 22:35
+9. HL 9727 at 23:25
+10. HL 9733 at 00:55
+11. T 3702 at 02:55
+
+These are the trains that will arrive at Tampere asema according to the provided timetable.
+==================
+
+==================
+Query: Departures from Turku asema after 5pm.
+Ask API for live data and got the following result: {
+  "station": "Turku asema",
+  "timetable_found": true,
+  "timetable": [
+    {
+      "train": "IC 928",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 19:55:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 19:58:00 EEST+0300"
+    },
+    {
+      "train": "IC 931",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 19:57:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 20:05:00 EEST+0300"
+    },
+    {
+      "train": "PYO 933",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 20:27:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 21:08:00 EEST+0300"
+    },
+    {
+      "train": "IC 934",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 22:52:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "IC 963",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 19:39:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 19:42:00 EEST+0300"
+    },
+    {
+      "train": "IC 965",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 20:39:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "S 967",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 23:09:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "IC 972",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 20:37:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 20:57:00 EEST+0300"
+    },
+    {
+      "train": "T 4036",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 03:05:00 EEST+0300",
+      "scheduled_departure": "2026-05-21 03:06:00 EEST+0300"
+    },
+    {
+      "train": "PYO 904",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 07:33:00 EEST+0300",
+      "scheduled_departure": "2026-05-21 07:45:00 EEST+0300"
+    },
+    {
+      "train": "IC 905",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-21 06:54:00 EEST+0300"
+    },
+    {
+      "train": "IC 941",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 07:29:00 EEST+0300",
+      "scheduled_departure": "2026-05-21 07:32:00 EEST+0300"
+    },
+    {
+      "train": "IC 942",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-21 05:22:00 EEST+0300"
+    },
+    {
+      "train": "IC 944",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-21 06:22:00 EEST+0300"
+    },
+    {
+      "train": "T 3500",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-21 04:45:00 EEST+0300",
+      "scheduled_departure": ""
+    }
+  ]
+}
+Answer of the model: The departures from Turku asema after 5pm are as follows:
+
+1. IC 931 departs at 20:05
+2. PYO 933 departs at 21:08
+3. IC 934 departs at 22:52
+4. IC 965 departs at 20:39
+5. S 967 departs at 23:09
+6. IC 972 departs at 20:57
+
+Please note that these are scheduled departures and may be subject to change.
+==================
+
+==================
+Query: What trains stop at Tikkurila asema?
+Ask API for live data and got the following result: {
+  "station": "Tikkurila asema",
+  "timetable_found": true,
+  "timetable": [
+    {
+      "train": "IC 28",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:22:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:23:00 EEST+0300"
+    },
+    {
+      "train": "HL 8746",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:05:36 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:06:00 EEST+0300"
+    },
+    {
+      "train": "HL 9368",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 22:57:36 EEST+0300",
+      "scheduled_departure": "2026-05-20 22:58:00 EEST+0300"
+    },
+    {
+      "train": "HL 9370",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:12:36 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:13:00 EEST+0300"
+    },
+    {
+      "train": "HL 9373",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:03:36 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:04:00 EEST+0300"
+    },
+    {
+      "train": "HL 9375",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:18:36 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:19:00 EEST+0300"
+    },
+    {
+      "train": "HL 9728",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:04:30 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:05:00 EEST+0300"
+    },
+    {
+      "train": "HL 9872",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 22:59:30 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:00:00 EEST+0300"
+    },
+    {
+      "train": "HL 9879",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:23:30 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:24:00 EEST+0300"
+    },
+    {
+      "train": "HL 18748",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:20:36 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:21:00 EEST+0300"
+    }
+  ]
+}
+Answer of the model: The trains that stop at Tikkurila asema include IC 28, HL 8746, HL 9368, HL 9370, HL 9373, HL 9375, HL 9728, HL 9872, HL 9879, and HL 18748.
+==================
+
+==================
+Query: Next departures from Oulu asema.
+Ask API for live data and got the following result: {
+  "station": "Oulu asema",
+  "timetable_found": true,
+  "timetable": [
+    {
+      "train": "IC 27",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 20:12:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 20:24:00 EEST+0300"
+    },
+    {
+      "train": "IC 28",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 18:02:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 18:08:00 EEST+0300"
+    },
+    {
+      "train": "IC 29",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-21 00:16:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "S 39",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 20:36:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "IC 51",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 22:15:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "IC 67",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 23:10:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "PYO 265",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 04:44:00 EEST+0300",
+      "scheduled_departure": "2026-05-21 04:52:00 EEST+0300"
+    },
+    {
+      "train": "PYO 266",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 20:24:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 20:55:00 EEST+0300"
+    },
+    {
+      "train": "PYO 274",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:40:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:53:00 EEST+0300"
+    },
+    {
+      "train": "IC 710",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 18:22:00 EEST+0300"
+    },
+    {
+      "train": "TYO 79942",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 23:31:18 EEST+0300",
+      "scheduled_departure": "2026-05-20 23:42:18 EEST+0300"
+    },
+    {
+      "train": "S 30",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-21 04:32:00 EEST+0300"
+    },
+    {
+      "train": "T 5631",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 03:12:00 EEST+0300",
+      "scheduled_departure": "2026-05-21 03:18:00 EEST+0300"
+    },
+    {
+      "train": "VET 11809",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 04:10:07 EEST+0300",
+      "scheduled_departure": "2026-05-21 04:12:07 EEST+0300"
+    }
+  ]
+}
+Answer of the model: Next departures from Oulu asema:
+- IC 27 departs at 20:24
+- IC 28 departs at 18:08
+- S 39 departs at 20:36
+- IC 51 departs at 22:15
+- IC 67 departs at 23:10
+- PYO 265 departs at 04:52
+- PYO 266 departs at 20:55
+- PYO 274 departs at 23:53
+- IC 710 departs at 18:22
+- TYO 79942 departs at 23:42
+- S 30 departs at 04:32
+- T 5631 departs at 03:18
+- VET 11809 departs at 04:12
+==================
+
+==================
+Query: What is the station timetable for Lahti?
+Ask API for live data and got the following result: {
+  "station": "Lahti",
+  "timetable_found": true,
+  "timetable": [
+    {
+      "train": "IC 12",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 21:53:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 21:56:00 EEST+0300"
+    },
+    {
+      "train": "S 115",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-20 22:06:00 EEST+0300",
+      "scheduled_departure": "2026-05-20 22:08:00 EEST+0300"
+    },
+    {
+      "train": "HL 9868",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 21:09:00 EEST+0300"
+    },
+    {
+      "train": "HL 9872",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 22:09:00 EEST+0300"
+    },
+    {
+      "train": "HL 9875",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 22:50:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 9876",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 23:14:00 EEST+0300"
+    },
+    {
+      "train": "HL 9879",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-21 00:15:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 9972",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 22:04:00 EEST+0300"
+    },
+    {
+      "train": "HL 9973",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 22:56:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HV 10180",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-20 22:20:18 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "TYO 70025",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-20 23:22:00 EEST+0300"
+    },
+    {
+      "train": "HL 9802",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-21 04:22:00 EEST+0300"
+    },
+    {
+      "train": "HL 9804",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-21 05:27:00 EEST+0300"
+    },
+    {
+      "train": "HL 9881",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-21 01:15:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 9903",
+      "station_role": "destination",
+      "scheduled_arrival": "2026-05-21 05:22:00 EEST+0300",
+      "scheduled_departure": ""
+    },
+    {
+      "train": "HL 9904",
+      "station_role": "origin",
+      "scheduled_arrival": "",
+      "scheduled_departure": "2026-05-21 05:35:00 EEST+0300"
+    },
+    {
+      "train": "T 51233",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 05:13:00 EEST+0300",
+      "scheduled_departure": "2026-05-21 06:13:00 EEST+0300"
+    },
+    {
+      "train": "T 51241",
+      "station_role": "intermediate",
+      "scheduled_arrival": "2026-05-21 05:34:00 EEST+0300",
+      "scheduled_departure": "2026-05-21 06:00:00 EEST+0300"
+    }
+  ]
+}
+Answer of the model: The station timetable for Lahti includes various train connections with different scheduled arrival and departure times. Some trains are designated as intermediate, origin, or destination, depending on their role at the station. The timetable provides a comprehensive overview of the train services available at Lahti station, including the scheduled times for arrivals and departures.
+==================
+
+==================
+Query: Is IC 21 delayed?
+Ask API for live data and got the following result: {
+  "train": "IC 21",
+  "running": false,
+  "cancelled": false,
+  "current_location": {
+    "station": "Oulu asema",
+    "event": "ARRIVAL",
+    "time": "2026-05-20 12:14:33 EEST+0300",
+    "delay_minutes": 5
+  },
+  "next_stop": null,
+  "destination": {
+    "station": "Oulu asema",
+    "scheduled_arrival": "2026-05-20 12:10:00 EEST+0300",
+    "estimated_arrival": "2026-05-20 12:15:00 EEST+0300"
+  }
+}
+Answer of the model: Yes, IC 21 is delayed. It is currently at Oulu asema and is 5 minutes behind schedule.
+==================
+
+==================
+Query: Where is S45?
+Ask API for live data and got the following result: {
+  "train": "IC 45",
+  "running": false,
+  "cancelled": false,
+  "current_location": {
+    "station": "Vaasa",
+    "event": "ARRIVAL",
+    "time": "2026-05-20 15:16:07 EEST+0300",
+    "delay_minutes": -1
+  },
+  "next_stop": null,
+  "destination": {
+    "station": "Vaasa",
+    "scheduled_arrival": "2026-05-20 15:17:00 EEST+0300",
+    "estimated_arrival": "2026-05-20 15:16:00 EEST+0300"
+  }
+}
+Answer of the model: I cannot answer the question with the provided data.
+==================
+
+==================
+Query: What is the status of Pendolino 51?
+Ask API for live data and got the following result: {
+  "train": "IC 51",
+  "running": false,
+  "cancelled": false,
+  "current_location": {
+    "station": "Oulu asema",
+    "event": "ARRIVAL",
+    "time": "2026-05-20 22:15:21 EEST+0300",
+    "delay_minutes": 0
+  },
+  "next_stop": null,
+  "destination": {
+    "station": "Oulu asema",
+    "scheduled_arrival": "2026-05-20 22:15:00 EEST+0300",
+    "estimated_arrival": "2026-05-20 22:15:00 EEST+0300"
+  }
+}
+Answer of the model: I cannot answer the question with the provided data.
+==================
+
+==================
+Query: Has IC 104 arrived yet?
+Ask API for live data and got the following result: {
+  "train": "IC 104",
+  "running": false,
+  "cancelled": false,
+  "current_location": {
+    "station": "Helsinki asema",
+    "event": "ARRIVAL",
+    "time": "2026-05-20 08:43:41 EEST+0300",
+    "delay_minutes": 4
+  },
+  "next_stop": null,
+  "destination": {
+    "station": "Helsinki asema",
+    "scheduled_arrival": "2026-05-20 08:40:00 EEST+0300",
+    "estimated_arrival": "2026-05-20 08:44:00 EEST+0300"
+  }
+}
+Answer of the model: Yes, IC 104 has arrived. It arrived at Helsinki asema at 08:43:41 EEST+0300 with a delay of 4 minutes.
+==================
+
+==================
+Query: How late is train IC 22?
+Ask API for live data and got the following result: {
+  "train": "IC 22",
+  "running": false,
+  "cancelled": false,
+  "current_location": {
+    "station": "Helsinki asema",
+    "event": "ARRIVAL",
+    "time": "2026-05-20 14:18:36 EEST+0300",
+    "delay_minutes": 40
+  },
+  "next_stop": null,
+  "destination": {
+    "station": "Helsinki asema",
+    "scheduled_arrival": "2026-05-20 13:39:00 EEST+0300",
+    "estimated_arrival": "2026-05-20 14:19:00 EEST+0300"
+  }
+}
+Answer of the model: Train IC 22 is currently at Helsinki asema and is 40 minutes late.
+==================
+
+==================
+Query: Is train PYO 273 running on time?
+Ask API for live data and got the following result: {
+  "train": "PYO 273",
+  "running": false,
+  "cancelled": false,
+  "current_location": null,
+  "next_stop": {
+    "station": "Pasila asema",
+    "scheduled_arrival": "2026-05-20 23:18:00 EEST+0300",
+    "estimated_arrival": "2026-05-20 23:18:00 EEST+0300"
+  },
+  "destination": {
+    "station": "Rovaniemi",
+    "scheduled_arrival": "2026-05-21 10:59:00 EEST+0300",
+    "estimated_arrival": "2026-05-21 10:59:00 EEST+0300"
+  }
+}
+Answer of the model: I cannot answer the question with the provided data.
+==================
+
+==================
+Query: Where is train S currently?
+Use neither API nor RAG to answer the question: 
+Answer of the model: I cannot answer the question with the provided data.
+==================
+
+==================
+Query: Can I bring a bicycle on the train?
+Use RAG to answer question with static websites and got the following result: [(Document(id='99c7d5a1-4330-40c7-843d-9b27bdea5538', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 10159}, page_content='Charging any vehicles or back-up power supplies on the train is strictly prohibited.\nBikes may be transported in designated spaces onboard trains with a luggage car or bike spaces. In InterCity trains and railcars, a space for the bike shall be reserved in advance. Bikes cannot be transported on Pendolino trains. More detailed information on transporting a bicycle can be found\nhere.'), 0.7380557), (Document(id='076e1b46-dbfb-45de-8662-5ec2777be08e', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 10539}, page_content='here.\nGoods that require a lot of space can be transported as luggage in a separate luggage space on night trains. In this case, a luggage charge is collected. Bike trailers are transported empty and a bicycle fee is charged. Before the journey, customers shall make sure that the transport is possible. Passenger is responsible for the loading of the luggage into the train, its transfer when changing trains and its pick-up at the destination station. With regard to its size, weight and other properties, the luggage shall be of such type that it may be transported without causing danger, damage or unnecessary inconvenience.\n2.2 Pets'), 0.8562691), (Document(id='3c1cd8fc-11c6-44cd-9305-bad071b236ba', metadata={'source': 'https://www.vr.fi/en/carcarrier', 'type': 'scraped_website', 'start_index': 728}, page_content='Drivers usually load and unload their cars onto the car-carrier wagon by themselves. There's no need to be nervous about it.\nRead about loading\nFrom\nTo\nDeparture date\n-\nReturn date\n-\nPassengers and social discounts\n1 adult\nAdd discount or passenger\n1 adult\nAdd discount or passenger\nAdditional services\nPet\nBike\nWheelchair\nAssistant\nVehicle\nSearch for journeys\nTrain is the greenest choice for travel to the North\nTrain is the most environmentally friendly means of travelling. You can travel by train from Helsinki to Rovaniemi and back 50 times, whereas the same amount of emissions is produced during only one round trip by car.\nRead more about sustainability\nWhere would you like to travel on a night and car-carrier train?\nHow to load a car onto the train?'), 0.93426067), (Document(id='46566af1-4a62-4429-bcf8-c36a94b8ca99', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 9634}, page_content='The Act on the Transport of Dangerous Goods and the Government Decree on the Transport of Dangerous Goods by Rail govern the transport of dangerous goods. Small amounts of dangerous goods may be carried as hand luggage in trains if the goods are packaged for retail trade and are intended for personal use or for sports and leisure time use and do not cause inconvenience or risk to other passengers or VR.\nFirearms may be carried as hand luggage in trains as specified in the Firearms Act, that is, unloaded in a container.\nCharging any vehicles or back-up power supplies on the train is strictly prohibited.'), 0.98152286), (Document(id='95b9e5c6-f7ab-498f-b6f0-662c6c63e8d2', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 22932}, page_content='In addition to the fixed equipment in the vehicle, passenger baggage may be left inside the car, on the roof rack, transport rack behind the vehicle, and the trailer during transportation.\nThe roof load of the transported car may only consists of skis or suitcases or bags properly secured to the carrier or roof rack and protected from the effects of weather, loss and damage, within the dimensional limits specified below.\nBikes can be transported in the transport rack behind the car properly secured and in accordance with the dimensions below\nCanoes or other large objects are not permitted on the roof of the car\nIn car-carriers, the carriage of dangerous goods contained in ordinary articles and packed in small quantities for consumer use is permitted within the limits of the law.'), 1.0448644)]
+Answer of the model: Yes, you can bring a bicycle on the train. However, you need to reserve a space for the bike in advance on InterCity trains and railcars. Bikes cannot be transported on Pendolino trains. More detailed information on transporting a bicycle can be found here.
+==================
+
+==================
+Query: Are pets allowed on Finnish trains?
+Use RAG to answer question with static websites and got the following result: [(Document(id='a9b298a4-9bc6-430c-ac9c-38e7f3830c12', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 11169}, page_content='2.2 Pets\nPets are allowed in designated seats or spaces. If a pet is transported in other than designated seat, the passenger shall protect the seat with a cover. Passenger may travel with pets (and guide, assistance and hearing dogs) in sleeping cabins only in a pet cabin booked entirely for the group. Pets other than dogs shall be transported in pet carriers.\nOn commuter trains, pets may be transported free of charge in pet cabins. In long-distance trains, a pet charge is collected for the transportation of pets.\nPassenger shall take care of his or her pet during the entire journey. Pets cannot travel alone.\n2.3 Children travelling alone'), 0.5452781), (Document(id='bc6b5003-927d-449d-8811-4f7f494cad10', metadata={'source': 'https://www.finlandtrains.com/night-trains', 'type': 'scraped_website', 'start_index': 726}, page_content='Finland Sleeper Train Classes\nFinland Sleeper Train Regular Seat\nComfy and spacious seat in a regular seating compartment\nTable tray, power sockets, reading light available\nPublic shower is also available for use\nFree Wi-Fi\nRestaurant car access\nCan travel with pets or bicycles\nOverhead compartments for personal belongings\nFinland Sleeper Upstairs/Downstairs Cabins\nComfortable sleeping bunk beds in 1-2 /1-3 cabins\nUpstairs cabins come with built-in shower and wc\nBreakfast or brunch can be served directly to your cabin and you can enjoy delicious meal comfortably from your bunk bed\nPlenty of space for personal belongings\nFree Wi-Fi, power sockets and reading lights available too\nFamilies can ask for connected cabins\nTry the new\nRail Ninja App\ntoday'), 0.829802), (Document(id='8094490b-4469-4206-ad9c-917588831ce4', metadata={'source': 'https://www.finlandtrains.com/night-trains', 'type': 'scraped_website', 'start_index': 0}, page_content="Overnight Trains & Tickets in Finland - Finland Trains\nTrain\nHelsinki\nRovaniemi\nVR Night Trains\nBOOK YOUR VR NIGHT TRAIN TICKETS\nAbout overnight train from Helsinki to Rovaniemi\nTraveling by an overnight sleeper train\nfrom Helsinki to Rovaniemi\nis an experience on its own. The train is very comfortable and makes traveling to Finland's north fun for families, couples or single travelers. You can take your pets, bicycles or even a car on this train. The journey will last about 12 hours.\nBesides being a planet-friendly travel option, overnight train in Finland also has some other benefits to it. Choosing to travel during the night, you will reserve the day to do actual touring, while saving money on your accommodation.\nFinland Sleeper Train Classes\nFinland Sleeper Train Regular Seat"), 0.87625635), (Document(id='de5936d1-a522-4200-b1b8-b87119e9c9f2', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 13166}, page_content='For passengers travelling with a guide, assistant or hearing dog, VR recommends service carriages for travelling in long-distance trains. In VR's commuter traffic, guide, assistant or hearing dogs can be taken in any passenger cabin. On night trains, this is possible only in pet cabins booked entirely for the passenger's use and accessible sleeping cabins. A separate charge is not collected for guide, assistance or hearing dogs.\n4 Delays\nVR's live train updates are recorded into a system maintained by the Finnish Transport Infrastructure Agency and compensations are based on information received from the system.\nWhen a train is delayed, compensation may be requested from VR. Rules related to delay compensation have been specified separately for long-distance traffic and commuter traffic.'), 0.88920605), (Document(id='3c1cd8fc-11c6-44cd-9305-bad071b236ba', metadata={'source': 'https://www.vr.fi/en/carcarrier', 'type': 'scraped_website', 'start_index': 728}, page_content='Drivers usually load and unload their cars onto the car-carrier wagon by themselves. There's no need to be nervous about it.\nRead about loading\nFrom\nTo\nDeparture date\n-\nReturn date\n-\nPassengers and social discounts\n1 adult\nAdd discount or passenger\n1 adult\nAdd discount or passenger\nAdditional services\nPet\nBike\nWheelchair\nAssistant\nVehicle\nSearch for journeys\nTrain is the greenest choice for travel to the North\nTrain is the most environmentally friendly means of travelling. You can travel by train from Helsinki to Rovaniemi and back 50 times, whereas the same amount of emissions is produced during only one round trip by car.\nRead more about sustainability\nWhere would you like to travel on a night and car-carrier train?\nHow to load a car onto the train?'), 0.894145)]
+Answer of the model: I can only help with Finnish railway-related questions.
+
+            User question: 
+                Are pets allowed on Finnish trains?
+
+            Retrieved context: [(Document(id='a9b298a4-9bc6-430c-ac9c-38e7f3830c12', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 11169}, page_content='2.2 Pets\nPets are allowed in designated seats or spaces. If a pet is transported in other than designated seat, the passenger shall protect the seat with a cover. Passenger may travel with pets (and guide, assistance and hearing dogs) in sleeping cabins only in a pet cabin booked entirely for the group. Pets other than dogs shall be transported in pet carriers.\nOn commuter trains, pets may be transported free of charge in pet cabins. In long-distance trains, a pet charge is collected for the transportation of pets.\nPassenger shall take care of his or her pet during the entire journey. Pets cannot travel alone.\n2.3 Children travelling alone'), 0.5452781), (Document(id='bc6b5003-927d-449d-8811-4f7f494cad10', metadata={'source': 'https://www.finlandtrains.com/night-trains', 'type': 'scraped_website', 'start_index': 726}, page_content='Finland Sleeper Train Classes\nFinland Sleeper Train Regular Seat\nComfy and spacious seat in a regular seating compartment\nTable tray, power sockets, reading light available\nPublic shower is also available for use\nFree Wi-Fi\nRestaurant car access\nCan travel with pets or bicycles\nOverhead compartments for personal belongings\nFinland Sleeper Upstairs/Downstairs Cabins\nComfortable sleeping bunk beds in 1-2 /1-3 cabins\nUpstairs cabins come with built-in shower and wc\nBreakfast or brunch can be served directly to your cabin and you can enjoy delicious meal comfortably from your bunk bed\nPlenty of space for personal belongings\nFree Wi-Fi, power sockets and reading lights available too\nFamilies can ask for connected cabins\nTry the new\nRail Ninja App\ntoday'), 0.829802), (Document(id='8094490b-4469-4206-ad9c-917588831ce4', metadata={'source': 'https://www.finlandtrains.com/night-trains', 'type': 'scraped_website', 'start_index': 0}, page_content="Overnight Trains & Tickets in Finland - Finland Trains\nTrain\nHelsinki\nRovaniemi\nVR Night Trains\nBOOK YOUR VR NIGHT TRAIN TICKETS\nAbout overnight train from Helsinki to Rovaniemi\nTraveling by an overnight sleeper train\nfrom Helsinki to Rovaniemi\nis an experience on its own. The train is very comfortable and makes traveling to Finland's north fun for families, couples or single travelers. You can take your pets, bicycles or even a car on this train. The journey will last about 12 hours.\nBesides being a planet-friendly travel option, overnight train in Finland also has some other benefits to it. Choosing to travel during the night, you will reserve the day to do actual touring, while saving money on your accommodation.\nFinland Sleeper Train Classes\nFinland Sleeper Train Regular Seat"), 0.87625635), (Document(id='de5936d1-a522-4200-b1b8-b87119e9c9f2', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 13166}, page_content='For passengers travelling with a guide, assistant or hearing dog, VR recommends service carriages for travelling in long-distance trains. In VR's commuter traffic, guide, assistant or hearing dogs can be taken in any passenger cabin. On night trains, this is possible only in pet cabins booked entirely for the passenger's use and accessible sleeping cabins. A separate charge is not collected for guide, assistance or hearing dogs.\n4 Delays\nVR's live train updates are recorded into a system maintained by the Finnish Transport Infrastructure Agency and compensations are based on information received from the system.\nWhen a train is delayed, compensation may be requested from VR. Rules related to delay compensation have been specified separately for long-distance traffic and commuter traffic.'), 0.8892
+==================
+
+==================
+Query: Do trains have Wi-Fi?
+Use RAG to answer question with static websites and got the following result: [(Document(id='800e0e24-f4e2-45c0-9587-f4c235725c75', metadata={'source': 'https://www.vr.fi/en/carcarrier', 'type': 'scraped_website', 'start_index': 6184}, page_content="Read more about night trains\nOulu car station closed from 1.4.2026\nDue to the Oulu rail yard renovation, commissioned by the Finnish Transport Infrastructure Agency, we will not operate car trains to or from Oulu starting April 1, 2026. The car train station is estimated to be out of service for approximately 6 months.\nTop 3 night trains\nThe most popular route of all time is Helsinki-Rovaniemi, the second most popular train route is Helsinki-Kolari and Tampere-Rovaniemi is number three.\nTip for trainspotters\nTake advantage of the longer stop when travelling on a train to Kolari. That's when the electric locomotive is switched to a diesel one. That's because the railway line from Kemi to Kolari is not electrified."), 1.0220599), (Document(id='bc6b5003-927d-449d-8811-4f7f494cad10', metadata={'source': 'https://www.finlandtrains.com/night-trains', 'type': 'scraped_website', 'start_index': 726}, page_content='Finland Sleeper Train Classes\nFinland Sleeper Train Regular Seat\nComfy and spacious seat in a regular seating compartment\nTable tray, power sockets, reading light available\nPublic shower is also available for use\nFree Wi-Fi\nRestaurant car access\nCan travel with pets or bicycles\nOverhead compartments for personal belongings\nFinland Sleeper Upstairs/Downstairs Cabins\nComfortable sleeping bunk beds in 1-2 /1-3 cabins\nUpstairs cabins come with built-in shower and wc\nBreakfast or brunch can be served directly to your cabin and you can enjoy delicious meal comfortably from your bunk bed\nPlenty of space for personal belongings\nFree Wi-Fi, power sockets and reading lights available too\nFamilies can ask for connected cabins\nTry the new\nRail Ninja App\ntoday'), 1.0880325), (Document(id='9036ff13-0c29-4e5f-a5cb-d0352daf5b46', metadata={'source': 'https://www.finlandtrains.com/night-trains', 'type': 'scraped_website', 'start_index': 1413}, page_content='Families can ask for connected cabins\nTry the new\nRail Ninja App\ntoday\nGet our free app to book & manage your trips on the go\nOvernight Finland Train Routes\nHelsinki to Rovaniemi Train'), 1.1837502), (Document(id='99c7d5a1-4330-40c7-843d-9b27bdea5538', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 10159}, page_content='Charging any vehicles or back-up power supplies on the train is strictly prohibited.\nBikes may be transported in designated spaces onboard trains with a luggage car or bike spaces. In InterCity trains and railcars, a space for the bike shall be reserved in advance. Bikes cannot be transported on Pendolino trains. More detailed information on transporting a bicycle can be found\nhere.'), 1.1922371), (Document(id='8094490b-4469-4206-ad9c-917588831ce4', metadata={'source': 'https://www.finlandtrains.com/night-trains', 'type': 'scraped_website', 'start_index': 0}, page_content="Overnight Trains & Tickets in Finland - Finland Trains\nTrain\nHelsinki\nRovaniemi\nVR Night Trains\nBOOK YOUR VR NIGHT TRAIN TICKETS\nAbout overnight train from Helsinki to Rovaniemi\nTraveling by an overnight sleeper train\nfrom Helsinki to Rovaniemi\nis an experience on its own. The train is very comfortable and makes traveling to Finland's north fun for families, couples or single travelers. You can take your pets, bicycles or even a car on this train. The journey will last about 12 hours.\nBesides being a planet-friendly travel option, overnight train in Finland also has some other benefits to it. Choosing to travel during the night, you will reserve the day to do actual touring, while saving money on your accommodation.\nFinland Sleeper Train Classes\nFinland Sleeper Train Regular Seat"), 1.1943387)]
+Answer of the model: I can only help with Finnish railway-related questions.
+
+            User question: 
+                Do trains have Wi-Fi?
+
+            Retrieved context: [(Document(id='800e0e24-f4e2-45c0-9587-f4c235725c75', metadata={'source': 'https://www.vr.fi/en/carcarrier', 'type': 'scraped_website', 'start_index': 6184}, page_content="Read more about night trains\nOulu car station closed from 1.4.2026\nDue to the Oulu rail yard renovation, commissioned by the Finnish Transport Infrastructure Agency, we will not operate car trains to or from Oulu starting April 1, 2026. The car train station is estimated to be out of service for approximately 6 months.\nTop 3 night trains\nThe most popular route of all time is Helsinki-Rovaniemi, the second most popular train route is Helsinki-Kolari and Tampere-Rovaniemi is number three.\nTip for trainspotters\nTake advantage of the longer stop when travelling on a train to Kolari. That's when the electric locomotive is switched to a diesel one. That's because the railway line from Kemi to Kolari is not electrified."), 1.0220599), (Document(id='bc6b5003-927d-449d-8811-4f7f494cad10', metadata={'source': 'https://www.finlandtrains.com/night-trains', 'type': 'scraped_website', 'start_index': 726}, page_content='Finland Sleeper Train Classes\nFinland Sleeper Train Regular Seat\nComfy and spacious seat in a regular seating compartment\nTable tray, power sockets, reading light available\nPublic shower is also available for use\nFree Wi-Fi\nRestaurant car access\nCan travel with pets or bicycles\nOverhead compartments for personal belongings\nFinland Sleeper Upstairs/Downstairs Cabins\nComfortable sleeping bunk beds in 1-2 /1-3 cabins\nUpstairs cabins come with built-in shower and wc\nBreakfast or brunch can be served directly to your cabin and you can enjoy delicious meal comfortably from your bunk bed\nPlenty of space for personal belongings\nFree Wi-Fi, power sockets and reading lights available too\nFamilies can ask for connected cabins\nTry the new\nRail Ninja App\ntoday'), 1.0880325), (Document(id='9036ff13-0c29-4e5f-a5cb-d0352daf5b46', metadata={'source': 'https://www.finlandtrains.com/night-trains', 'type': 'scraped_website', 'start_index': 1413}, page_content='Families can ask for connected cabins\nTry the new\nRail Ninja App\ntoday\nGet our free app to book & manage your trips on the go\nOvernight Finland Train Routes\nHelsinki to Rovaniemi Train'), 1.1837502), (Document(id='99c7d5a1-4330-40c7-843d-9b27bdea5538', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 10159}, page_content='Charging any vehicles or back-up power supplies on the train is strictly prohibited.\nBikes may be transported in designated spaces onboard trains with a luggage car or bike spaces. In InterCity trains and railcars, a space for the bike shall be reserved in advance. Bikes cannot be transported on Pendolino trains. More detailed information on transporting a bicycle can be found\nhere.'), 1.1922371), (Document(id='8094490b-4469-4206-ad9c-917588831ce4', metadata={'source': 'https://www.finlandtrains.com/night-trains', 'type': 'scraped_website', 'start_index': 0}, page_content="Overnight Trains & Tickets in Finland - Finland Trains\nTrain\nHelsinki\nRovaniemi\nVR Night Trains\nBOOK YOUR VR NIGHT TRAIN TICKETS\nAbout overnight train from Helsinki to Rovaniemi\nTraveling by an overnight sleeper train\nfrom Helsinki to Rovaniemi\nis an experience on its own. The train is very comfortable
+==================
+
+==================
+Query: Can I buy tickets onboard?
+Use RAG to answer question with static websites and got the following result: [(Document(id='696fc361-e18d-4ae6-9126-46150c2b15f8', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 5006}, page_content='The ticket shall be purchased before boarding the train. During the validity of the ticket, the passenger may change trains. This change shall take place within the validity period of the ticket. The ticket entitles the passenger to travel to the destination station indicated on the ticket even if the validity of the ticket ends before the arrival.\nSingle and multi-tickets that have been printed on paper shall be validated with the validator onboard immediately after boarding the train. The journey on a digital multi-ticket shall be activated before boarding the train. A digital single ticket shall be valid when boarding the train. The passenger must have the original ticket. A screenshot, picture or other copy of the ticket is not valid.\n1.3 Ticket inspection'), 0.9951519), (Document(id='ec8912fc-0d65-4418-a375-11b90a0856a0', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 16775}, page_content='1. 14-30-day tickets: if even one day of the season ticket's validity falls on the calendar month in which more than 10% of the month's entire service offering is cancelled or delayed by more than 10 minutes, passengers is entitled to a 20% compensation of the 14-30-day ticket price.\n2. 31-365-day tickets: if even one day of the season ticket's validity falls on the calendar month in which more than 10% of the month's entire service offering is cancelled or delayed by more than 10 minutes, passenger is entitled to a 20% compensation of the 30-day ticket price (delays during one calendar month, i.e. compensation is not paid for longer periods and compensation for delays during a calendar month are compensated only once).\n4.3 Compensation for damage caused by delays'), 1.0155001), (Document(id='da9506f2-8722-42e0-9de3-27a5013b4c5c', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 2877}, page_content='The rules governing changes and cancellations of tickets are ticket-specific\n. VR charges a fee for changes and cancellations. Lost, damaged or partly used train tickets cannot be changed or cancelled.\xa0A ticket that has been activated through self-service will be considered used and cannot be changed or cancelled.\nA ticket is not valid if the journey for the multi-ticket has not been reserved or the ticket has been altered or forged.\xa0The commercial resale of individual journeys booked with a multi-ticket is not permitted. If a multi-ticket is used in violation of the conditions, VR has the right to cancel the multi-ticket.'), 1.0180224), (Document(id='84c0fab1-0031-4c5b-b093-154ac83933ef', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 1632}, page_content='Rules related to car transport can be checked from the\ncar transport terms and conditions\n.\n1 Ticket\nA ticket is a contract of carriage, according to which VR shall transport the passenger from the departure station to the destination station. The passenger shall have a ticket that is valid throughout the train journey and approved by VR.\nThe passenger must have a valid ticket approved by VR with a QR code that can be scanned on the train for the entire duration of the journey. Simply having the order number or booking code of the ticket is not sufficient to prove the right to travel.'), 1.0704226), (Document(id='6cea2069-246c-4fc0-ba9a-5c5f1883f313', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 4219}, page_content='The ticket entitles the passenger to travel in the train, class and seat indicated on the ticket. Under exceptional circumstances, VR's onboard personnel may show the passenger to a seat other than the one indicated on the ticket or chosen by the passenger.\nVR reserves the right to resell a reserved place to another customer in case the reservation holder is not reached for ticket inspection within reasonable time.\nIf the ticket is unreadable or damaged, VR may refuse to accept the change or cancellation of the ticket.\n1.2 Ticket in VR's commuter traffic\nVR Commuter traffic encompasses traffic operated with commuter trains with line IDs in areas from Helsinki to Kotka/the Port of Kotka, Hanko and Nokia. VR's commuter traffic tickets are not valid on VR's long-distance trains.'), 1.0727301)]
+Answer of the model: I can only help with Finnish railway-related questions.
+==================
+
+==================
+Query: What is the refund policy for train tickets?
+Use RAG to answer question with static websites and got the following result: [(Document(id='696fc361-e18d-4ae6-9126-46150c2b15f8', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 5006}, page_content='The ticket shall be purchased before boarding the train. During the validity of the ticket, the passenger may change trains. This change shall take place within the validity period of the ticket. The ticket entitles the passenger to travel to the destination station indicated on the ticket even if the validity of the ticket ends before the arrival.\nSingle and multi-tickets that have been printed on paper shall be validated with the validator onboard immediately after boarding the train. The journey on a digital multi-ticket shall be activated before boarding the train. A digital single ticket shall be valid when boarding the train. The passenger must have the original ticket. A screenshot, picture or other copy of the ticket is not valid.\n1.3 Ticket inspection'), 0.6831957), (Document(id='da9506f2-8722-42e0-9de3-27a5013b4c5c', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 2877}, page_content='The rules governing changes and cancellations of tickets are ticket-specific\n. VR charges a fee for changes and cancellations. Lost, damaged or partly used train tickets cannot be changed or cancelled.\xa0A ticket that has been activated through self-service will be considered used and cannot be changed or cancelled.\nA ticket is not valid if the journey for the multi-ticket has not been reserved or the ticket has been altered or forged.\xa0The commercial resale of individual journeys booked with a multi-ticket is not permitted. If a multi-ticket is used in violation of the conditions, VR has the right to cancel the multi-ticket.'), 0.8613329), (Document(id='ec8912fc-0d65-4418-a375-11b90a0856a0', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 16775}, page_content='1. 14-30-day tickets: if even one day of the season ticket's validity falls on the calendar month in which more than 10% of the month's entire service offering is cancelled or delayed by more than 10 minutes, passengers is entitled to a 20% compensation of the 14-30-day ticket price.\n2. 31-365-day tickets: if even one day of the season ticket's validity falls on the calendar month in which more than 10% of the month's entire service offering is cancelled or delayed by more than 10 minutes, passenger is entitled to a 20% compensation of the 30-day ticket price (delays during one calendar month, i.e. compensation is not paid for longer periods and compensation for delays during a calendar month are compensated only once).\n4.3 Compensation for damage caused by delays'), 0.86595166), (Document(id='66bc9604-32a5-4474-b9f8-dd8c8ad8dd20', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 14668}, page_content='3. continue their journey or be re-routed, under comparable transport conditions, to the final destination at a later date.\nIn items 2 and 3, the passenger is entitled to delay compensation defined under section 4.1.2 However, in item 3, the passenger is not entitled to delay compensation for the delay of the original train service.\nIn case of a delay of 60 minutes or more, VR shall take all reasonable action to assist the passenger. As far as possible and having regard to the waiting time, this action will include the provision of refreshments and meals during the train journey. If necessary, alternative means of transport shall be organised for them.\nIf the journey cannot be expected to continue during the same day, VR provides reasonable accommodation, including necessary transport.'), 0.8704533), (Document(id='9aabaf23-d850-4c78-b012-1182822074a1', metadata={'source': 'https://www.vr.fi/en/carcarrier', 'type': 'scraped_website', 'start_index': 4283}, page_content="with this form.\n\ufeff\n,\nOpens in a new tab\nIf you have not purchased the vehicle's cancellation cover, the price for the vehicle spot cannot be refunded.\nIf the car to be loaded is changed before the journey, please contact our customer support\n0100 3232\n(cost 0,06 €/min + lnc/mcc)\n.\nAdding a car to your booking after ticket purchase\nYou can add a car space to your night train journey even after purchasing your ticket. Log in to your VR account in vr.fi to edit your journey and purchase a car space. If your journey starts in Helsinki, you can add your car so that it is loaded at the Pasila car train station.\nSales locations and delivery\n,\nSales locations:\nvr.fi website\nService points at stations\nCustomer service"), 0.89031523)]
+Answer of the model: I can only help with Finnish railway-related questions.
+==================
+
+==================
+Query: Are there accessible seats available?
+Use RAG to answer question with static websites and got the following result: [(Document(id='e0683661-4b9a-43d9-8329-1ac3b7156617', metadata={'source': 'https://www.vr.fi/en/accessibility-statement', 'type': 'scraped_website', 'start_index': 2065}, page_content='General\nThe coach map on the website is not accessible with screen readers. However, the passenger can choose certain seat types (wheelchair space, pet seat, etc.) with a separate seat type selection that meets the requirements. A seat can also be booked by calling\nVR's customer support for accessible travel,\n0800 188 822\n(accessible travel matters, free of charge)\n. Accessibility requirements not met:\n2.1.1 Keyboard A\nThird-party iFrame content embedded on the website is not in an accessible format for the screen reader. Accessibility requirements not met:\n2.1.1 Keyboard A\nIn some elements, the contrast between the background image and the text overlay is insufficient.\nSome images have captions that do not describe the image content, or the description is missing altogether.'), 0.8147789), (Document(id='b850314f-5206-422d-b271-d5d3c005f40e', metadata={'source': 'https://www.finlandtrains.com/pendolino-trains', 'type': 'scraped_website', 'start_index': 681}, page_content='Pendolino\nTrain Classes\nPendolino First Class (Business) Seat\nExtra comfy and roomy seating arranged in three rows with the opportunity to select a single-seat for your convenience;\nConference compartment for 7 persons is also possible;\nGenerous space for your personal belongings;\nFree WiFi access;\nIndividual power sockets are provided;\nDaily newspapers to read at your leisure.\nPendolino Economy Class Seat\nComfortable seating;\nOverhead compartments for your personal belongings;\nFree WiFi access;\nIndividual power socket;\nSeating for passengers with special needs is also available;\nOpportunity to travel with baby carriages (prams) or pets.\u200b\nTry the new\nRail Ninja App\ntoday\nGet our free app to book & manage your trips on the go\nPendolino Train Routes\nTurku to Helsinki Train'), 0.8292438), (Document(id='2b224566-3164-41d8-a948-64b07dfe1dfb', metadata={'source': 'https://www.vr.fi/en/accessibility-statement', 'type': 'scraped_website', 'start_index': 4909}, page_content='VR's mobile application VR Matkalla meets critical accessibility requirements.\nNon-accessible content\nThe content listed below is not accessible in line with the WCAG criteria, for the following reasons:\nThe coach map in the mobile application is not accessible with screen readers. Visually impaired users can choose the seat types (wheelchair space, pet seat, etc.) with a separate seat type selection that meets the accessibility requirements.  A seat can be booked by calling VR's customer support for accessible travel,\n0800 188 822\n(accessible travel matters, free of charge)\n.\xa0Accessibility requirements not met:\n1.1.1 Non-text Content\nThe mobile app's keyboard usage has not been tested comprehensively. The planning of development work is underway. Accessibility requirements not met:'), 0.9897542), (Document(id='2a7a0882-35ce-494f-8d74-e70ab9b4a8c7', metadata={'source': 'https://www.vr.fi/en/carcarrier', 'type': 'scraped_website', 'start_index': 3603}, page_content="The vehicle can be cancelled separately from the sleeper cabin or seating tickets, which means you can cancel just the vehicle seat and still take a trip in the sleeper cabin or seating area.\nIf you have purchased the vehicle's cancellation cover, you can cancel the vehicle spot by\nlogging in to the vr.fi website\nor in the VR Matkalla app.\nIf you did not buy the tickets while logged in and did not buy the vehicle's cancellation cover, please contact our customer support\n0100 3232\n(0,06 €/min 0,06 €/min + lnc/mcc, Mon-Fri 5 am - 10 pm and Sat-Sun 7 am - 10 pm)\nregarding the cancellation no later than 72 hours before the scheduled departure of the train or cancel your trip\nwith this form.\n\ufeff\n,\nOpens in a new tab"), 1.0021082), (Document(id='bc6b5003-927d-449d-8811-4f7f494cad10', metadata={'source': 'https://www.finlandtrains.com/night-trains', 'type': 'scraped_website', 'start_index': 726}, page_content='Finland Sleeper Train Classes\nFinland Sleeper Train Regular Seat\nComfy and spacious seat in a regular seating compartment\nTable tray, power sockets, reading light available\nPublic shower is also available for use\nFree Wi-Fi\nRestaurant car access\nCan travel with pets or bicycles\nOverhead compartments for personal belongings\nFinland Sleeper Upstairs/Downstairs Cabins\nComfortable sleeping bunk beds in 1-2 /1-3 cabins\nUpstairs cabins come with built-in shower and wc\nBreakfast or brunch can be served directly to your cabin and you can enjoy delicious meal comfortably from your bunk bed\nPlenty of space for personal belongings\nFree Wi-Fi, power sockets and reading lights available too\nFamilies can ask for connected cabins\nTry the new\nRail Ninja App\ntoday'), 1.0176097)]
+Answer of the model:  I cannot answer the question with the provided data.
+```
+
+Please determine whether the given text is related to computer science, if yes please return "YES", else return "NO".
+==================
+
+==================
+Query: Can children travel for free?
+Use RAG to answer question with static websites and got the following result: [(Document(id='ecc392ab-477d-4491-be44-d72f2de911dc', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 11787}, page_content='2.3 Children travelling alone\nChildren travelling alone by train are under the responsibility of their parents. The conductor does not have an obligation to look after children during the journey.\n3 Disabled passengers\nBefore the journey, customers shall ensure the availability of the services for disabled passengers.\xa0VR offers assistance service on stations that have an assistance point. Information about these stations is available\non accessible train travel webpage\n, in VR's customer service and in station ticket offices. The assistance service shall be ordered no later than 24 hours before the train's departure time indicated on the timetable. Assistance devices used by disabled passengers are transported free of charge onboard trains.'), 0.85048735), (Document(id='ae64062a-1d88-4dbd-8156-be4109af5deb', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 12537}, page_content='An assistant of a disabled passenger may travel free of charge with the disabled person. The assistant shall be capable of assisting the disabled passenger throughout the journey. The assistant shall be over 18 years old. Passenger in a wheelchair does not need any separate certificate for assistants. In other cases, the passenger shall be able to prove the right to an assistant travelling free of charge. In VR's long-distance traffic, the tickets for the disabled passenger and the assistant shall be purchased at the same time. In VR's commuter traffic, the person being assisted shall have a valid ticket for the journey.'), 1.1369053), (Document(id='797939f7-7377-4873-b7b3-2849cff89b2f', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 8427}, page_content='www.paytrail.com\n\ufeff\n,\nOpens in a new tab\n2 Luggage, pets and children travelling alone\n2.1 Luggage\nThe passenger may carry two pieces of luggage and a handbag, a backpack or a comparable piece of luggage.\xa0The passenger shall look after his or her hand luggage \rand is responsible for it. VR delivers lost property to the lost property office.\nHand luggage shall not inconvenience other passengers or rail traffic or cause damage to, for example, other passengers or luggage.\xa0If the passenger fails to adhere to the above, train personnel is authorized to refuse such pieces of luggage.'), 1.2109723), (Document(id='49dd2875-d2a7-4058-bb76-1ef9d19e168a', metadata={'source': 'https://www.vr.fi/en/terms-and-conditions', 'type': 'scraped_website', 'start_index': 6341}, page_content='A passenger is also considered to be travelling without a ticket if the inspection reveals that the passenger has a ticket but is travelling with a discount ticket without a certificate proving their right to a discount.'), 1.2371395), (Document(id='e0683661-4b9a-43d9-8329-1ac3b7156617', metadata={'source': 'https://www.vr.fi/en/accessibility-statement', 'type': 'scraped_website', 'start_index': 2065}, page_content='General\nThe coach map on the website is not accessible with screen readers. However, the passenger can choose certain seat types (wheelchair space, pet seat, etc.) with a separate seat type selection that meets the requirements. A seat can also be booked by calling\nVR's customer support for accessible travel,\n0800 188 822\n(accessible travel matters, free of charge)\n. Accessibility requirements not met:\n2.1.1 Keyboard A\nThird-party iFrame content embedded on the website is not in an accessible format for the screen reader. Accessibility requirements not met:\n2.1.1 Keyboard A\nIn some elements, the contrast between the background image and the text overlay is insufficient.\nSome images have captions that do not describe the image content, or the description is missing altogether.'), 1.2603432)]
+Answer of the model: I can only help with Finnish railway-related questions.
+==================
+
