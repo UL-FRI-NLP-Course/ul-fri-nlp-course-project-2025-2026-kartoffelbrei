@@ -1,18 +1,16 @@
-import os.path
-
 import pandas as pd
 
 from typing import List, Any
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-from pathlib import Path
 
 from llm_engine.intents import Intent
+from util.file_creation import FileCreation
 
 class IntentData:
-    def __init__(self, y_pred: List[Any], dataset: List[Any]):
+    def __init__(self, y_pred: List[Any], dataset: List[Any], file_creation: FileCreation):
         self.y_pred = y_pred
         self.y_true = self._create_y_true(dataset)
-        self.path = Path.cwd()
+        self.file_creation = file_creation
 
     def _create_y_true(self, dataset: List[Any]) -> List[Any]:
         y_true = []
@@ -27,11 +25,7 @@ class IntentData:
         accuracy = accuracy_score(self.y_true, self.y_pred)
         report = classification_report(self.y_true, self.y_pred)
 
-        with open(os.path.join(self.path, "metrics.txt"), "w") as f:
-            f.write("=== Intent Evaluation Metrics ===\n\n")
-            f.write(f"Accuracy: {accuracy:.4f}\n\n")
-            f.write("Classification Report:\n")
-            f.write(report)
+        self.file_creation.write_metrics_file(accuracy=accuracy, report=report)
 
     def compute_confusion_matrix(self) -> None:
         labels = [
@@ -45,4 +39,4 @@ class IntentData:
         cm = confusion_matrix(self.y_true, self.y_pred, labels=labels)
 
         df_cm = pd.DataFrame(cm, index=labels, columns=labels)
-        df_cm.to_csv(os.path.join(self.path, "confusion_matrix.csv"))
+        self.file_creation.write_confusion_matrix_file(df=df_cm)

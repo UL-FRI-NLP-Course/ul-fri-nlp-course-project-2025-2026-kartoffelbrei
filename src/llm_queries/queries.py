@@ -2,13 +2,13 @@ from llm_engine.intents import Intent
 
 dataset = [
     # other
-    #{"text": "What is the weather in Helsinki?", "label": Intent.OTHER.value},
-    #{"text": "Tell me a joke.", "label": Intent.OTHER.value},
-    #{"text": "Who won the football match yesterday?", "label": Intent.OTHER.value},
-    #{"text": "What is the capital of Sweden?", "label": Intent.OTHER.value},
-    #{"text": "How old is Elon Musk?", "label": Intent.OTHER.value},
-    #{"text": "What is machine learning?", "label": Intent.OTHER.value},
-    #{"text": "Play some music.", "label": Intent.OTHER.value},
+    {"text": "What is the weather in Helsinki?", "label": Intent.OTHER.value},
+    {"text": "Tell me a joke.", "label": Intent.OTHER.value},
+    {"text": "Who won the football match yesterday?", "label": Intent.OTHER.value},
+    {"text": "What is the capital of Sweden?", "label": Intent.OTHER.value},
+    {"text": "How old is Elon Musk?", "label": Intent.OTHER.value},
+    {"text": "What is machine learning?", "label": Intent.OTHER.value},
+    {"text": "Play some music.", "label": Intent.OTHER.value},
     # journey search
     {"text": "Can I travel from Helsinki asema to Tampere asema today?", "label": Intent.JOURNEY_SEARCH.value},
     {"text": "What is the next train from Turku asema to Helsinki asema?", "label": Intent.JOURNEY_SEARCH.value},

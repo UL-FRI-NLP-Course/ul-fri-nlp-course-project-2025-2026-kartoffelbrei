@@ -1,7 +1,6 @@
 import os
 
 from typing import Any
-from pathlib import Path
 
 from backend.website_handler import RAG_Handler
 from llm_engine.model_manager import ModelManager
@@ -12,18 +11,20 @@ from backend.api_requests import APIRequests
 from llm_engine.api_request_builder import APIRequestBuilder
 from llm_engine.intents import Intent
 from llm_engine.intent_extractor import IntentExtractor
+from util.file_creation import FileCreation
 
 
 FAISS_PATH= "/d/hpc/projects/onj_fri/kartoffelbrei/faiss/"
 
 class AssistantPipeline:
-    def __init__(self):
+    def __init__(self, file_creation: FileCreation):
         self.model_manager = ModelManager()
         self.model_manager.load_all()
         self.api_requests = APIRequests()
         self.api_request_builder = APIRequestBuilder(self.api_requests)
         self.faiss_store = None
         self.rag_handler = RAG_Handler()
+        self.file_creation = file_creation
         if not os.path.exists(FAISS_PATH):
             print("Create FAISS index.")
             texts = self.rag_handler.create_database()
@@ -37,18 +38,12 @@ class AssistantPipeline:
         self.answer_router: Router = AnswerRouter(self.model_manager)
         print("\n")
 
-    def _log(self, text: str, file="pipeline_log.txt"):
-        with open(os.path.join(Path.cwd(), file), "a", encoding="utf-8") as f:
-            f.write(text + "\n")
-            print(text)
-
     def run(self, input: str) -> Any:
-        self._log("==================")
-        self._log(f"Query: {input}")
+        self.file_creation.write_pipeline_log("==================")
+        self.file_creation.write_pipeline_log(f"Query: {input}")
         # get JSON with keywords
         intents = self.intent_router.extract_answer(user_input=input)
         # decide which RAG method is necessary
-        decision = ""
         if (
                 IntentExtractor.get_intent(intents) != Intent.OTHER.value
                 and IntentExtractor.get_intent(intents) != Intent.GENERAL_INFO.value
@@ -61,11 +56,11 @@ class AssistantPipeline:
         else:
             decision = "Use neither API nor RAG to answer the question"
             result = ""
-        self._log(f"{decision}: {result}")
+        self.file_creation.write_pipeline_log(f"{decision}: {result}")
         response = self.answer_router.extract_answer(user_input=input, result=result)
 
         
-        self._log(f"Answer of the model: {response}")
-        self._log("==================\n")
+        self.file_creation.write_pipeline_log(f"Answer of the model: {response}")
+        self.file_creation.write_pipeline_log("==================\n")
 
         return intents
