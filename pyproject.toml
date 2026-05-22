@@ -1,6 +1,6 @@
 [project]
 name = "kartoffelbrei"
-version = "31.03.2026"
+version = "22.05.2026"
 requires-python = ">=3.10"
 authors = [
     { name = "Nina Zink", email = "nina-sophie.zink@fau.de"},
