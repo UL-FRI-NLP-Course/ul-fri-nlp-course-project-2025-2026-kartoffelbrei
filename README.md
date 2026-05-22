@@ -42,7 +42,7 @@ export HF_TOKEN=[your personal huggingface token]
 srun singularity exec --nv containers/container-pytorch-2.2.0 python \
     "ul-fri-nlp-course-project-2025-2026-kartoffelbrei/src/main.py"
 ```
-6. Create the directory `logs`: `mkdir logs`
+6. Create the directory `logs`.
 7. To load the models change `MODEL_CACHE_DIR` in `src/llm_engine/config_llm.py` to your shared node.
 8. Execute the shell script: `sbatch run-main.sh`
 
