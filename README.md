@@ -39,7 +39,7 @@ and general railway information. More information can be found in `report/report
 #SBATCH --mem=64G
 
 export HF_TOKEN=[your personal huggingface token]
-srun singularity exec --nv containers/container-pytorch-2.2.0 python \
+srun singularity exec --nv containers/container-pytorch-2.5.1 python \
     "ul-fri-nlp-course-project-2025-2026-kartoffelbrei/src/main.py"
 ```
 6. Create the directory `logs`.
