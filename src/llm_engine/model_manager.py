@@ -1,8 +1,8 @@
 import os
 import torch
-from typing import Union, List
+from typing import Union, List, Any
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-from huggingface_hub import snapshot_download, DryRunFileInfo
+from huggingface_hub import snapshot_download
 from langchain_huggingface import HuggingFaceEmbeddings
 from llm_engine.config_llm import ConfigLLM as Config
 
@@ -17,7 +17,7 @@ class ModelManager:
         self.embedding_model = None
 
     @staticmethod
-    def _download_model(repo_id: str) -> Union[str, List[DryRunFileInfo]]:
+    def _download_model(repo_id: str) -> Union[str, List[Any]]:
         return snapshot_download(
             repo_id=repo_id,
             token=os.getenv("HF_TOKEN"),

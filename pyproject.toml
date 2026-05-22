@@ -14,27 +14,34 @@ dependencies = [
     "requests>=2.33.1",
     "nltk>=3.9.1",
     "scikit-learn>=1.6.1",
-    "sentence_transformers>=5.3.0",
-    "huggingface-hub>=1.8.0",
-    "accelerate>=1.13.0",
-    "bitsandbytes>=0.46.1",
-    "beautifulsoup4>=4.13.3",
+
+    # HF CORE (must be consistent)
+    "transformers==5.9.0",#5.5.4
+    "accelerate==1.13.0",
+    "bitsandbytes==0.49.2",
+    "huggingface-hub==1.16.1",#1.11.0
+
+    # tokenizer deps
+    "protobuf==7.34.1",
+
+    "sentence-transformers==5.5.0",
+
+    "beautifulsoup4==4.14.3",
     "jupyter>=1.0.0",
     "mpld3>=0.5.10",
     "pydot>=2.0.0",
     "gensim>=4.3.2",
-    "tensorflow>=2.18.0",
-    "keras>=3.5.0",
     "pandas>=2.2.2",
-    "torch",
-    "langchain",
-    "langchain-community",
-    "langchain-core",
-    "langchain-text-splitters",
-    "langchain-huggingface",
-    "faiss-cpu",
-    "tiktoken",
-    "dateparser",
+
+    "langchain==1.3.0",
+    "langchain-community==0.4.1",
+    "langchain-core==1.4.0",
+    "langchain-text-splitters==1.1.2",
+    "langchain-huggingface==1.2.2",
+
+    "faiss-cpu==1.13.2",
+    "tiktoken==0.13.0",
+    "dateparser==1.4.0",
 ]
 
 [project.optional-dependencies]

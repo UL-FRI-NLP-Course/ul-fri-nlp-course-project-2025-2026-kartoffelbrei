@@ -2,7 +2,7 @@
 
 The chatbot combines **intent detection**, **live API data**, **live data retrieval with RAG**, and 
 **LLM-based responses** to answer questions about train connections, train status, station timetables, 
-and general railway information.
+and general railway information. More information can be found in `report/report.pdf`.
 
 ---
 
@@ -21,9 +21,10 @@ and general railway information.
 ## Setup in Arnes's Cluster
 
 1. Clone the repository in your home node.
-2. Create the directory `containers`: `mkdir containers`
-3. Build a singularity image: `singularity build ./containers/container-pt-2.2.0.sif docker://pytorch/pytorch:2.2.0-cuda11.8-cudnn8-runtime`
-4. Create a shell script (e.g. `run-main.sh`) to run the container:
+2. Create the directory `containers`.
+3. Build a singularity image: `singularity build --sandbox ./containers/container-pytorch-2-5-1 docker://pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime`.
+4. Install additional libraries: `singularity exec --writable --no-home --no-mount pwd ./containers/container-pytorch-2-5-1 env PYTHONUSERSITE=1 pip install ./ul-fri-nlp-course-project-2025-2026-kartoffelbrei`
+5. Create a shell script (e.g. `run-main.sh`) to run the container:
 ```bash
 #!/bin/bash
 #SBATCH --nodes=1
@@ -38,13 +39,12 @@ and general railway information.
 #SBATCH --mem=64G
 
 export HF_TOKEN=[your personal huggingface token]
-srun singularity exec --nv containers/container-pt-2.2.0.sif python \
+srun singularity exec --nv containers/container-pytorch-2.2.0 python \
     "ul-fri-nlp-course-project-2025-2026-kartoffelbrei/src/main.py"
 ```
-5. Create the directory `logs`: `mkdir logs`
-6. Install additional libraries: `singularity exec containers/container-pt-2.2.0.sif pip install ul-fri-nlp-course-project-2025-2026-kartoffelbrei/
-`
-7. Execute the shell script: `sbatch run-main.sh`
+6. Create the directory `logs`: `mkdir logs`
+7. To load the models change `MODEL_CACHE_DIR` in `src/llm_engine/config_llm.py` to your shared node.
+8. Execute the shell script: `sbatch run-main.sh`
 
 ---
 
