@@ -16,10 +16,10 @@ dependencies = [
     "scikit-learn>=1.6.1",
 
     # HF CORE (must be consistent)
-    "transformers==5.9.0",#5.5.4
+    "transformers==5.5.4",
     "accelerate==1.13.0",
     "bitsandbytes==0.49.2",
-    "huggingface-hub==1.16.1",#1.11.0
+    "huggingface-hub==1.11.0",
 
     # tokenizer deps
     "protobuf==7.34.1",
